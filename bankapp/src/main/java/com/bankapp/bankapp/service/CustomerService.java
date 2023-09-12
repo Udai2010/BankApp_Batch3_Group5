@@ -1,5 +1,7 @@
 package com.bankapp.bankapp.service;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,23 +22,22 @@ public class CustomerService {
 	}
 
 	public String validateUser(Login l) {
-		String result="";
-		//Customer c = null;
+		String result="test";
 		
-		Customer obj = customerRepo.findByUsername(l.getUsername());
+		Optional<Customer> obj = customerRepo.findById(l.getUserID());
 		if(obj==null)
-		{
-			result = "Invalid User";
-			return result;
-		}
-		else if(obj.getPassword().equals(l.getPassword()))
-		{
-			result="Valid User";
-		}
-		else
-		{
-			result="Invalid User";
-		}
+			{
+				result = "Invalid User";
+				return result;
+			}
+			else if(obj.get().getPassword().equals(l.getPassword()))
+			{
+				result="Valid User";
+			}
+			else
+			{
+				result="Invalid User";
+			}
 		return result;
 	}
 

@@ -25,6 +25,7 @@ export default function LoginPage() {
       .then((response)=>{
         alert(response.data);
         console.log(response);
+        //window.location="/dashboard";
       })
       .catch((err)=>{
         alert("error- "+err)
@@ -33,7 +34,7 @@ export default function LoginPage() {
 
   return (
     <div>
-      <form onSubmit={onLogin}>
+      <form onSubmit={onLogin} >
       <h2>LoginPage</h2>
       <label>Username</label>
       <input type="text" value={username} required onChange={onUsernameChange}/><br/>
