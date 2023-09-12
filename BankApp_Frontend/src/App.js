@@ -5,7 +5,7 @@ import HomePage from './pages/HomePage';
 import LoginPage from './pages/LoginPage';
 import TransactionPage from './pages/TransactionPage';
 import Dashboard from './pages/Dashboard';
-import Dashboard from './pages/RegistrationPage';
+import RegistrationPage from './pages/RegistrationPage';
 
 function App() {
   return (
