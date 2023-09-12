@@ -1,16 +1,13 @@
 package com.bankapp.bankapp.model;
 
-import java.util.ArrayList;
-import java.util.List;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -24,28 +21,32 @@ public class Account {
 	private String account_type;
 	private String IFSC;
 	private String branch;
+	private String occupation_type;
+	private String income_source;
+	private double annual_income;
+	private String debit_card;
+	private String net_banking;
+	private String status;
 	
 	@ManyToOne
 	@JoinColumn(name="customer_id")
+	@JsonBackReference
 	private Customer customer;
 
-	@OneToMany(mappedBy="sender_account",cascade=CascadeType.ALL)
+	/*@OneToMany(mappedBy="sender_account",cascade=CascadeType.ALL)
 	private List<Transaction> sent_transactions = new ArrayList<>();
 	
 	@OneToMany(mappedBy="receiver_account",cascade=CascadeType.ALL)
-	private List<Transaction> received_transactions = new ArrayList<>();
+	private List<Transaction> received_transactions = new ArrayList<>();*/
 
-	public Account(Long account_id, double balance, String account_type, String iFSC, String branch, Customer customer,
-			List<Transaction> sent_transactions, List<Transaction> received_transactions) {
+	public Account(Long account_id, double balance, String account_type, String iFSC, String branch, Customer customer) {
 		super();
 		this.account_id = account_id;
 		this.balance = balance;
 		this.account_type = account_type;
-		IFSC = iFSC;
+		this.IFSC = iFSC;
 		this.branch = branch;
 		this.customer = customer;
-		this.sent_transactions = sent_transactions;
-		this.received_transactions = received_transactions;
 	}
 
 	public Long getAccount_id() {
@@ -96,21 +97,54 @@ public class Account {
 		this.customer = customer;
 	}
 
-	public List<Transaction> getSent_transactions() {
-		return sent_transactions;
+	public String getStatus() {
+		return status;
 	}
 
-	public void setSent_transactions(List<Transaction> sent_transactions) {
-		this.sent_transactions = sent_transactions;
+	public void setStatus(String status) {
+		this.status = status;
+	}
+	
+	public String getOccupation_type() {
+		return occupation_type;
 	}
 
-	public List<Transaction> getReceived_transactions() {
-		return received_transactions;
+	public void setOccupation_type(String occupation_type) {
+		this.occupation_type = occupation_type;
 	}
 
-	public void setReceived_transactions(List<Transaction> received_transactions) {
-		this.received_transactions = received_transactions;
+	public String getIncome_source() {
+		return income_source;
 	}
+
+	public void setIncome_source(String income_source) {
+		this.income_source = income_source;
+	}
+
+	public double getAnnual_income() {
+		return annual_income;
+	}
+
+	public void setAnnual_income(double annual_income) {
+		this.annual_income = annual_income;
+	}
+
+	public String getDebit_card() {
+		return debit_card;
+	}
+
+	public void setDebit_card(String debit_card) {
+		this.debit_card = debit_card;
+	}
+
+	public String getNet_banking() {
+		return net_banking;
+	}
+
+	public void setNet_banking(String net_banking) {
+		this.net_banking = net_banking;
+	}
+
 
 		
 }
