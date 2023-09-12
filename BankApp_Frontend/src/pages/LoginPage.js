@@ -33,7 +33,7 @@ export default function LoginPage() {
   };
 
   return (
-    <div>
+    <div style={{display:'block',textAlign:'center'}}>
       <form onSubmit={onLogin} >
       <h2>LoginPage</h2>
       <label>Username</label>
