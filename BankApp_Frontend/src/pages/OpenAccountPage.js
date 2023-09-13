@@ -40,13 +40,17 @@ export default function OpenAccountPage() {
     event.preventDefault();
     axios
       .post(baseURL+customerId,{
-          customerId:customerId,
-          occupationType:occupationType,
-          sourceOfIncome:sourceOfIncome,
+          occupation_type:occupationType,
+          income_source:sourceOfIncome,
           annual_income:grossSalary,
           debit_card:debit_card,
           branch: "BLR",
-          account_type: "Savings"
+          account_type: "Savings",
+          net_banking:net_banking,
+          status:"active",
+          ifsc:"BLR1234A",
+          balance:5000
+
       })
       .then((response)=>{
         alert(response.data);

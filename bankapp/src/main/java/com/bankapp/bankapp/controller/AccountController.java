@@ -37,9 +37,12 @@ public class AccountController {
 
 		List<String> resp = new ArrayList<String>();
 		if(violations.size() == 0){
-			accountService.createAccount(account, userID);
-			resp.add("Account created succesfully");
-			return resp;
+			Account acc = accountService.createAccount(account, userID);
+			System.out.print(acc.toString());
+			if(acc!=null)
+			{	resp.add("Account created succesfully");
+				return resp;
+			}
 		}
 
 		for(ConstraintViolation<Account> t: violations){
