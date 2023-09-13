@@ -9,3 +9,4 @@ import com.bankapp.bankapp.model.Account;
 public interface AccountRepository extends JpaRepository<Account,Long> {
 
 }
+

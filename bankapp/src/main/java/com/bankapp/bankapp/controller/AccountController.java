@@ -1,5 +1,6 @@
 package com.bankapp.bankapp.controller;
 
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -18,6 +19,7 @@ import com.bankapp.bankapp.service.AccountService;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.Validation;
 import jakarta.validation.ValidatorFactory;
+
 
 @RestController
 @CrossOrigin("*")
@@ -42,8 +44,23 @@ public class AccountController {
 			resp.add(t.getMessage());
 		}
 
-		return resp;
+
+	@Autowired
+	AccountService accountService;
+	
+	@Autowired
+	CustomerRepository customerRepo;
+	@PostMapping("/createAccount/{uid}")
+	public String createAccount(@RequestBody Account account,@PathVariable("uid") Long userID) {
 		
-		
+		String result="";
+		Account acc = accountService.createAccount(account, userID);
+		if(acc!=null)
+			result="Account Created";
+			
+			System.out.print(acc.getCustomer().getName());
+		return result;
 	}
+
+
 }

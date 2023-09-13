@@ -30,6 +30,7 @@ public class Customer {
 	private String email;
 	@Length(min=10, max=10, message = "pan number must be 10 characters")
 	private String pan_number;
+
 	@NotBlank(message="Username can not be blank.")
 	private String username;
 	@NotBlank(message="Password can not be blank.")
@@ -45,7 +46,7 @@ public class Customer {
 	public Customer() {}
 	
 	public Customer(Long customer_Id, String name, String email, String pan_number, String dob, String fathername,
-			String mothername, String address, String username, String password ) {
+			String mothername, String address, String password ) {
 		super();
 		this.customer_Id = customer_Id;
 		this.name = name;
@@ -55,7 +56,6 @@ public class Customer {
 		this.fathername = fathername;
 		this.mothername = mothername;
 		this.address = address;
-		this.username = username;
 		this.password = password;
 	}
 
@@ -89,14 +89,6 @@ public class Customer {
 
 	public void setPan_number(String pan_number) {
 		this.pan_number = pan_number;
-	}
-
-	public String getUsername() {
-		return username;
-	}
-
-	public void setUsername(String username) {
-		this.username = username;
 	}
 	
 	public String getPassword() {

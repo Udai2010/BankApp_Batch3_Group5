@@ -8,5 +8,4 @@ import com.bankapp.bankapp.model.Customer;
 @Repository
 public interface CustomerRepository extends JpaRepository<Customer,Long>{
 	
-	Customer findByUsername(String usename);
 }

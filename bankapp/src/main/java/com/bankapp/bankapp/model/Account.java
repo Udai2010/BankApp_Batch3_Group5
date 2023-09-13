@@ -1,16 +1,13 @@
 package com.bankapp.bankapp.model;
 
-import java.util.ArrayList;
-import java.util.List;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 import jakarta.validation.constraints.NotBlank;
@@ -31,7 +28,7 @@ public class Account {
 	private String IFSC;
 	@NotBlank(message="Branch can not be blank.")
 	private String branch;
-	// New fields
+
 	private String occupation_type;
 	private String income_source;
 	private double annual_income;
@@ -41,13 +38,15 @@ public class Account {
 	
 	@ManyToOne
 	@JoinColumn(name="customer_id")
+	@JsonBackReference
 	private Customer customer;
 
-	@OneToMany(mappedBy="sender_account",cascade=CascadeType.ALL)
+	/*@OneToMany(mappedBy="sender_account",cascade=CascadeType.ALL)
 	private List<Transaction> sent_transactions = new ArrayList<>();
 	
 	@OneToMany(mappedBy="receiver_account",cascade=CascadeType.ALL)
-	private List<Transaction> received_transactions = new ArrayList<>();
+	private List<Transaction> received_transactions = new ArrayList<>();*/
+
 
 	public Account(Long account_id, double balance, String account_type, String iFSC, String branch, Customer customer,
 			List<Transaction> sent_transactions, List<Transaction> received_transactions, String occupation_type, String income_source, double annual_income, String debit_card, String net_banking, String status) {
@@ -55,11 +54,10 @@ public class Account {
 		this.account_id = account_id;
 		this.balance = balance;
 		this.account_type = account_type;
-		IFSC = iFSC;
+		this.IFSC = iFSC;
 		this.branch = branch;
 		this.customer = customer;
-		this.sent_transactions = sent_transactions;
-		this.received_transactions = received_transactions;
+
 		this.occupation_type = occupation_type;
 		this.income_source = income_source;
 		this.annual_income = annual_income;
@@ -116,21 +114,38 @@ public class Account {
 		this.customer = customer;
 	}
 
-	public List<Transaction> getSent_transactions() {
-		return sent_transactions;
+	public String getStatus() {
+		return status;
 	}
 
-	public void setSent_transactions(List<Transaction> sent_transactions) {
-		this.sent_transactions = sent_transactions;
+	public void setStatus(String status) {
+		this.status = status;
+	}
+	
+	public String getOccupation_type() {
+		return occupation_type;
 	}
 
-	public List<Transaction> getReceived_transactions() {
-		return received_transactions;
+	public void setOccupation_type(String occupation_type) {
+		this.occupation_type = occupation_type;
 	}
 
-	public void setReceived_transactions(List<Transaction> received_transactions) {
-		this.received_transactions = received_transactions;
+	public String getIncome_source() {
+		return income_source;
 	}
+
+	public void setIncome_source(String income_source) {
+		this.income_source = income_source;
+	}
+
+	public double getAnnual_income() {
+		return annual_income;
+	}
+
+	public void setAnnual_income(double annual_income) {
+		this.annual_income = annual_income;
+	}
+
 
 	public String getOccupation_type() {
 		return occupation_type;
@@ -179,9 +194,6 @@ public class Account {
 	public void setStatus(String status) {
 		this.status = status;
 	}
-
-	
-	
 
 		
 }
