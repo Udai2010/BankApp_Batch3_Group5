@@ -1,22 +1,49 @@
 package com.bankapp.bankapp.controller;
 
-import java.util.Optional;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RestController;
 
+
 import com.bankapp.bankapp.model.Account;
-import com.bankapp.bankapp.model.Customer;
-import com.bankapp.bankapp.repository.CustomerRepository;
 import com.bankapp.bankapp.service.AccountService;
+
+import jakarta.validation.ConstraintViolation;
+import jakarta.validation.Validation;
+import jakarta.validation.ValidatorFactory;
+
 
 @RestController
 @CrossOrigin("*")
 public class AccountController {
+    @Autowired
+    AccountService accountService;
+    
+	@PostMapping("/createAccount/{uid}")
+	public List<String> createNewAccount(@RequestBody Account account,@PathVariable("uid") Long userID) {
+		ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
+		jakarta.validation.Validator validator = factory.getValidator();
+		Set<ConstraintViolation<Account>> violations = validator.validate(account);
+
+		List<String> resp = new ArrayList<String>();
+		if(violations.size() == 0){
+			accountService.createAccount(account, userID);
+			resp.add("Account created succesfully");
+			return resp;
+		}
+
+		for(ConstraintViolation<Account> t: violations){
+			resp.add(t.getMessage());
+		}
+
 
 	@Autowired
 	AccountService accountService;
@@ -34,5 +61,6 @@ public class AccountController {
 			System.out.print(acc.getCustomer().getName());
 		return result;
 	}
+
 
 }

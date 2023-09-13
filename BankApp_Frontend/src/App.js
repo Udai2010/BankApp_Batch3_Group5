@@ -5,6 +5,7 @@ import HomePage from './pages/HomePage';
 import LoginPage from './pages/LoginPage';
 import TransactionPage from './pages/TransactionPage';
 import Dashboard from './pages/Dashboard';
+import OpenAccountPage from './pages/OpenAccountPage';
 import RegistrationPage from './pages/RegistrationPage';
 
 function App() {
@@ -16,6 +17,7 @@ function App() {
             <Route path='/login' element={<LoginPage/>}/>
             <Route path='/transaction' element={<TransactionPage/>}/>
             <Route path='/dashboard' element={<Dashboard/>}/>
+            <Route path='/openaccount' element={<OpenAccountPage/>}/>
             <Route path='/register' element={<RegistrationPage/>}/>
           </Routes>
         </BrowserRouter>
