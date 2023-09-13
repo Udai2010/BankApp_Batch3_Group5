@@ -49,7 +49,7 @@ public class Account {
 
 
 	public Account(Long account_id, double balance, String account_type, String iFSC, String branch, Customer customer,
-			List<Transaction> sent_transactions, List<Transaction> received_transactions, String occupation_type, String income_source, double annual_income, String debit_card, String net_banking, String status) {
+			String occupation_type, String income_source, double annual_income, String debit_card, String net_banking, String status) {
 		super();
 		this.account_id = account_id;
 		this.balance = balance;
@@ -114,63 +114,7 @@ public class Account {
 		this.customer = customer;
 	}
 
-	public String getStatus() {
-		return status;
-	}
-
-	public void setStatus(String status) {
-		this.status = status;
-	}
 	
-	public String getOccupation_type() {
-		return occupation_type;
-	}
-
-	public void setOccupation_type(String occupation_type) {
-		this.occupation_type = occupation_type;
-	}
-
-	public String getIncome_source() {
-		return income_source;
-	}
-
-	public void setIncome_source(String income_source) {
-		this.income_source = income_source;
-	}
-
-	public double getAnnual_income() {
-		return annual_income;
-	}
-
-	public void setAnnual_income(double annual_income) {
-		this.annual_income = annual_income;
-	}
-
-
-	public String getOccupation_type() {
-		return occupation_type;
-	}
-
-	public void setOccupation_type(String occupation_type) {
-		this.occupation_type = occupation_type;
-	}
-
-	public String getIncome_source() {
-		return income_source;
-	}
-
-	public void setIncome_source(String income_source) {
-		this.income_source = income_source;
-	}
-
-	public double getAnnual_income() {
-		return annual_income;
-	}
-
-	public void setAnnual_income(double annual_income) {
-		this.annual_income = annual_income;
-	}
-
 	public String getDebit_card() {
 		return debit_card;
 	}

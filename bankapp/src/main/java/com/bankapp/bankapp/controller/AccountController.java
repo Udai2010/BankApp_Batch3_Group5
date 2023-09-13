@@ -20,6 +20,8 @@ import jakarta.validation.ConstraintViolation;
 import jakarta.validation.Validation;
 import jakarta.validation.ValidatorFactory;
 
+import com.bankapp.bankapp.repository.CustomerRepository;
+
 
 @RestController
 @CrossOrigin("*")
@@ -43,24 +45,26 @@ public class AccountController {
 		for(ConstraintViolation<Account> t: violations){
 			resp.add(t.getMessage());
 		}
-
-
-	@Autowired
-	AccountService accountService;
-	
-	@Autowired
-	CustomerRepository customerRepo;
-	@PostMapping("/createAccount/{uid}")
-	public String createAccount(@RequestBody Account account,@PathVariable("uid") Long userID) {
-		
-		String result="";
-		Account acc = accountService.createAccount(account, userID);
-		if(acc!=null)
-			result="Account Created";
-			
-			System.out.print(acc.getCustomer().getName());
-		return result;
+		return resp;
 	}
+
+
+	// @Autowired
+	// AccountService accountService;
+	
+	// @Autowired
+	// CustomerRepository customerRepo;
+	// @PostMapping("/createAccount/{uid}")
+	// public String createAccount(@RequestBody Account account,@PathVariable("uid") Long userID) {
+		
+	// 	String result="";
+	// 	Account acc = accountService.createAccount(account, userID);
+	// 	if(acc!=null)
+	// 		result="Account Created";
+			
+	// 		System.out.print(acc.getCustomer().getName());
+	// 	return result;
+	// }
 
 
 }
