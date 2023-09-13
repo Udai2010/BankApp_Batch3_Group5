@@ -13,6 +13,10 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
+import jakarta.validation.constraints.NotBlank;
+
+import org.hibernate.validator.constraints.Length;
+
 @Entity
 @Table(name="account")
 public class Account {
@@ -21,9 +25,19 @@ public class Account {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long account_id;
 	private double balance;
+	@NotBlank(message="Account type can not be blank.")
 	private String account_type;
+	@Length(min=5, max=10, message="IFSC must be between 5 to 10 characters.")
 	private String IFSC;
+	@NotBlank(message="Branch can not be blank.")
 	private String branch;
+	// New fields
+	private String occupation_type;
+	private String income_source;
+	private double annual_income;
+	private String debit_card;
+	private String net_banking;
+	private String status;
 	
 	@ManyToOne
 	@JoinColumn(name="customer_id")
@@ -36,7 +50,7 @@ public class Account {
 	private List<Transaction> received_transactions = new ArrayList<>();
 
 	public Account(Long account_id, double balance, String account_type, String iFSC, String branch, Customer customer,
-			List<Transaction> sent_transactions, List<Transaction> received_transactions) {
+			List<Transaction> sent_transactions, List<Transaction> received_transactions, String occupation_type, String income_source, double annual_income, String debit_card, String net_banking, String status) {
 		super();
 		this.account_id = account_id;
 		this.balance = balance;
@@ -46,6 +60,12 @@ public class Account {
 		this.customer = customer;
 		this.sent_transactions = sent_transactions;
 		this.received_transactions = received_transactions;
+		this.occupation_type = occupation_type;
+		this.income_source = income_source;
+		this.annual_income = annual_income;
+		this.debit_card = debit_card;
+		this.net_banking = net_banking;
+		this.status = status;
 	}
 
 	public Long getAccount_id() {
@@ -111,6 +131,57 @@ public class Account {
 	public void setReceived_transactions(List<Transaction> received_transactions) {
 		this.received_transactions = received_transactions;
 	}
+
+	public String getOccupation_type() {
+		return occupation_type;
+	}
+
+	public void setOccupation_type(String occupation_type) {
+		this.occupation_type = occupation_type;
+	}
+
+	public String getIncome_source() {
+		return income_source;
+	}
+
+	public void setIncome_source(String income_source) {
+		this.income_source = income_source;
+	}
+
+	public double getAnnual_income() {
+		return annual_income;
+	}
+
+	public void setAnnual_income(double annual_income) {
+		this.annual_income = annual_income;
+	}
+
+	public String getDebit_card() {
+		return debit_card;
+	}
+
+	public void setDebit_card(String debit_card) {
+		this.debit_card = debit_card;
+	}
+
+	public String getNet_banking() {
+		return net_banking;
+	}
+
+	public void setNet_banking(String net_banking) {
+		this.net_banking = net_banking;
+	}
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
+	
+	
 
 		
 }

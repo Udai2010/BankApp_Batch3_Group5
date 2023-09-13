@@ -11,6 +11,11 @@ import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+
+import org.hibernate.validator.constraints.Length;
+
 
 @Entity
 @Table(name="customer")
@@ -19,10 +24,15 @@ public class Customer {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long customer_Id;
+	@NotBlank(message="Name can not be blank.")
 	private String name;
+	@Email(message="Email is invalid.")
 	private String email;
+	@Length(min=10, max=10, message = "pan number must be 10 characters")
 	private String pan_number;
+	@NotBlank(message="Username can not be blank.")
 	private String username;
+	@NotBlank(message="Password can not be blank.")
 	private String password;
 	private String dob;
 	private String fathername;
