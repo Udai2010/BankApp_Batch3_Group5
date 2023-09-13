@@ -13,6 +13,7 @@ import Backdrop from '@mui/material/Backdrop';
 import Modal from '@mui/material/Modal';
 import Fade from '@mui/material/Fade';
 import { useNavigate } from 'react-router-dom';
+import { passwordHashService } from '../services/PasswordHashService';
 
 const style = {
   position: 'absolute',
@@ -25,6 +26,7 @@ const style = {
   boxShadow: 24,
   p: 4,
 };
+
 
 const defaultTheme = createTheme();
 
@@ -86,12 +88,13 @@ export default function RegistrationPage() {
 
   const submitHandler = (event) => {
     event.preventDefault();
+    const hasedPassword = passwordHashService(password);
     axios.post(baseUrl, {
 
       name: name,
       email: email,
       pan_number: pannumber,
-      password: password,
+      password: hasedPassword,
       dob: dob,
       fathername: fathername,
       mothername: mothername,

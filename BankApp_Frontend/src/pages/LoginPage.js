@@ -9,6 +9,7 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { Grid } from '@mui/material';
+import { passwordHashService } from '../services/PasswordHashService';
 
 const defaultTheme = createTheme();
 
@@ -27,10 +28,12 @@ export default function LoginPage() {
 
   const onLogin = (event) => {
     event.preventDefault();
+    const hashedPassword = passwordHashService(password)
+    console.log(username)
     axios
       .post(baseURL, {
-        username: username,
-        password: password
+        userID: username,
+        password: hashedPassword
       })
       .then((response) => {
         alert(response.data);
@@ -69,7 +72,7 @@ export default function LoginPage() {
                     required
                     fullWidth
                     id="username"
-                    label="User Name"
+                    label="Customer ID"
                     name="username"
                     // autoComplete="name"
                     onChange={onUsernameChange}
