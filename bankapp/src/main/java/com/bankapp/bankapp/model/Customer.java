@@ -31,8 +31,6 @@ public class Customer {
 	@Length(min=10, max=10, message = "pan number must be 10 characters")
 	private String pan_number;
 
-	@NotBlank(message="Username can not be blank.")
-	private String username;
 	@NotBlank(message="Password can not be blank.")
 	private String password;
 	private String dob;

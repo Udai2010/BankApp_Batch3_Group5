@@ -66,6 +66,9 @@ public class Account {
 		this.status = status;
 	}
 
+	public Account() {
+	}
+
 	public Long getAccount_id() {
 		return account_id;
 	}
