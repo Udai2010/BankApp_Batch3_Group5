@@ -24,7 +24,7 @@ public class CustomerService {
 	public String validateUser(Login l) {
 		String result="test";
 		
-		Optional<Customer> obj = customerRepo.findById(l.getUserID());
+		Optional<Customer> obj = customerRepo.findById(l.getUsername());
 		if(obj==null)
 			{
 				result = "Invalid User";
