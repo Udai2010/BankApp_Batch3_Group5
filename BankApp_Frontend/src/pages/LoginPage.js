@@ -71,7 +71,7 @@ export default function LoginPage() {
                     required
                     fullWidth
                     id="username"
-                    label="User Name"
+                    label="Customer ID"
                     name="username"
                     value={username}
                     // autoComplete="name"

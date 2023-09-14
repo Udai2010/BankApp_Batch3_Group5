@@ -7,21 +7,23 @@ import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RestController;
 
 
 import com.bankapp.bankapp.model.Account;
+import com.bankapp.bankapp.model.FundTransfer;
+import com.bankapp.bankapp.model.Withdraw;
 import com.bankapp.bankapp.repository.CustomerRepository;
 import com.bankapp.bankapp.service.AccountService;
 
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.Validation;
 import jakarta.validation.ValidatorFactory;
-
-import com.bankapp.bankapp.repository.CustomerRepository;
 
 
 @RestController
@@ -52,23 +54,19 @@ public class AccountController {
 		return resp;
 	}
 
+	@PutMapping("withdraw")
+	public String withdrawAccount(@RequestBody Withdraw withdraw){
+		return accountService.withdrawAmount(withdraw.getAmount(), withdraw.getAccount_id());
+	}
 
-	// @Autowired
-	// AccountService accountService;
-	
-	// @Autowired
-	// CustomerRepository customerRepo;
-	// @PostMapping("/createAccount/{uid}")
-	// public String createAccount(@RequestBody Account account,@PathVariable("uid") Long userID) {
-		
-	// 	String result="";
-	// 	Account acc = accountService.createAccount(account, userID);
-	// 	if(acc!=null)
-	// 		result="Account Created";
-			
-	// 		System.out.print(acc.getCustomer().getName());
-	// 	return result;
-	// }
+	@PutMapping("deposit")
+	public String depositAccount(@RequestBody Withdraw deposit){
+		return accountService.depositAmount(deposit.getAmount(), deposit.getAccount_id());
+	}
 
+	@PutMapping("fundtransfer")
+	public String fundTransfer(@RequestBody FundTransfer ft){
+		return accountService.fundTransfer(ft);
+	}
 
 }
