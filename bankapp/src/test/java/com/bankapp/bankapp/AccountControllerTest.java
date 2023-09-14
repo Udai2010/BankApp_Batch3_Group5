@@ -3,7 +3,11 @@ package com.bankapp.bankapp;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.hamcrest.Matchers;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.mockito.ArgumentMatchers;
@@ -14,6 +18,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.MvcResult;
 
 import com.bankapp.bankapp.model.Account;
 import com.bankapp.bankapp.model.Customer;
@@ -51,15 +56,17 @@ public class AccountControllerTest {
 		acc.setIFSC("BLR1234");
 		acc.setNet_banking("No");
 		acc.setStatus("Active");
-		long customerID = 2;
 				
-		Mockito.when(accService.createAccount(acc,customerID))
-		.thenReturn(acc);
+		Mockito.when(accService.createAccount(ArgumentMatchers.any(),ArgumentMatchers.any())).thenReturn(acc);
 		String json = mapper.writeValueAsString(acc);
-		String url = "/createAccount/"+customerID;
-		mvc.perform(post(url)
+		List<String> resp = new ArrayList<String>();
+		String msg = "\"Account created succesfully\"";
+		resp.add(msg);
+		if(acc!=null)
+		{MvcResult result = mvc.perform(post("/createAccount/1")
 				.contentType(MediaType.APPLICATION_JSON).characterEncoding("utf-8")
-				.content(json).accept(MediaType.APPLICATION_JSON))
-				.andExpect(jsonPath("$", Matchers.equalTo("Account created succesfully")));
+				.content(json).accept(MediaType.APPLICATION_JSON)).andReturn();
+			Assertions.assertEquals(resp.toString(), result.getResponse().getContentAsString());
+		}
 	}
 }

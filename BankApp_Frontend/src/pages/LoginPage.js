@@ -9,6 +9,7 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { Grid } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
 
 const defaultTheme = createTheme();
 
@@ -16,7 +17,7 @@ export default function LoginPage() {
   const baseURL = "http://localhost:3000/login";
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-
+  const navigate = useNavigate();
   const onUsernameChange = (event) => {
     setUsername(event.target.value);
   };
@@ -27,6 +28,7 @@ export default function LoginPage() {
 
   const onLogin = (event) => {
     event.preventDefault();
+    console.log(username," ",password);
     axios
       .post(baseURL, {
         username: username,
@@ -34,8 +36,8 @@ export default function LoginPage() {
       })
       .then((response) => {
         alert(response.data);
-        console.log(response);
-        //window.location="/dashboard";
+        //console.log(response);
+        navigate("/dashboard");
       })
       .catch((err) => {
         alert("error- " + err)
@@ -71,6 +73,7 @@ export default function LoginPage() {
                     id="username"
                     label="User Name"
                     name="username"
+                    value={username}
                     // autoComplete="name"
                     onChange={onUsernameChange}
                     autoFocus
@@ -85,6 +88,7 @@ export default function LoginPage() {
                     label="Password"
                     name="password"
                     type='password'
+                    value={password}
                     onChange={onPasswordChange}
                     autoFocus
                   />
