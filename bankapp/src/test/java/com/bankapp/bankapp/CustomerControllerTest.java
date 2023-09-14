@@ -62,7 +62,8 @@ public class CustomerControllerTest {
 		cust.setPassword("abc@12345");
 
 		List<String> resp = new ArrayList<String>();
-		resp.add("Customer created succesfully");
+		String msg = "\"Customer created succesfully\"";
+		resp.add(msg);
 		Mockito.when(custService.createNewCustomer(ArgumentMatchers.any()))
 		.thenReturn(cust);
 		String json = mapper.writeValueAsString(cust);
