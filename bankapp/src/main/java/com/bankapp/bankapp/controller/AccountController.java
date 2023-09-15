@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 
@@ -67,6 +68,11 @@ public class AccountController {
 	@PutMapping("fundtransfer")
 	public String fundTransfer(@RequestBody FundTransfer ft){
 		return accountService.fundTransfer(ft);
+	}
+	
+	@GetMapping("/balance/{accId}")
+	public double Balance(@PathVariable("accId") Long AccId) {
+		return accountService.getBalance(AccId);
 	}
 
 }
