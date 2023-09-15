@@ -30,10 +30,13 @@ public class Transaction {
 	
 	private double amount;
 	
+	private String transactionType;
 	private String status;
 	
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date transactionDate;
+
+	public Transaction(){}
 
 	public Transaction(Long transaction_id, Account sender_account, Account receiver_account, double amount,
 			String status, Date transactionDate) {
@@ -76,6 +79,30 @@ public class Transaction {
 
 	public void setAmount(double amount) {
 		this.amount = amount;
+	}
+
+	public Account getSender_account() {
+		return sender_account;
+	}
+
+	public void setSender_account(Account sender_account) {
+		this.sender_account = sender_account;
+	}
+
+	public Account getReceiver_account() {
+		return receiver_account;
+	}
+
+	public void setReceiver_account(Account receiver_account) {
+		this.receiver_account = receiver_account;
+	}
+
+	public String getTransactionType() {
+		return transactionType;
+	}
+
+	public void setTransactionType(String transactionType) {
+		this.transactionType = transactionType;
 	}
 
 	public String getStatus() {
