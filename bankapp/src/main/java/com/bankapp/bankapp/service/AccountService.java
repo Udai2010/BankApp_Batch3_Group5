@@ -73,7 +73,6 @@ public class AccountService {
 
 	@Transactional
 	public String fundTransfer(FundTransfer ft){
-<<<<<<< Updated upstream
 		withdrawAmount(ft.getAmount(), ft.getSourceAccount(), true);
 		depositAmount(ft.getAmount(), ft.getDestAccount(), true);
 		Transaction t = new Transaction();
@@ -84,10 +83,7 @@ public class AccountService {
 		t.setSender_account(accountRepo.getReferenceById(ft.getSourceAccount()));
 		t.setReceiver_account(accountRepo.getReferenceById(ft.getDestAccount()));
 		transactionRepo.save(t);
-=======
-		withdrawAmount(ft.getAmount(), ft.getSourceAccount());
-		depositAmount(ft.getAmount(), ft.getDestAccount());
->>>>>>> Stashed changes
+
 		return "Fund transfer completed";
 	}
 
