@@ -21,6 +21,7 @@ import com.bankapp.bankapp.model.FundTransfer;
 import com.bankapp.bankapp.model.Withdraw;
 import com.bankapp.bankapp.repository.CustomerRepository;
 import com.bankapp.bankapp.service.AccountService;
+import com.bankapp.bankapp.service.CustomerService;
 
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.Validation;
@@ -32,6 +33,9 @@ import jakarta.validation.ValidatorFactory;
 public class AccountController {
     @Autowired
     AccountService accountService;
+    
+    @Autowired
+    CustomerService customerService;
     
 	@PostMapping("/createAccount/{uid}")
 	public List<String> createNewAccount(@RequestBody Account account,@PathVariable("uid") Long userID) {
@@ -54,7 +58,8 @@ public class AccountController {
 		}
 		return resp;
 	}
-
+		
+	
 	@PutMapping("withdraw")
 	public String withdrawAccount(@RequestBody Withdraw withdraw){
 		return accountService.withdrawAmount(withdraw.getAmount(), withdraw.getAccount_id(), false);
