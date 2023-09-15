@@ -56,12 +56,12 @@ public class AccountController {
 
 	@PutMapping("withdraw")
 	public String withdrawAccount(@RequestBody Withdraw withdraw){
-		return accountService.withdrawAmount(withdraw.getAmount(), withdraw.getAccount_id());
+		return accountService.withdrawAmount(withdraw.getAmount(), withdraw.getAccount_id(), false);
 	}
 
 	@PutMapping("deposit")
 	public String depositAccount(@RequestBody Withdraw deposit){
-		return accountService.depositAmount(deposit.getAmount(), deposit.getAccount_id());
+		return accountService.depositAmount(deposit.getAmount(), deposit.getAccount_id(), false);
 	}
 
 	@PutMapping("fundtransfer")
