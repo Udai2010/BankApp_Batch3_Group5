@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -16,6 +17,7 @@ import jakarta.validation.Validation;
 import jakarta.validation.ValidatorFactory;
 import jakarta.validation.ConstraintViolation;
 
+import com.bankapp.bankapp.model.Account;
 import com.bankapp.bankapp.model.Customer;
 import com.bankapp.bankapp.model.Login;
 import com.bankapp.bankapp.service.CustomerService;
@@ -58,5 +60,13 @@ public class CustomerController {
 		return customerService.validateUser(l);
 		
 	}
+	
+	/*@GetMapping("/account/{uid}")
+	public List<Account> getAccount(@PathVariable("uid") Long uid){
+	List<Account> acc = new ArrayList<Account>();
+	acc = customerService.getAccount(uid);
+		return acc
+		
+	}*/
 
 }

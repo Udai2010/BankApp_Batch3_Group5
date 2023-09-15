@@ -1,5 +1,6 @@
 import React from "react";
 
+
 import { createTheme, ThemeProvider, AppBar,Box,Toolbar,Typography,Button } from "@mui/material";
 
 import { Grid, Avatar, CssBaseline, Container, Card, CardContent, CardActions } from '@mui/material';
@@ -10,6 +11,7 @@ import AddBoxIcon from '@mui/icons-material/AddBox';
 import IndeterminateCheckBoxIcon from '@mui/icons-material/IndeterminateCheckBox';
 import LoopIcon from '@mui/icons-material/Loop';
 import CompareArrowsIcon from '@mui/icons-material/CompareArrows';
+import { Link } from "react-router-dom";
 
 const defaultTheme = createTheme();
 
@@ -30,7 +32,7 @@ export default function Dashboard () {
                     </Toolbar>
                     </AppBar>
                 </Box>
-            <Container component="div" maxWidth="100%">
+            <Container component="div" maxWidth="85%">
           <CssBaseline />
           <Box
             sx={{
@@ -50,14 +52,14 @@ export default function Dashboard () {
                 <Grid container spacing={2}>
                     <Grid item xs={4} alignItems="center">
                     <Card sx={{ minWidth: 275 }}>
-                    <CardContent>
+                    <CardContent style={{alignItems:"center"}}>
                     
                         <AccountBoxIcon style={{ fontSize: 60 }}/>
                     
                     </CardContent>
                     <CardActions>
                         <Button fullWidth
-                        variant="contained"
+                        variant="contained" component={Link} to="/account"
                         sx={{ mt: 3, mb: 2 }}>Account</Button>
                     </CardActions>
                 </Card>
@@ -125,7 +127,7 @@ export default function Dashboard () {
                         <CardActions>
                             <Button fullWidth
                             variant="contained"
-                            sx={{ mt: 3, mb: 2 }}>Self Transfer</Button>
+                            sx={{ mt: 3, mb: 2 }}>Transaction History</Button>
                         </CardActions>
                         </Card>
                     </Grid>

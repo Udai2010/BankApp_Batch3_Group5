@@ -7,6 +7,8 @@ import TransactionPage from './pages/TransactionPage';
 import Dashboard from './pages/Dashboard';
 import OpenAccountPage from './pages/OpenAccountPage';
 import RegistrationPage from './pages/RegistrationPage';
+import AccountPage from './pages/AccountPage';
+import UserPage from './pages/UserPage'
 
 function App() {
   return (
@@ -19,6 +21,8 @@ function App() {
             <Route path='/dashboard' element={<Dashboard/>}/>
             <Route path='/openaccount' element={<OpenAccountPage/>}/>
             <Route path='/register' element={<RegistrationPage/>}/>
+            <Route path='/account' element = {<AccountPage/>}/>
+            <Route path='/user' element={<UserPage/>}/>
           </Routes>
         </BrowserRouter>
     </div>

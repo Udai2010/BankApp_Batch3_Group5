@@ -1,5 +1,8 @@
 package com.bankapp.bankapp.service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.Date;
@@ -70,6 +73,7 @@ public class AccountService {
 
 	@Transactional
 	public String fundTransfer(FundTransfer ft){
+<<<<<<< Updated upstream
 		withdrawAmount(ft.getAmount(), ft.getSourceAccount(), true);
 		depositAmount(ft.getAmount(), ft.getDestAccount(), true);
 		Transaction t = new Transaction();
@@ -80,7 +84,13 @@ public class AccountService {
 		t.setSender_account(accountRepo.getReferenceById(ft.getSourceAccount()));
 		t.setReceiver_account(accountRepo.getReferenceById(ft.getDestAccount()));
 		transactionRepo.save(t);
+=======
+		withdrawAmount(ft.getAmount(), ft.getSourceAccount());
+		depositAmount(ft.getAmount(), ft.getDestAccount());
+>>>>>>> Stashed changes
 		return "Fund transfer completed";
 	}
+
+	
 	
 }
