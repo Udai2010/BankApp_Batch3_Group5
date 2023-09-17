@@ -1,6 +1,5 @@
 package com.bankapp.bankapp.service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -87,6 +86,11 @@ public class AccountService {
 		return "Fund transfer completed";
 	}
 
-	
-	
+	public List<Account> getAllAccounts(Long customerId){
+		List<Account> acc = accountRepo.findAllAccounts(customerId);
+		return acc;
+	}
+	public Account getAccountDetails(Long accountId){
+		return accountRepo.getReferenceById(accountId);
+	}
 }

@@ -37,7 +37,9 @@ export default function LoginPage() {
       .then((response) => {
         alert(response.data);
         //console.log(response);
-        navigate("/dashboard");
+        // navigate("/dashboard");
+        window.sessionStorage.setItem("customer_id", username);
+        window.location.assign("/dashboard");
       })
       .catch((err) => {
         alert("error- " + err)

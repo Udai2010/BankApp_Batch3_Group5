@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useState } from 'react'
 import axios from 'axios'
 
@@ -43,6 +43,11 @@ export default function OpenAccountPage() {
 
   const navigate = useNavigate()
 
+  useEffect(() => {
+    setCustomerId(window.sessionStorage.getItem("customer_id"));
+
+    
+}, [customerId])
   // Model Handler
   const [open, setOpen] = useState(true);
   const handleClose = () => {
@@ -131,6 +136,7 @@ export default function OpenAccountPage() {
                           label="Customer ID"
                           name="customerId"
                           autoComplete="customerId"
+                          value={customerId}
                           onChange={onCustomerIdChange}
                           autoFocus
                         />
