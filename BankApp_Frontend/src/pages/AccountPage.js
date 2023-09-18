@@ -13,10 +13,7 @@ export default function AccountPage() {
     async function getAccounts(customer_id, setAccounts) {
         const url = `http://localhost:3000/account/${customer_id}`;
         await axios.get(url).then((response) => {
-            console.log(accounts);
             setAccounts(response.data);
-            console.log(accounts);
-            console.log(response);
         });
 
     }

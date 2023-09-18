@@ -126,7 +126,7 @@ export default function Dashboard () {
 
                         <CardActions>
                             <Button fullWidth
-                            variant="contained"
+                            variant="contained" component={Link} to="/transaction"
                             sx={{ mt: 3, mb: 2 }}>Transaction History</Button>
                         </CardActions>
                         </Card>
