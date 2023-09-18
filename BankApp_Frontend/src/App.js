@@ -8,8 +8,10 @@ import Dashboard from './pages/Dashboard';
 import OpenAccountPage from './pages/OpenAccountPage';
 import RegistrationPage from './pages/RegistrationPage';
 import AccountPage from './pages/AccountPage';
-import UserPage from './pages/UserPage'
-
+import UserPage from './pages/UserPage';
+import WithdrawPage from './pages/WithdrawPage';
+import DepositPage from './pages/DepositPage';
+import FundTransfer from './pages/FundTransfer';
 function App() {
   return (
     <div>
@@ -23,6 +25,9 @@ function App() {
             <Route path='/register' element={<RegistrationPage/>}/>
             <Route path='/account' element = {<AccountPage/>}/>
             <Route path='/user' element={<UserPage/>}/>
+            <Route path='/withdraw' element={<WithdrawPage/>}/>
+            <Route path='/deposit' element={<DepositPage/>}/>
+            <Route path="/fundtransfer" element={<FundTransfer/>}/>
           </Routes>
         </BrowserRouter>
     </div>
