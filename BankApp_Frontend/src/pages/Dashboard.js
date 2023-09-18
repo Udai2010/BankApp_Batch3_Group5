@@ -85,7 +85,7 @@ export default function Dashboard () {
 
                     <CardActions>
                         <Button fullWidth
-                        variant="contained"
+                        variant="contained" component={Link} to="/deposit"
                         sx={{ mt: 3, mb: 2 }}>Deposit</Button>
                     </CardActions>
                     </Card> 
@@ -98,7 +98,7 @@ export default function Dashboard () {
 
                         <CardActions>
                             <Button fullWidth
-                            variant="contained"
+                            variant="contained" component={Link} to="/withdraw"
                             sx={{ mt: 3, mb: 2 }}>Withdraw</Button>
                         </CardActions>
                         </Card>
