@@ -112,7 +112,7 @@ export default function Dashboard () {
 
                         <CardActions>
                             <Button fullWidth
-                            variant="contained"
+                            variant="contained" component={Link} to="/fundtransfer"
                             sx={{ mt: 3, mb: 2 }}>Fund Transfer</Button>
                         </CardActions>
                         </Card>

@@ -72,7 +72,8 @@ public class AccountService {
 
 	@Transactional
 	public String fundTransfer(FundTransfer ft){
-		withdrawAmount(ft.getAmount(), ft.getSourceAccount(), true);
+		String withdraw_resp = withdrawAmount(ft.getAmount(), ft.getSourceAccount(), true);
+		if(withdraw_resp.equals("Insufficient funds")) return "Failed due to insuffcient funds in senders account";
 		depositAmount(ft.getAmount(), ft.getDestAccount(), true);
 		Transaction t = new Transaction();
 		t.setAmount(ft.getAmount());
