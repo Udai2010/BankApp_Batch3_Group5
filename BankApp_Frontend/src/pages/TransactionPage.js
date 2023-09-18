@@ -79,7 +79,7 @@ export default function TransactionPage() {
                     return (<TableRow key={row.transaction_id}>
                         <TableCell>{row.transaction_id}</TableCell>
                         <TableCell>{row.sender_account.account_id}</TableCell>
-                        <TableCell>{row.receiver_account.account_id}</TableCell>
+                        <TableCell>{row.receiver_account?.account_id}</TableCell>
                         <TableCell>{row.amount}</TableCell>
                         <TableCell>{row.transactionType}</TableCell>
                         <TableCell>{row.transactionDate}</TableCell>
