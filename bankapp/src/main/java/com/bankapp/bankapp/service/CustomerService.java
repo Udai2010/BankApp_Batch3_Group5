@@ -41,4 +41,7 @@ public class CustomerService {
 		return result;
 	}
 
+	public Customer getCustomer(Long customer_id){
+		return customerRepo.findById(customer_id).get();
+	}
 }

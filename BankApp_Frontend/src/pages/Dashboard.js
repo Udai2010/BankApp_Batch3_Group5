@@ -72,7 +72,7 @@ export default function Dashboard () {
 
                     <CardActions>
                         <Button fullWidth
-                        variant="contained"
+                        variant="contained" component={Link} to="/user"
                         sx={{ mt: 3, mb: 2 }}>Profile</Button>
                     </CardActions>
                     </Card>
