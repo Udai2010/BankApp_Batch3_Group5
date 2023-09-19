@@ -3,6 +3,7 @@ package com.bankapp.bankapp.controller;
 import javax.validation.Valid;
 import java.util.Set;
 import java.util.List;
+import java.util.Optional;
 import java.util.ArrayList;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -72,6 +73,9 @@ public class CustomerController {
 	public String chagnePassword(@RequestBody Login l){
 		return customerService.changePassword(l);
 	}
+	
+	
+
 	
 	/*@GetMapping("/account/{uid}")
 	public List<Account> getAccount(@PathVariable("uid") Long uid){
