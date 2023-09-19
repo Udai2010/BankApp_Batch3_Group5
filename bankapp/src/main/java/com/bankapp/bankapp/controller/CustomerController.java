@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -20,6 +21,7 @@ import jakarta.validation.ConstraintViolation;
 import com.bankapp.bankapp.model.Account;
 import com.bankapp.bankapp.model.Customer;
 import com.bankapp.bankapp.model.Login;
+import com.bankapp.bankapp.model.Withdraw;
 import com.bankapp.bankapp.service.CustomerService;
 
 @RestController
@@ -64,6 +66,11 @@ public class CustomerController {
 	@GetMapping("/user/{uid}")
 	public Customer getUser(@PathVariable("uid") Long uid){
 		return customerService.getCustomer(uid);
+	}
+	
+	@PutMapping("/changepassword")
+	public String chagnePassword(@RequestBody Login l){
+		return customerService.changePassword(l);
 	}
 	
 	/*@GetMapping("/account/{uid}")
