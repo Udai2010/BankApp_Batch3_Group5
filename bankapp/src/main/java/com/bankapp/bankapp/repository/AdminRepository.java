@@ -8,4 +8,5 @@ import com.bankapp.bankapp.model.Admin;
 @Repository
 public interface AdminRepository extends JpaRepository<Admin,Long> {
 
+
 }

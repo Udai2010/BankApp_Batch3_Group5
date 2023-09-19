@@ -14,6 +14,7 @@ import FundTransfer from './pages/FundTransfer';
 import ChangePassword from './pages/ChangePassword';
 import AdminLoginPage from './pages/AdminLoginPage';
 import AdminDashboard from './pages/AdminDashboard';
+import AdminViewTransactions from './pages/AdminViewTransactions';
 
 function App() {
   return (
@@ -34,6 +35,7 @@ function App() {
             <Route path="/changepassword" element={<ChangePassword/>}/>
             <Route path="/adminlogin" element={<AdminLoginPage/>}/>
             <Route path="/admindashboard" element={<AdminDashboard/>}/>
+            <Route path="/viewalltransaction" element={<AdminViewTransactions/>}/>
           </Routes>
         </BrowserRouter>
     </div>

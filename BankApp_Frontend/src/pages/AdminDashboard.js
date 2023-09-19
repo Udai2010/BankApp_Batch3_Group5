@@ -2,6 +2,7 @@ import React from "react";
 
 
 import { createTheme, ThemeProvider, AppBar,Box,Toolbar,Typography,Button } from "@mui/material";
+import { purple } from "@mui/material/colors";
 
 import { Grid, Avatar, CssBaseline, Container, Card, CardContent, CardActions } from '@mui/material';
 
@@ -13,7 +14,11 @@ import LoopIcon from '@mui/icons-material/Loop';
 import CompareArrowsIcon from '@mui/icons-material/CompareArrows';
 import { Link } from "react-router-dom";
 
-const defaultTheme = createTheme();
+const defaultTheme = createTheme(
+    {palette:{
+        primary: purple
+    }}
+);
 
 export default function AdminDashboard () {
     return(
@@ -99,7 +104,7 @@ export default function AdminDashboard () {
 
                         <CardActions>
                             <Button fullWidth
-                            variant="contained" 
+                            variant="contained" component={Link} to="/viewalltransaction"
                             sx={{ mt: 3, mb: 2 }}>View Transaction</Button>
                         </CardActions>
                         </Card>
