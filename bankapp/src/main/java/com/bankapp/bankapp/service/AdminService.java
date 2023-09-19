@@ -12,8 +12,10 @@ import com.bankapp.bankapp.model.AdminLogin;
 import com.bankapp.bankapp.repository.AccountRepository;
 import com.bankapp.bankapp.repository.AdminRepository;
 import com.bankapp.bankapp.repository.TransactionRepository;
+import com.bankapp.bankapp.repository.CustomerRepository;
 import com.bankapp.bankapp.model.Transaction;
 import com.bankapp.bankapp.model.Admin;
+import com.bankapp.bankapp.model.Customer;
 
 
 @Service
@@ -24,6 +26,8 @@ public class AdminService {
     AccountRepository accountRepo;
     @Autowired 
     TransactionRepository transactionRepo;
+    @Autowired
+    CustomerRepository customerRepo;
 
     public Admin createAdmin(Admin a) {
 		Admin obj = adminRepo.save(a);
@@ -48,6 +52,10 @@ public class AdminService {
 
     public List<Transaction> getTransactions(Long customer_id){
         List<Transaction> t=new ArrayList<Transaction>();
+        Optional<Customer> obj = customerRepo.findById(customer_id);
+        if(!obj.isPresent()){
+            return t;
+        }
         List<Account> accounts = accountRepo.findAllAccounts(customer_id);
 
         for(int i = 0; i < accounts.size(); i++){
