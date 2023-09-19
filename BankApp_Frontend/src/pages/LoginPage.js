@@ -17,7 +17,7 @@ export default function LoginPage() {
   const baseURL = "http://localhost:3000/login";
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const navigate = useNavigate();
+  
   const onUsernameChange = (event) => {
     setUsername(event.target.value);
   };
@@ -37,8 +37,6 @@ export default function LoginPage() {
       })
       .then((response) => {
         alert(response.data);
-        //console.log(response);
-        // navigate("/dashboard");
         window.sessionStorage.setItem("customer_id", username);
         window.location.assign("/dashboard");
       })
@@ -77,7 +75,6 @@ export default function LoginPage() {
                     label="Customer ID"
                     name="username"
                     value={username}
-                    // autoComplete="name"
                     onChange={onUsernameChange}
                     autoFocus
                   />
@@ -106,17 +103,6 @@ export default function LoginPage() {
                 Login
               </Button>
             </Box>
-{/* 
-            <div style={{ display: 'block', textAlign: 'center' }}>
-              <form onSubmit={onLogin} >
-                <h2>LoginPage</h2>
-                <label>Username</label>
-                <input type="text" value={username} required onChange={onUsernameChange} /><br />
-                <label>Password</label>
-                <input type="password" value={password} required onChange={onPasswordChange} /><br />
-                <button type="submit">Login</button>
-              </form>
-            </div> */}
           </Box>
         </Container>
       </ThemeProvider>

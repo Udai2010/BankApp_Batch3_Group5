@@ -12,6 +12,8 @@ import WithdrawPage from './pages/WithdrawPage';
 import DepositPage from './pages/DepositPage';
 import FundTransfer from './pages/FundTransfer';
 import ChangePassword from './pages/ChangePassword';
+import AdminLoginPage from './pages/AdminLoginPage';
+import AdminDashboard from './pages/AdminDashboard';
 
 function App() {
   return (
@@ -30,6 +32,8 @@ function App() {
             <Route path='/deposit' element={<DepositPage/>}/>
             <Route path="/fundtransfer" element={<FundTransfer/>}/>
             <Route path="/changepassword" element={<ChangePassword/>}/>
+            <Route path="/adminlogin" element={<AdminLoginPage/>}/>
+            <Route path="/admindashboard" element={<AdminDashboard/>}/>
           </Routes>
         </BrowserRouter>
     </div>
