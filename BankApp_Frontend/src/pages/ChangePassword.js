@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from "axios";
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
@@ -9,37 +9,40 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { Grid } from '@mui/material';
-import { passwordHashService } from '../services/PasswordHashService';
+import { useNavigate } from 'react-router-dom';
 
 const defaultTheme = createTheme();
 
 export default function LoginPage() {
-  const baseURL = "http://localhost:3000/login";
+  const baseURL = "http://localhost:3000/changepassword";
+  const [customerId, setCustomerId] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
-  const onUsernameChange = (event) => {
-    setUsername(event.target.value);
+
+  function onUsernameChange() {
+    setUsername(window.sessionStorage.getItem("customer_id"));
   };
 
   const onPasswordChange = (event) => {
     setPassword(event.target.value);
   };
 
-  const onLogin = (event) => {
+  useEffect(() => {
+    onUsernameChange();
+  }, []);
+
+  const onChangePassword = (event) => {
+    
     event.preventDefault();
-    const hashedPassword = passwordHashService(password)
-    console.log(username)
+    console.log(username," ",password);
     axios
-      .post(baseURL, {
-        userID: username,
-        password: hashedPassword
+      .put(baseURL, {
+        username: username,
+        password: password
       })
       .then((response) => {
         alert(response.data);
-        //console.log(response);
-        // navigate("/dashboard");
-        window.sessionStorage.setItem("customer_id", username);
         window.location.assign("/dashboard");
       })
       .catch((err) => {
@@ -66,22 +69,9 @@ export default function LoginPage() {
             <Typography component="h1" variant="h5">
               Login
             </Typography>
-            <Box component="form" onSubmit={onLogin} noValidate sx={{ mt: 1 }}>
+            <Box component="form" onSubmit={onChangePassword} noValidate sx={{ mt: 1 }}>
               <Grid containter>
-                <Grid item xm={12}>
-                  <TextField
-                    margin="normal"
-                    required
-                    fullWidth
-                    id="username"
-                    label="Customer ID"
-                    name="username"
-                    value={username}
-                    // autoComplete="name"
-                    onChange={onUsernameChange}
-                    autoFocus
-                  />
-                </Grid>
+
                 <Grid item xm={12}>
                   <TextField
                     margin="normal"
@@ -103,20 +93,9 @@ export default function LoginPage() {
                 variant="contained"
                 sx={{ mt: 3, mb: 2 }}
               >
-                Login
+                Change Password
               </Button>
             </Box>
-{/* 
-            <div style={{ display: 'block', textAlign: 'center' }}>
-              <form onSubmit={onLogin} >
-                <h2>LoginPage</h2>
-                <label>Username</label>
-                <input type="text" value={username} required onChange={onUsernameChange} /><br />
-                <label>Password</label>
-                <input type="password" value={password} required onChange={onPasswordChange} /><br />
-                <button type="submit">Login</button>
-              </form>
-            </div> */}
           </Box>
         </Container>
       </ThemeProvider>
