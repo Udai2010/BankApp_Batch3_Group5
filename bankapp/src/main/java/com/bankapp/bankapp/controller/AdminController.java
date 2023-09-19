@@ -18,11 +18,11 @@ import com.bankapp.bankapp.model.Admin;
 @RestController
 @CrossOrigin("*")
 public class AdminController {
-    
-    @Autowired
-    AdminService adminService;
 
-    @PostMapping("/createAdmin")
+	@Autowired
+	AdminService adminService;
+	
+	@PostMapping("/createAdmin")
 	public String createAdmin(@RequestBody Admin a) {
 		
 		String resp;
