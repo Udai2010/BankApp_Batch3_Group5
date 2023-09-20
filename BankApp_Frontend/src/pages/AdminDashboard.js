@@ -91,7 +91,7 @@ export default function AdminDashboard () {
 
                     <CardActions>
                         <Button fullWidth
-                        variant="contained" 
+                        variant="contained" component={Link} to="/adminsearch"
                         sx={{ mt: 3, mb: 2 }}>User Search</Button>
                     </CardActions>
                     </Card> 

@@ -15,6 +15,8 @@ import ChangePassword from './pages/ChangePassword';
 import AdminLoginPage from './pages/AdminLoginPage';
 import AdminDashboard from './pages/AdminDashboard';
 import AdminViewTransactions from './pages/AdminViewTransactions';
+import AdminSearchuser from './pages/AdminSearchuser';
+
 
 function App() {
   return (
@@ -36,6 +38,9 @@ function App() {
             <Route path="/adminlogin" element={<AdminLoginPage/>}/>
             <Route path="/admindashboard" element={<AdminDashboard/>}/>
             <Route path="/viewalltransaction" element={<AdminViewTransactions/>}/>
+            <Route path="/adminsearch" element={<AdminSearchuser/>}/>
+
+
           </Routes>
         </BrowserRouter>
     </div>
