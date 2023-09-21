@@ -11,7 +11,7 @@ export default function AdminSearchuser() {
 
 
 async function getCustomer() {
-    const url = `http://localhost:8080/searchUser/${selectedCustomer}`;
+    const url = `http://localhost:3000/searchUser/${selectedCustomer}`;
     await axios.get(url).then((response) => {
       console.log(response);
         setCustomer(response.data);
