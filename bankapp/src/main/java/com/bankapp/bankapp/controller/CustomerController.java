@@ -74,6 +74,11 @@ public class CustomerController {
 		return customerService.changePassword(l);
 	}
 	
+	@PutMapping("/forgotpassword")
+	public String forgotPassword(@RequestBody Login l) {
+		return customerService.forgotPassword(l);
+	}
+	
 	
 
 	

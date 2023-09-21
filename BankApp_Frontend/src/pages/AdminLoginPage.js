@@ -37,6 +37,7 @@ export default function AdminLoginPage() {
         .then((response) => {
           alert(response.data);
           window.sessionStorage.setItem("admin_id", admin_id);
+          window.sessionStorage.removeItem("customer_id");
           window.location.assign("/admindashboard");
         })
         .catch((err) => {
