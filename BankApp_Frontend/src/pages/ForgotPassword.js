@@ -1,5 +1,4 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
 import axios from "axios";
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
@@ -10,38 +9,42 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { Grid } from '@mui/material';
-import { passwordHashService } from '../services/PasswordHashService';
+import { useNavigate } from 'react-router-dom';
 
 const defaultTheme = createTheme();
 
-export default function LoginPage() {
-  const baseURL = "http://localhost:3000/login";
-  const [username, setUsername] = useState("");
+export default function ForgotPassowrd() {
+  const baseURL = "http://localhost:3000/forgotpassword";
+  const [customerId, setCustomerId] = useState("");
+  const [otp, setOtp] = useState("");
   const [password, setPassword] = useState("");
-  // const navigate = useNavigate();
-  const onUsernameChange = (event) => {
-    setUsername(event.target.value);
-  };
+  const navigate = useNavigate();
+
+  const onCustomerIdChange=(event)=> {
+        setCustomerId(event.target.value);
+    };
 
   const onPasswordChange = (event) => {
     setPassword(event.target.value);
   };
 
-  const onLogin = (event) => {
+  const onOtpChange = (event) => {
+        setOtp(event.target.value);
+  };
+
+  
+  const onForgotPassword = (event) => {
+    
     event.preventDefault();
-    const hashedPassword = passwordHashService(password)
-    console.log(username)
     axios
-      .post(baseURL, {
-        userID: username,
-        password: hashedPassword
+      .put(baseURL, {
+        username: customerId,
+        password: password,
+        otp:otp
       })
       .then((response) => {
         alert(response.data);
-        //console.log(response);
-        // navigate("/dashboard");
-        window.sessionStorage.setItem("customer_id", username);
-        window.location.assign("/dashboard");
+        window.location.assign("/login");
       })
       .catch((err) => {
         alert("error- " + err)
@@ -65,35 +68,51 @@ export default function LoginPage() {
             <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
             </Avatar>
             <Typography component="h1" variant="h5">
-              Login
+              Forgot Password
             </Typography>
-            <Box component="form" onSubmit={onLogin} noValidate sx={{ mt: 1 }}>
+            <Box component="form" onSubmit={onForgotPassword} noValidate sx={{ mt: 1 }}>
               <Grid containter>
-                <Grid item xm={12}>
+              <Grid item xm={12}>
                   <TextField
                     margin="normal"
                     required
                     fullWidth
-                    id="username"
+                    id="customerId"
                     label="Customer ID"
-                    name="username"
-                    value={username}
-                    // autoComplete="name"
-                    onChange={onUsernameChange}
+                    name="customerId"
+                    type='text'
+                    value={customerId}
+                    onChange={onCustomerIdChange}
                     autoFocus
                   />
                 </Grid>
+
                 <Grid item xm={12}>
                   <TextField
                     margin="normal"
                     required
                     fullWidth
                     id="password"
-                    label="Password"
+                    label="New Password"
                     name="password"
                     type='password'
                     value={password}
                     onChange={onPasswordChange}
+                    autoFocus
+                  />
+                </Grid>
+
+                <Grid item xm={12}>
+                  <TextField
+                    margin="normal"
+                    required
+                    fullWidth
+                    id="otp"
+                    label="OTP"
+                    name="otp"
+                    type='text'
+                    value={otp}
+                    onChange={onOtpChange}
                     autoFocus
                   />
                 </Grid>
@@ -104,30 +123,9 @@ export default function LoginPage() {
                 variant="contained"
                 sx={{ mt: 3, mb: 2 }}
               >
-                Login
+                Change Password
               </Button>
-
-              <Button
-                fullWidth
-                variant="contained"
-                component={Link} to="/forgotpassword"
-                sx={{ mt: 3, mb: 2 }}
-              >
-                Forgot Password
-              </Button>
-
             </Box>
-{/* 
-            <div style={{ display: 'block', textAlign: 'center' }}>
-              <form onSubmit={onLogin} >
-                <h2>LoginPage</h2>
-                <label>Username</label>
-                <input type="text" value={username} required onChange={onUsernameChange} /><br />
-                <label>Password</label>
-                <input type="password" value={password} required onChange={onPasswordChange} /><br />
-                <button type="submit">Login</button>
-              </form>
-            </div> */}
           </Box>
         </Container>
       </ThemeProvider>

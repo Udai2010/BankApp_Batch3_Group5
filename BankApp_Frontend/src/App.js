@@ -16,7 +16,7 @@ import AdminLoginPage from './pages/AdminLoginPage';
 import AdminDashboard from './pages/AdminDashboard';
 import AdminViewTransactions from './pages/AdminViewTransactions';
 import AdminSearchuser from './pages/AdminSearchuser';
-
+import ForgotPassowrd from './pages/ForgotPassword';
 
 function App() {
   return (
@@ -39,7 +39,7 @@ function App() {
             <Route path="/admindashboard" element={<AdminDashboard/>}/>
             <Route path="/viewalltransaction" element={<AdminViewTransactions/>}/>
             <Route path="/adminsearch" element={<AdminSearchuser/>}/>
-
+            <Route path="/forgotpassword" element={<ForgotPassowrd/>}/>
 
           </Routes>
         </BrowserRouter>
