@@ -10,6 +10,7 @@ import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { Grid } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
+import { passwordHashService } from '../services/PasswordHashService';
 
 const defaultTheme = createTheme();
 
@@ -25,7 +26,7 @@ export default function LoginPage() {
   };
 
   const onPasswordChange = (event) => {
-    setPassword(event.target.value);
+    setPassword(passwordHashService(event.target.value));
   };
 
   useEffect(() => {
