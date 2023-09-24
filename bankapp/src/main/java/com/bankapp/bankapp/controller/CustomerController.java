@@ -21,6 +21,7 @@ import jakarta.validation.Validation;
 import jakarta.validation.ValidatorFactory;
 import jakarta.validation.ConstraintViolation;
 
+import com.bankapp.bankapp.exception.InvalidCredentialException;
 import com.bankapp.bankapp.model.Account;
 import com.bankapp.bankapp.model.Customer;
 import com.bankapp.bankapp.model.Login;
@@ -41,9 +42,10 @@ public class CustomerController {
 	
 	@PostMapping("/createCustomer")
 
-	public Customer createNewCustomer(@RequestBody Customer c) {
-		Customer obj = customerService.createNewCustomer(c);
-		return obj;
+	// public Customer createNewCustomer(@RequestBody Customer c) {
+	// 	Customer obj = customerService.createNewCustomer(c);
+	// 	return obj;
+	// }
 
 	public List<String> createNewCustomer(@RequestBody Customer c) {
 		ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
@@ -70,9 +72,11 @@ public class CustomerController {
 	}
 	
 	@PostMapping("/login")
-	public ResponseEntity<String> validateUser(@Valid @RequestBody Login l) {
+	public ResponseEntity<String> validateUser(@Valid @RequestBody Login l) throws InvalidCredentialException {
 		String res=customerService.validateUser(l);
-		if(res.equals("Invalid User")) return new ResponseEntity<>(res,HttpStatus.BAD_REQUEST);
+		if(res.equals("Invalid User")){
+			throw new InvalidCredentialException("No user could be found");
+		}
 		return new ResponseEntity<>(res,HttpStatus.OK);
 		
 	}
