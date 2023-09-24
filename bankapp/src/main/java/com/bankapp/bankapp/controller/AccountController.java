@@ -2,19 +2,27 @@ package com.bankapp.bankapp.controller;
 
 
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.context.request.WebRequest;
 
-
+import com.bankapp.bankapp.exception.InsufficientBalanceException;
 import com.bankapp.bankapp.model.Account;
 import com.bankapp.bankapp.model.FundTransfer;
 import com.bankapp.bankapp.model.Withdraw;
@@ -60,7 +68,11 @@ public class AccountController {
 	
 	@PutMapping("withdraw")
 	public String withdrawAccount(@RequestBody Withdraw withdraw){
-		return accountService.withdrawAmount(withdraw.getAmount(), withdraw.getAccount_id(), false);
+		String resp = accountService.withdrawAmount(withdraw.getAmount(), withdraw.getAccount_id(), false);
+		if(resp != "Withdraw successful") {
+			throw new InsufficientBalanceException("Not enough balance");
+		}
+		return resp;
 	}
 
 	@PutMapping("deposit")
