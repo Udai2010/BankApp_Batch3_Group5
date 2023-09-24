@@ -22,7 +22,7 @@ public class CustomerService {
 	}
 
 	public String validateUser(Login l) {
-		String result="test";
+		String result;
 		
 		Optional<Customer> obj = customerRepo.findById(l.getUserID());
 		if(obj==null)
