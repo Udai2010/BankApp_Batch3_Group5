@@ -41,12 +41,6 @@ public class CustomerController {
 	}
 	
 	@PostMapping("/createCustomer")
-
-	// public Customer createNewCustomer(@RequestBody Customer c) {
-	// 	Customer obj = customerService.createNewCustomer(c);
-	// 	return obj;
-	// }
-
 	public List<String> createNewCustomer(@RequestBody Customer c) {
 		ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
 		jakarta.validation.Validator validator = factory.getValidator();
