@@ -1,6 +1,6 @@
 
 import React, { useState } from 'react';
-import { Link,useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 import axios from "axios";
 import Avatar from '@mui/material/Avatar';
@@ -17,7 +17,6 @@ import Backdrop from '@mui/material/Backdrop';
 import Modal from '@mui/material/Modal';
 import Fade from '@mui/material/Fade';
 import { passwordHashService } from '../services/PasswordHashService';
-import { useNavigate } from 'react-router-dom';
 
 const defaultTheme = createTheme();
 
