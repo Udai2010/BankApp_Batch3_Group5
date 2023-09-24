@@ -1,5 +1,4 @@
-import React, { useEffect } from 'react'
-import { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 
 import Avatar from '@mui/material/Avatar';
@@ -40,19 +39,19 @@ export default function OpenAccountPage() {
   const [net_banking, setNet_banking]=useState("");
   
   const [success, setSuccess] = useState(false)
-
+  const [message, setMessage] = useState("");
   const navigate = useNavigate()
 
   useEffect(() => {
     setCustomerId(window.sessionStorage.getItem("customer_id"));
-
-    
-}, [customerId])
+  }, [customerId])
+  
   // Model Handler
   const [open, setOpen] = useState(true);
   const handleClose = () => {
-    setOpen(false)
-    navigate('/')
+    setOpen(false);
+    setSuccess(false);
+    navigate('/account');
   };
 
 
@@ -84,20 +83,21 @@ export default function OpenAccountPage() {
     event.preventDefault();
     axios
       .post(baseURL+customerId,{
-          occupation_type:occupationType,
-          income_source:sourceOfIncome,
-          annual_income:grossSalary,
-          debit_card:debit_card,
+          debit_card: debit_card,
           branch: "BLR",
           account_type: "Savings",
           net_banking:net_banking,
           status:"active",
           ifsc:"BLR1234A",
-          balance:5000
+          balance:5000,
+          occupation_type: occupationType,
+          income_source: sourceOfIncome,
+          annual_income: grossSalary
 
       })
       .then((response)=>{
-        alert(response.data);
+        setMessage(response.data);
+        setSuccess(true);
         console.log(response);
       })
       .catch((err)=>{
@@ -225,13 +225,14 @@ export default function OpenAccountPage() {
               <Fade in={open}>
                 <Box sx={style}>
                   <Typography id="transition-modal-description" sx={{ mt: 2 }}>
-                    Account has been successfully created.
+                    Account Created Successfully. {message}
                   </Typography>
                 </Box>
               </Fade>
             </Modal>
           </div>
-        </>}
+        </>
+        }
     </>
   )
 }
