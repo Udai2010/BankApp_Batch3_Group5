@@ -17,6 +17,7 @@ import Backdrop from '@mui/material/Backdrop';
 import Modal from '@mui/material/Modal';
 import Fade from '@mui/material/Fade';
 import { passwordHashService } from '../services/PasswordHashService';
+import { useNavigate } from 'react-router-dom';
 
 const defaultTheme = createTheme();
 
@@ -86,7 +87,7 @@ export default function LoginPage() {
         window.sessionStorage.setItem("customer_id", username);
       })
       .catch((err) => {
-        setMessage(err.response.data);
+        setMessage(err.response.data.errors);
         setSuccess(true);
       });
 

@@ -64,7 +64,7 @@ export default function WithdrawPage() {
             //navigate("/dashboard");
           })
           .catch((err) => {
-            alert("error- " + err)
+            alert(err.response.data.errors)
           }); 
       };
 
