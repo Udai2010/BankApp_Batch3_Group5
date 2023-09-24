@@ -7,6 +7,8 @@ import java.util.Optional;
 import java.util.ArrayList;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -38,6 +40,11 @@ public class CustomerController {
 	}
 	
 	@PostMapping("/createCustomer")
+
+	public Customer createNewCustomer(@RequestBody Customer c) {
+		Customer obj = customerService.createNewCustomer(c);
+		return obj;
+
 	public List<String> createNewCustomer(@RequestBody Customer c) {
 		ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
 		jakarta.validation.Validator validator = factory.getValidator();
@@ -45,8 +52,11 @@ public class CustomerController {
 
 		List<String> resp = new ArrayList<String>();
 		if(violations.size() == 0){
-			customerService.createNewCustomer(c);
-			resp.add("Customer created succesfully");
+
+			Customer obj = customerService.createNewCustomer(c);
+			String result="Your new Customer ID is "+obj.getCustomer_Id().toString();
+			resp.add(result);
+
 			return resp;
 		}
 
@@ -55,12 +65,15 @@ public class CustomerController {
 		}
 
 		return resp;
+
 		
 	}
 	
 	@PostMapping("/login")
-	public String validateUser(@Valid @RequestBody Login l) {
-		return customerService.validateUser(l);
+	public ResponseEntity<String> validateUser(@Valid @RequestBody Login l) {
+		String res=customerService.validateUser(l);
+		if(res.equals("Invalid User")) return new ResponseEntity<>(res,HttpStatus.BAD_REQUEST);
+		return new ResponseEntity<>(res,HttpStatus.OK);
 		
 	}
 
