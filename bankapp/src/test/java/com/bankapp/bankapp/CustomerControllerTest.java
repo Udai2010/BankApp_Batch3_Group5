@@ -79,8 +79,8 @@ public class CustomerControllerTest {
 		user.setUserID((long)2);
 		user.setPassword("alan@123");
 		
-		Mockito.when(custService.validateUser(ArgumentMatchers.any()))
-		.thenReturn("Valid User");
+//		Mockito.when(custService.validateUser(ArgumentMatchers.any()))
+//		.thenReturn("Valid User");
 		
 		String json = mapper.writeValueAsString(user);
 		MvcResult result = mvc.perform(post("/login")
