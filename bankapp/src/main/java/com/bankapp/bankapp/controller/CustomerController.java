@@ -57,11 +57,6 @@ public class CustomerController {
 		
 	}
 	
-	@PostMapping("/login")
-	public String validateUser(@Valid @RequestBody Login l) {
-		return customerService.validateUser(l);
-		
-	}
 
 	@GetMapping("/user/{uid}")
 	public Customer getUser(@PathVariable("uid") Long uid){
