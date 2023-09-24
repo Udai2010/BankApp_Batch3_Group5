@@ -1,26 +1,17 @@
 import React, { useEffect, useState } from 'react';
-import { FormControl, InputLabel, MenuItem, Select, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
+import { FormControl, Button, MenuItem, Select, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField } from '@mui/material';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import axios from 'axios';
 
 const defaultTheme = createTheme();
-export default function TransactionPage() {
+export default function AdminViewTransactions() {
   const [customerId, setCustomerId] = useState("");
-  const [accounts, setAccounts] = useState([]);
   const [transactions, setTransactions] = useState([]);
-  const [selectedAccount, setSelectedAccont] = useState(-1);
+  const [selectedCustomer, setSelectedCustomer] = useState(-1);
 
-  async function getAccounts(customer_id, setAccounts) {
-      const url = `http://localhost:3000/account/${customer_id}`;
-      await axios.get(url).then((response) => {
-          setAccounts(response.data);
-          console.log(accounts);
-      });
-      
-  }
 
-  async function getTransactions(account_id, setTransactions) {
-    const url = `http://localhost:3000/transactions/${account_id}`;
+  async function getTransactions(customer_id, setTransactions) {
+    const url = `http://localhost:3000/admingettransactions/${customer_id}`;
     await axios.get(url).then((response) => {
       console.log(response);
         setTransactions(response.data);
@@ -28,37 +19,37 @@ export default function TransactionPage() {
   }
 
   const handleChange = (event) => {
-    setSelectedAccont(event.target.value);
+    console.log(event.target.value);
+    setSelectedCustomer(event.target.value);
+  }
+  const handleKeyPress = (event) => {
+    if(event.key == 'Enter'){
+        handleSearch();
+    }
   }
 
-  useEffect(() => {
-    getAccounts(window.sessionStorage.getItem("customer_id"), setAccounts);
-  }, [customerId]);
-  useEffect(() => {
-    if(accounts.length > 0) setSelectedAccont(accounts[0].account_id);
-  }, [accounts]);
-  useEffect(() => {
-    if(selectedAccount !== -1) getTransactions(selectedAccount, setTransactions);
-  }, [selectedAccount]); 
+//   useEffect(() => {
+//     if(selectedCustomer !== -1) getTransactions(selectedCustomer, setTransactions);
+//   }, [selectedCustomer]); 
+  const handleSearch = () => {
+    getTransactions(selectedCustomer, setTransactions);
+  }
   
   return (
     <div>TransactionPage
 
-      {accounts.length > 0 ?<div>
+      <div>
         <FormControl>
-          <InputLabel id="selectAccount">Account number</InputLabel>
-          <Select 
-            id="selectAccount"
-            value={selectedAccount}
-            label="Account number"
-            onChange={handleChange}>
-              {accounts.map((acc) => {
-                return <MenuItem value={acc.account_id}>{acc.account_id}</MenuItem>
-              })}
-            </Select>
+          <TextField 
+            id="selectedCustomer"
+            // value={selectedCustomer}
+            label="Customer id"
+            onChange={handleChange}
+            onKeyPress={handleKeyPress}
+            />
         </FormControl>
-        </div>: <p>No accounts</p>
-      }
+        </div>
+
 
       
       {transactions.length>0?<TableContainer>
@@ -88,7 +79,7 @@ export default function TransactionPage() {
                 })}
             </TableBody>
         </Table>
-    </TableContainer>: <p>There are no transactions for this account.</p>}
+    </TableContainer>: <p>There are no transactions for this Customer.</p>}
     
   </div>
   )

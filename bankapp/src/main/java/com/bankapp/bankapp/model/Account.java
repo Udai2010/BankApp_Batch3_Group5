@@ -1,17 +1,18 @@
 package com.bankapp.bankapp.model;
 
-import java.util.ArrayList;
-import java.util.List;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+
+import jakarta.validation.constraints.NotBlank;
+
+import org.hibernate.validator.constraints.Length;
 
 @Entity
 @Table(name="account")
@@ -21,31 +22,51 @@ public class Account {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long account_id;
 	private double balance;
+	@NotBlank(message="Account type can not be blank.")
 	private String account_type;
+	@Length(min=5, max=10, message="IFSC must be between 5 to 10 characters.")
 	private String IFSC;
+	@NotBlank(message="Branch can not be blank.")
 	private String branch;
+
+	private String occupation_type;
+	private String income_source;
+	private double annual_income;
+	private String debit_card;
+	private String net_banking;
+	private String status;
 	
 	@ManyToOne
 	@JoinColumn(name="customer_id")
+	@JsonBackReference
 	private Customer customer;
 
-	@OneToMany(mappedBy="sender_account",cascade=CascadeType.ALL)
+	/*@OneToMany(mappedBy="sender_account",cascade=CascadeType.ALL)
 	private List<Transaction> sent_transactions = new ArrayList<>();
 	
 	@OneToMany(mappedBy="receiver_account",cascade=CascadeType.ALL)
-	private List<Transaction> received_transactions = new ArrayList<>();
+	private List<Transaction> received_transactions = new ArrayList<>();*/
+
 
 	public Account(Long account_id, double balance, String account_type, String iFSC, String branch, Customer customer,
-			List<Transaction> sent_transactions, List<Transaction> received_transactions) {
+			String occupation_type, String income_source, double annual_income, String debit_card, String net_banking, String status) {
 		super();
 		this.account_id = account_id;
 		this.balance = balance;
 		this.account_type = account_type;
-		IFSC = iFSC;
+		this.IFSC = iFSC;
 		this.branch = branch;
 		this.customer = customer;
-		this.sent_transactions = sent_transactions;
-		this.received_transactions = received_transactions;
+
+		this.occupation_type = occupation_type;
+		this.income_source = income_source;
+		this.annual_income = annual_income;
+		this.debit_card = debit_card;
+		this.net_banking = net_banking;
+		this.status = status;
+	}
+
+	public Account() {
 	}
 
 	public Long getAccount_id() {
@@ -96,20 +117,29 @@ public class Account {
 		this.customer = customer;
 	}
 
-	public List<Transaction> getSent_transactions() {
-		return sent_transactions;
+	
+	public String getDebit_card() {
+		return debit_card;
 	}
 
-	public void setSent_transactions(List<Transaction> sent_transactions) {
-		this.sent_transactions = sent_transactions;
+	public void setDebit_card(String debit_card) {
+		this.debit_card = debit_card;
 	}
 
-	public List<Transaction> getReceived_transactions() {
-		return received_transactions;
+	public String getNet_banking() {
+		return net_banking;
 	}
 
-	public void setReceived_transactions(List<Transaction> received_transactions) {
-		this.received_transactions = received_transactions;
+	public void setNet_banking(String net_banking) {
+		this.net_banking = net_banking;
+	}
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
 	}
 
 		

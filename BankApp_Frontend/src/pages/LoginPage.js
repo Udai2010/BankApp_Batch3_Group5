@@ -1,10 +1,7 @@
-<<<<<<< Updated upstream
-import React from 'react'
-import { useState } from 'react'
-import axios from 'axios'
-=======
+
 import React, { useState } from 'react';
-import { Link,useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+
 import axios from "axios";
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
@@ -15,13 +12,14 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { Grid } from '@mui/material';
+
 import Backdrop from '@mui/material/Backdrop';
 import Modal from '@mui/material/Modal';
 import Fade from '@mui/material/Fade';
 import { passwordHashService } from '../services/PasswordHashService';
 
 const defaultTheme = createTheme();
->>>>>>> Stashed changes
+
 
 const style = {
   position: 'absolute',
@@ -38,10 +36,7 @@ const style = {
 
 export default function LoginPage() {
   const baseURL = "http://localhost:3000/login";
-<<<<<<< Updated upstream
-  const [username,setUsername]=useState("");
-  const [password,setPassword]=useState("");
-=======
+
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState("");
@@ -63,7 +58,6 @@ export default function LoginPage() {
     setView(false);
     setMessage("");
   };
->>>>>>> Stashed changes
 
   const onUsernameChange = (event) => {
     setUsername(event.target.value);
@@ -75,21 +69,14 @@ export default function LoginPage() {
 
   const onLogin = (event) => {
     event.preventDefault();
+    const hashedPassword = passwordHashService(password)
+    console.log(username)
     axios
-      .post(baseURL,{
-          username:username,
-          password:password
+      .post(baseURL, {
+        userID: username,
+        password: hashedPassword
       })
-<<<<<<< Updated upstream
-      .then((response)=>{
-        alert(response.data);
-        console.log(response);
-        //window.location="/dashboard";
-      })
-      .catch((err)=>{
-        alert("error- "+err)
-      });  
-=======
+
       .then((response) => {
         setMessage(response.data);
         setView(true);
@@ -102,22 +89,12 @@ export default function LoginPage() {
         setMessage(err.response.data);
         setSuccess(true);
       });
->>>>>>> Stashed changes
+
   };
 
+
   return (
-<<<<<<< Updated upstream
-    <div>
-      <form onSubmit={onLogin} >
-      <h2>LoginPage</h2>
-      <label>Username</label>
-      <input type="text" value={username} required onChange={onUsernameChange}/><br/>
-      <label>Password</label>
-      <input type="password" value={password} required onChange={onPasswordChange}/><br/>
-      <button type="submit">Login</button>
-      </form>
-    </div>
-=======
+
     <>
     { !success ?
       <>
@@ -243,6 +220,6 @@ export default function LoginPage() {
       </>
     } 
     </>
->>>>>>> Stashed changes
+
   )
 }
