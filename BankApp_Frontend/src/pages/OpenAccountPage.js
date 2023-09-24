@@ -13,6 +13,8 @@ import { Checkbox, FormControlLabel, Grid } from '@mui/material';
 import Backdrop from '@mui/material/Backdrop';
 import Modal from '@mui/material/Modal';
 import Fade from '@mui/material/Fade';
+import {Select} from '@mui/material';
+import {MenuItem} from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 
 const style = {
@@ -37,7 +39,8 @@ export default function OpenAccountPage() {
   const [grossSalary, setGrossSalary]=useState("");
   const [debit_card, setDebitCard]=useState("");
   const [net_banking, setNet_banking]=useState("");
-  
+  const [account_type, setAccountType]=useState("");
+  const [branch, setBranch] = useState("");
   const [success, setSuccess] = useState(false)
   const [message, setMessage] = useState("");
   const navigate = useNavigate()
@@ -79,13 +82,22 @@ export default function OpenAccountPage() {
     setNet_banking(event.target.value);
   }
 
+  const onBranchChange = (event) => {
+    setBranch(event.target.value);
+  }
+
+  const onAccountTypeChange = (event) => {
+    setAccountType(event.target.value);
+    console.log(account_type);
+  }
+
   const onSubmitForm = (event) => {
     event.preventDefault();
     axios
       .post(baseURL+customerId,{
           debit_card: debit_card,
-          branch: "BLR",
-          account_type: "Savings",
+          branch: branch,
+          account_type: account_type,
           net_banking:net_banking,
           status:"active",
           ifsc:"BLR1234A",
@@ -180,6 +192,38 @@ export default function OpenAccountPage() {
                           autoFocus
                         />
                     </Grid>
+
+                    <Grid item xs={6} >
+                      <TextField
+                          margin="normal"
+                          required
+                          fullWidth
+                          id="branch"
+                          label="Branch"
+                          name="branch"
+                          autoComplete="branch"
+                          onChange={onBranchChange}
+                          autoFocus
+                        />
+                    </Grid>
+
+                    <Grid item xs={6} >
+                      <Select
+                        margin="normal"
+                        id="accountType"
+                        value={account_type}
+                        label="Account Type"
+                        name="accountType"
+                        onChange={onAccountTypeChange}
+                        required
+                        fullWidth
+                      >
+                        <MenuItem value={"Savings"}>Savings</MenuItem>
+                        <MenuItem value={"Fixed Deposit"}>Fixed Deposit</MenuItem>
+                        <MenuItem value={"Salary"}>Salary</MenuItem>
+                      </Select>
+                    </Grid>
+
                     <Grid item xs={6} >
                         <FormControlLabel
                           label="Do you need a debit card?"
