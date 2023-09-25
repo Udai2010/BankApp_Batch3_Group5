@@ -78,7 +78,7 @@ export default function AdminDashboard () {
 
                     <CardActions>
                         <Button fullWidth
-                        variant="contained" 
+                        variant="contained"  component={Link} to="/enable"
                         sx={{ mt: 3, mb: 2 }}>Enable/Disable</Button>
                     </CardActions>
                     </Card>

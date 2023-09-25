@@ -72,7 +72,7 @@ public class AdminController {
     
     @PostMapping("/enable-disable")
     public String UserAcess(@RequestBody UserAccess User) {
-        accService.Access(User.getAccess(),User.getCustomerId());
+        accService.Access(User.getAccess(),User.getAccount_id());
     	
     	String s = User.getAccess();
     	if(s == "active") {

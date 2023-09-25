@@ -43,6 +43,7 @@ public class AccountService {
 		accountRepo.Access(s, account_id);
 	}
 	
+	@Transactional
 	public String getStatus(Long account_id){
 		String status = accountRepo.getStatus(account_id);
 		return status;
