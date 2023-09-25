@@ -37,6 +37,17 @@ public class AccountService {
 		double balance = accountRepo.getBalance(account_id);
 		return balance;
 	}
+	
+	@Transactional
+	public void Access(String s,Long account_id) {
+		accountRepo.Access(s, account_id);
+	}
+	
+	public String getStatus(Long account_id){
+		String status = accountRepo.getStatus(account_id);
+		return status;
+	}
+	
 	@Transactional
 	public String withdrawAmount(double amount, Long account_id, boolean isFundTransfer) {
 		double balance = getBalance(account_id);
@@ -91,6 +102,7 @@ public class AccountService {
 		List<Account> acc = accountRepo.findAllAccounts(customerId);
 		return acc;
 	}
+	
 	public Account getAccountDetails(Long accountId){
 		return accountRepo.getReferenceById(accountId);
 	}
