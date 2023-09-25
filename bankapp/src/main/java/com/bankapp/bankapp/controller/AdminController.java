@@ -20,6 +20,7 @@ import com.bankapp.bankapp.service.AdminService;
 import com.bankapp.bankapp.service.CustomerService;
 
 import com.bankapp.bankapp.model.Transaction;
+import com.bankapp.bankapp.model.UserAccess;
 import com.bankapp.bankapp.model.Admin;
 
 @RestController
@@ -62,6 +63,26 @@ public class AdminController {
     @GetMapping("/admingettransactions/{uid}")
     public List<Transaction> getTransactions(@PathVariable("uid") Long customer_id){
         return adminService.getTransactions(customer_id);
+    }
+    
+    @GetMapping("/getStatus/{uid}")
+    public String getstatus(@PathVariable("uid") Long customer_id) {
+    	return accService.getStatus(customer_id);
+    }
+    
+    @PostMapping("/enable-disable")
+    public String UserAcess(@RequestBody UserAccess User) {
+        accService.Access(User.getAccess(),User.getCustomerId());
+    	
+    	String s = User.getAccess();
+    	if(s == "active") {
+			return "Account activated successfully";
+		}
+		
+		else {
+			return "Account de-activated successfully";
+		}
+    	
     }
 
 }
