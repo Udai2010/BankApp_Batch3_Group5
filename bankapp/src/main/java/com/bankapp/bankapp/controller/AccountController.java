@@ -5,6 +5,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
+import javax.validation.ConstraintViolation;
+import javax.validation.Validation;
+import javax.validation.ValidatorFactory;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -21,9 +25,6 @@ import com.bankapp.bankapp.model.Withdraw;
 import com.bankapp.bankapp.service.AccountService;
 import com.bankapp.bankapp.service.CustomerService;
 
-import jakarta.validation.ConstraintViolation;
-import jakarta.validation.Validation;
-import jakarta.validation.ValidatorFactory;
 
 
 @RestController
@@ -38,7 +39,7 @@ public class AccountController {
 	@PostMapping("/createAccount/{uid}")
 	public List<String> createNewAccount(@RequestBody Account account,@PathVariable("uid") Long userID) {
 		ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
-		jakarta.validation.Validator validator = factory.getValidator();
+		javax.validation.Validator validator = factory.getValidator();
 		Set<ConstraintViolation<Account>> violations = validator.validate(account);
 
 		List<String> resp = new ArrayList<String>();

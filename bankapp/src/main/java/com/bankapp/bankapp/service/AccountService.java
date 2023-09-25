@@ -2,6 +2,8 @@ package com.bankapp.bankapp.service;
 
 import java.util.List;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.Date;
@@ -14,7 +16,6 @@ import com.bankapp.bankapp.repository.CustomerRepository;
 import com.bankapp.bankapp.repository.TransactionRepository;
 import com.bankapp.bankapp.model.Transaction;
 
-import jakarta.transaction.Transactional;
 
 @Service
 public class AccountService {
