@@ -1,6 +1,9 @@
 package com.bankapp.bankapp.controller;
 
-import javax.validation.Valid;
+import javax.validation.ConstraintViolation;
+import javax.validation.Validation;
+import javax.validation.ValidatorFactory;
+
 import java.util.Set;
 import java.util.List;
 import java.util.Optional;
@@ -17,15 +20,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.PathVariable;
 
-import jakarta.validation.Validation;
-import jakarta.validation.ValidatorFactory;
-import jakarta.validation.ConstraintViolation;
 
 import com.bankapp.bankapp.exception.InvalidCredentialException;
 import com.bankapp.bankapp.model.Account;
 import com.bankapp.bankapp.model.Customer;
 import com.bankapp.bankapp.model.Login;
-import com.bankapp.bankapp.model.Withdraw;
 import com.bankapp.bankapp.service.CustomerService;
 
 @RestController
@@ -43,7 +42,7 @@ public class CustomerController {
 	@PostMapping("/createCustomer")
 	public List<String> createNewCustomer(@RequestBody Customer c) {
 		ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
-		jakarta.validation.Validator validator = factory.getValidator();
+		javax.validation.Validator validator = factory.getValidator();
 		Set<ConstraintViolation<Customer>> violations = validator.validate(c);
 
 		List<String> resp = new ArrayList<String>();
