@@ -1,6 +1,6 @@
 
 import React, { useState } from 'react';
-import { Link,useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 import axios from "axios";
 import Avatar from '@mui/material/Avatar';
@@ -86,7 +86,7 @@ export default function LoginPage() {
         window.sessionStorage.setItem("customer_id", username);
       })
       .catch((err) => {
-        setMessage(err.response.data);
+        setMessage(err.response.data.errors);
         setSuccess(true);
       });
 
