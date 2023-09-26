@@ -1,68 +1,89 @@
-import React, { useEffect, useState } from 'react';
-import { Button} from '@mui/material';
-import { Link } from 'react-router-dom';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { FormControl, InputLabel, MenuItem, Select, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
-import axios from 'axios';
-import NavBar from './NavBar';
+
+import React, { useEffect, useState } from "react";
+import { Button } from "@mui/material";
+import { Link } from "react-router-dom";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
+import {
+  FormControl,
+  InputLabel,
+  MenuItem,
+  Select,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+} from "@mui/material";
+import axios from "axios";
+
 const defaultTheme = createTheme();
 export default function AccountPage() {
+  const token = localStorage.getItem("token");
+  const token = localStorage.getItem("token");
 
-    const [customerId, setCustomerId] = useState("");
-    const [accounts, setAccounts] = useState([]);
+  const [customerId, setCustomerId] = useState("");
+  const [accounts, setAccounts] = useState([]);
 
-    const [selectedAccount, setSelectedAccont] = useState(-1);
-    const [transactions, setTransactions] = useState([]);
-    const [startdate, setstartdate] = useState("")
-     const [enddate, setenddate] = useState("")
+  const [selectedAccount, setSelectedAccont] = useState(-1);
+  const [transactions, setTransactions] = useState([]);
+  const [startdate, setstartdate] = useState("");
+  const [enddate, setenddate] = useState("");
 
-
-    async function getAccounts(customer_id, setAccounts) {
-        const url = `http://localhost:3000/account/${customer_id}`;
-        await axios.get(url).then((response) => {
-            setAccounts(response.data);
-        });
-
-    }
-
-    const sdateChangeHandler = (event) => {
-        setstartdate(event.target.value);
-      };
-    
-      const edateChangeHandler = (event) => {
-        setenddate(event.target.value);
-      };
-      const submitHandler=( event)=>{
-        event.preventDefault();
-        console.log(startdate);
-        console.log(enddate);
-
-        const url = `http://localhost:3000/statement/${selectedAccount}/${startdate}/${enddate}`;
-        axios.get(url).then((response) => {
-        console.log(response);
-        setTransactions(response.data);
+  async function getAccounts(customer_id, setAccounts) {
+    const authToken = `Bearer ${token}`;
+    const axiosInstance = axios.create({
+      baseURL: "http://localhost:3000", // Replace with your API URL
+      headers: {
+        Authorization: authToken,
+        "Content-Type": "application/json", // You can include other headers if needed
+      },
     });
-      }
+
+    const url = `http://localhost:3000/account/${customer_id}`;
+    axiosInstance.get(url).then((response) => {
+      setAccounts(response.data);
+    });
+  }
+
+  const sdateChangeHandler = (event) => {
+    setstartdate(event.target.value);
+  };
+
+  const edateChangeHandler = (event) => {
+    setenddate(event.target.value);
+  };
+  const submitHandler = (event) => {
+    event.preventDefault();
+    console.log(startdate);
+    console.log(enddate);
+
+    const url = `http://localhost:3000/statement/${selectedAccount}/${startdate}/${enddate}`;
+    axios.get(url).then((response) => {
+      console.log(response);
+      setTransactions(response.data);
+    });
+  };
+  };
 
     const handleChange = (event) => {
         setSelectedAccont(event.target.value);
         //console.log(selectedAccount);
       }
 
-    useEffect(() => {
-        getAccounts(window.sessionStorage.getItem("customer_id"), setAccounts);
-        console.log(accounts);
-    }, [])
-    useEffect(() => {
-        if(accounts.length > 0) setSelectedAccont(accounts[0].account_id);
-      }, [accounts]);
+  useEffect(() => {
+    getAccounts(window.sessionStorage.getItem("customer_id"), setAccounts);
+    console.log(accounts);
+  }, []);
+  useEffect(() => {
+    if (accounts.length > 0) setSelectedAccont(accounts[0].account_id);
+  }, [accounts]);
+
 
     return(
         <>
                 <NavBar/>
                 <h2>Account dashboard</h2> 
-                
-
                 {accounts.length>0?<TableContainer>
                     <Table>
                         <TableHead>
@@ -155,3 +176,4 @@ export default function AccountPage() {
                 </>
     )
 }
+

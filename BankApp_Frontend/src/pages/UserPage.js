@@ -1,26 +1,38 @@
+
 import React, { useEffect, useState } from 'react';
 import { Paper, Typography } from '@mui/material';
 import { Link } from 'react-router-dom';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import axios from 'axios';
 import NavBar from './NavBar';
+
 const defaultTheme = createTheme();
-export default function UserPage(){
-    const [customer_id, setCustomerId] = useState("")
-    const [customer, setCustomer] = useState([])
+export default function UserPage() {
+  const token = localStorage.getItem("token");
 
-    async function getCustomer(customer_id, setCustomer) {
-        const url = `http://localhost:3000/user/${customer_id}`;
-        await axios.get(url).then((response) => {
-            setCustomer(response.data);
-        });
+  const authToken = `Bearer ${token}`;
+  const axiosInstance = axios.create({
+    baseURL: "http://localhost:3000", // Replace with your API URL
+    headers: {
+      Authorization: authToken,
+      "Content-Type": "application/json", // You can include other headers if needed
+    },
+  });
+  const [customer_id, setCustomerId] = useState("");
+  const [customer, setCustomer] = useState([]);
 
-    }
+  async function getCustomer(customer_id, setCustomer) {
+    const url = `http://localhost:3000/user/${customer_id}`;
+    await axiosInstance.get(url).then((response) => {
+      setCustomer(response.data);
+    });
+  }
 
-    useEffect(() => {
-        getCustomer(window.sessionStorage.getItem("customer_id"), setCustomer);
-        console.log(customer);
-    })
+  useEffect(() => {
+    getCustomer(window.sessionStorage.getItem("customer_id"), setCustomer);
+    console.log(customer);
+  });
+
 
     return(<>
         
@@ -40,4 +52,5 @@ export default function UserPage(){
         </ThemeProvider>
     
     </>)
+
 }
