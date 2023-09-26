@@ -34,7 +34,7 @@ const defaultTheme = createTheme();
 
 export default function RegistrationPage() {
 
-  const baseUrl = "http://localhost:3000/createCustomer"
+  const baseUrl = "http://localhost:3000/auth/createCustomer"
 
   const [name, setname] = useState("")
   const [email, setemail] = useState("")

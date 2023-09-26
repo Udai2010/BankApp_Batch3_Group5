@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 
@@ -35,6 +34,11 @@ const style = {
 
 
 export default function LoginPage() {
+  const baseURL = "http://localhost:3000/auth/login";
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+
+  // const navigate = useNavigate();
   const baseURL = "http://localhost:3000/login";
 
   const [username, setUsername] = useState("");
@@ -67,31 +71,35 @@ export default function LoginPage() {
     setPassword(event.target.value);
   };
 
-  const onLogin = (event) => {
+  const onLogin = async (event) => {
     event.preventDefault();
-    const hashedPassword = passwordHashService(password)
-    console.log(username)
-    axios
-      .post(baseURL, {
-        userID: username,
-        password: hashedPassword
-      })
+    const hashedPassword = passwordHashService(password);
+    console.log(username);
+    let response = await axios.post(baseURL, {
+      userID: username,
+      password: hashedPassword,
+    });
+    if (response.data) {
+      const newToken = response.data;
 
-      .then((response) => {
-        setMessage(response.data);
-        setView(true);
-        setSuccess(true);
-        
-        console.log(response);
-        window.sessionStorage.setItem("customer_id", username);
-      })
-      .catch((err) => {
-        setMessage(err.response.data.errors);
-        setSuccess(true);
-      });
+      try {
+        localStorage.setItem("token", newToken);
+        console.log("Token saved to local storage:", newToken);
+      } catch (error) {
+        console.error("Error saving token to local storage:", error);
+      }
 
+      const token = localStorage.getItem("token");
+      if (token) {
+        console.log(token);
+      }
+      
+      window.sessionStorage.setItem("customer_id", username);
+      window.location.assign("/dashboard");
+    } else {
+      alert("error in authentication");
+    }
   };
-
 
   return (
 
@@ -104,13 +112,12 @@ export default function LoginPage() {
           <Box
             sx={{
               marginTop: 8,
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'center',
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
             }}
           >
-            <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
-            </Avatar>
+            <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}></Avatar>
             <Typography component="h1" variant="h5">
               Login
             </Typography>
@@ -137,7 +144,7 @@ export default function LoginPage() {
                     id="password"
                     label="Password"
                     name="password"
-                    type='password'
+                    type="password"
                     value={password}
                     onChange={onPasswordChange}
                   />
@@ -220,6 +227,5 @@ export default function LoginPage() {
       </>
     } 
     </>
-
   )
 }
