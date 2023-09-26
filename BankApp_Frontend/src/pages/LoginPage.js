@@ -1,17 +1,37 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+
 import axios from "axios";
-import Avatar from "@mui/material/Avatar";
-import Button from "@mui/material/Button";
-import CssBaseline from "@mui/material/CssBaseline";
-import TextField from "@mui/material/TextField";
-import Box from "@mui/material/Box";
-import Typography from "@mui/material/Typography";
-import Container from "@mui/material/Container";
-import { createTheme, ThemeProvider } from "@mui/material/styles";
-import { Grid } from "@mui/material";
-import { passwordHashService } from "../services/PasswordHashService";
+import Avatar from '@mui/material/Avatar';
+import Button from '@mui/material/Button';
+import CssBaseline from '@mui/material/CssBaseline';
+import TextField from '@mui/material/TextField';
+import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
+import Container from '@mui/material/Container';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { Grid } from '@mui/material';
+
+import Backdrop from '@mui/material/Backdrop';
+import Modal from '@mui/material/Modal';
+import Fade from '@mui/material/Fade';
+import { passwordHashService } from '../services/PasswordHashService';
 
 const defaultTheme = createTheme();
+
+
+const style = {
+  position: 'absolute',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  width: 400,
+  bgcolor: 'background.paper',
+  border: '2px solid #000',
+  boxShadow: 24,
+  p: 4,
+};
+
 
 export default function LoginPage() {
   const baseURL = "http://localhost:3000/auth/login";
@@ -19,6 +39,30 @@ export default function LoginPage() {
   const [password, setPassword] = useState("");
 
   // const navigate = useNavigate();
+  const baseURL = "http://localhost:3000/login";
+
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [message, setMessage] = useState("");
+  const [success, setSuccess] = useState(false)
+  const [view,setView]=useState(false); 
+  const navigate = useNavigate();
+
+
+
+  const [open, setOpen] = useState(true);
+  const handleValidClose = () => {
+    setOpen(false);
+    navigate('/dashboard');
+  };
+
+  const handleInvalidClose = () => {
+    setOpen(false);
+    setSuccess(false);
+    setView(false);
+    setMessage("");
+  };
+
   const onUsernameChange = (event) => {
     setUsername(event.target.value);
   };
@@ -58,7 +102,10 @@ export default function LoginPage() {
   };
 
   return (
+
     <>
+    { !success ?
+      <>
       <ThemeProvider theme={defaultTheme}>
         <Container component="main" maxWidth="sm">
           <CssBaseline />
@@ -85,7 +132,6 @@ export default function LoginPage() {
                     label="Customer ID"
                     name="username"
                     value={username}
-                    // autoComplete="name"
                     onChange={onUsernameChange}
                     autoFocus
                   />
@@ -101,7 +147,6 @@ export default function LoginPage() {
                     type="password"
                     value={password}
                     onChange={onPasswordChange}
-                    autoFocus
                   />
                 </Grid>
               </Grid>
@@ -113,21 +158,74 @@ export default function LoginPage() {
               >
                 Login
               </Button>
+
+              <Button
+                fullWidth
+                variant="contained"
+                component={Link} to="/forgotpassword"
+                sx={{ mt: 3, mb: 2 }}
+              >
+                Forgot Password
+              </Button>
+
             </Box>
-            {/* 
-            <div style={{ display: 'block', textAlign: 'center' }}>
-              <form onSubmit={onLogin} >
-                <h2>LoginPage</h2>
-                <label>Username</label>
-                <input type="text" value={username} required onChange={onUsernameChange} /><br />
-                <label>Password</label>
-                <input type="password" value={password} required onChange={onPasswordChange} /><br />
-                <button type="submit">Login</button>
-              </form>
-            </div> */}
           </Box>
         </Container>
       </ThemeProvider>
+      </>
+      : view ?
+      <>
+        <div>
+            <Modal
+              aria-labelledby="transition-modal-title"
+              aria-describedby="transition-modal-description"
+              open={open}
+              onClose={handleValidClose}
+              closeAfterTransition
+              slots={{ backdrop: Backdrop }}
+              slotProps={{
+                backdrop: {
+                  timeout: 500,
+                },
+              }}
+            >
+              <Fade in={open}>
+                <Box sx={style}>
+                  <Typography id="transition-modal-description" sx={{ mt: 2 }}>
+                    {message}
+                  </Typography>
+                </Box>
+              </Fade>
+            </Modal>
+          </div>
+      </>
+      :
+      <>
+        <div>
+            <Modal
+              aria-labelledby="transition-modal-title"
+              aria-describedby="transition-modal-description"
+              open={open}
+              onClose={handleInvalidClose}
+              closeAfterTransition
+              slots={{ backdrop: Backdrop }}
+              slotProps={{
+                backdrop: {
+                  timeout: 500,
+                },
+              }}
+            >
+              <Fade in={open}>
+                <Box sx={style}>
+                  <Typography id="transition-modal-description" sx={{ mt: 2 }}>
+                      {message}
+                  </Typography>
+                </Box>
+              </Fade>
+            </Modal>
+          </div>
+      </>
+    } 
     </>
-  );
+  )
 }

@@ -34,25 +34,28 @@ export default function OpenAccountPage() {
   const token = localStorage.getItem("token");
 
   const baseURL = "http://localhost:3000/createAccount/";
-  const [customerId, setCustomerId] = useState("");
-  const [occupationType, setOccupationType] = useState("");
-  const [sourceOfIncome, setSourceOfIncome] = useState("");
-  const [grossSalary, setGrossSalary] = useState("");
-  const [debit_card, setDebitCard] = useState("");
-  const [net_banking, setNet_banking] = useState("");
-
-  const [success, setSuccess] = useState(false);
-
-  const navigate = useNavigate();
+  const [customerId,setCustomerId]=useState("");
+  const [occupationType,setOccupationType]=useState("");
+  const [sourceOfIncome, setSourceOfIncome]=useState("");
+  const [grossSalary, setGrossSalary]=useState("");
+  const [debit_card, setDebitCard]=useState("");
+  const [net_banking, setNet_banking]=useState("");
+  const [account_type, setAccountType]=useState("");
+  const [branch, setBranch] = useState("");
+  const [success, setSuccess] = useState(false)
+  const [message, setMessage] = useState("");
+  const navigate = useNavigate()
 
   useEffect(() => {
     setCustomerId(window.sessionStorage.getItem("customer_id"));
-  }, [customerId]);
+  }, [customerId])
+  
   // Model Handler
   const [open, setOpen] = useState(true);
   const handleClose = () => {
     setOpen(false);
-    navigate("/");
+    setSuccess(false);
+    navigate('/account');
   };
 
   const onCustomerIdChange = (event) => {
@@ -78,6 +81,15 @@ export default function OpenAccountPage() {
   const onNetBankingChange = (event) => {
     setNet_banking(event.target.value);
   };
+
+  const onBranchChange = (event) => {
+    setBranch(event.target.value);
+  }
+
+  const onAccountTypeChange = (event) => {
+    setAccountType(event.target.value);
+    console.log(account_type);
+  }
 
   const onSubmitForm = (event) => {
     event.preventDefault();
@@ -191,16 +203,43 @@ export default function OpenAccountPage() {
                         autoFocus
                       />
                     </Grid>
-                    <Grid item xs={6}>
-                      <FormControlLabel
-                        label="Do you need a debit card?"
-                        control={
-                          <Checkbox
-                            checked={debit_card}
-                            onChange={onDebitChange}
-                          />
-                        }
-                      />
+
+                    <Grid item xs={6} >
+                      <TextField
+                          margin="normal"
+                          required
+                          fullWidth
+                          id="branch"
+                          label="Branch"
+                          name="branch"
+                          autoComplete="branch"
+                          onChange={onBranchChange}
+                          autoFocus
+                        />
+                    </Grid>
+
+                    <Grid item xs={6} >
+                      <Select
+                        margin="normal"
+                        id="accountType"
+                        value={account_type}
+                        label="Account Type"
+                        name="accountType"
+                        onChange={onAccountTypeChange}
+                        required
+                        fullWidth
+                      >
+                        <MenuItem value={"Savings"}>Savings</MenuItem>
+                        <MenuItem value={"Fixed Deposit"}>Fixed Deposit</MenuItem>
+                        <MenuItem value={"Salary"}>Salary</MenuItem>
+                      </Select>
+                    </Grid>
+
+                    <Grid item xs={6} >
+                        <FormControlLabel
+                          label="Do you need a debit card?"
+                          control={<Checkbox checked={debit_card} onChange={onDebitChange}/>}
+                        />
                     </Grid>
                     <Grid item xs={6}>
                       <FormControlLabel
@@ -246,14 +285,14 @@ export default function OpenAccountPage() {
               <Fade in={open}>
                 <Box sx={style}>
                   <Typography id="transition-modal-description" sx={{ mt: 2 }}>
-                    Account has been successfully created.
+                    Account Created Successfully. {message}
                   </Typography>
                 </Box>
               </Fade>
             </Modal>
           </div>
         </>
-      )}
+        }
     </>
   );
 }

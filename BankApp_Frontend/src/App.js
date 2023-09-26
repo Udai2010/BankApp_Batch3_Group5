@@ -12,7 +12,12 @@ import WithdrawPage from './pages/WithdrawPage';
 import DepositPage from './pages/DepositPage';
 import FundTransfer from './pages/FundTransfer';
 import ChangePassword from './pages/ChangePassword';
-
+import AdminLoginPage from './pages/AdminLoginPage';
+import AdminDashboard from './pages/AdminDashboard';
+import AdminViewTransactions from './pages/AdminViewTransactions';
+import AdminSearchuser from './pages/AdminSearchuser';
+import ForgotPassowrd from './pages/ForgotPassword';
+import EnableDisable from './pages/EnableDisable';
 function App() {
   return (
     <div>
@@ -30,6 +35,12 @@ function App() {
             <Route path='/deposit' element={<DepositPage/>}/>
             <Route path="/fundtransfer" element={<FundTransfer/>}/>
             <Route path="/changepassword" element={<ChangePassword/>}/>
+            <Route path="/adminlogin" element={<AdminLoginPage/>}/>
+            <Route path="/admindashboard" element={<AdminDashboard/>}/>
+            <Route path="/viewalltransaction" element={<AdminViewTransactions/>}/>
+            <Route path="/adminsearch" element={<AdminSearchuser/>}/>
+            <Route path="/forgotpassword" element={<ForgotPassowrd/>}/>
+            <Route path='/enable' element={<EnableDisable/>}/>
           </Routes>
         </BrowserRouter>
     </div>

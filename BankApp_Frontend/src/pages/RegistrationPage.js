@@ -47,13 +47,16 @@ export default function RegistrationPage() {
 
   const [success, setSuccess] = useState(false)
 
+  const [message,setMessage] = useState("")
+
   const navigate = useNavigate()
 
   // Model Handler
   const [open, setOpen] = useState(true);
   const handleClose = () => {
     setOpen(false)
-    navigate('/')
+    navigate('/login')
+
   };
 
   const nameChangeHandler = (event) => {
@@ -103,7 +106,9 @@ export default function RegistrationPage() {
       address: address
 
     }).then((response) => {
-      setSuccess(true)
+
+      setMessage(response.data);
+      setSuccess(true);
     }).catch((error) => {
       alert(error)
     })
@@ -268,7 +273,9 @@ export default function RegistrationPage() {
               <Fade in={open}>
                 <Box sx={style}>
                   <Typography id="transition-modal-description" sx={{ mt: 2 }}>
-                    Customer {name} has successfully created
+
+                     Registration Successful. {message}
+
                   </Typography>
                 </Box>
               </Fade>

@@ -141,5 +141,29 @@ public class Account {
 		this.status = status;
 	}
 
+	public String getOccupation_type() {
+		return occupation_type;
+	}
+
+	public void setOccupation_type(String occupation_type) {
+		this.occupation_type = occupation_type;
+	}
+
+	public String getIncome_source() {
+		return income_source;
+	}
+
+	public void setIncome_source(String income_source) {
+		this.income_source = income_source;
+	}
+
+	public double getAnnual_income() {
+		return annual_income;
+	}
+
+	public void setAnnual_income(double annual_income) {
+		this.annual_income = annual_income;
+	}
+
 		
 }

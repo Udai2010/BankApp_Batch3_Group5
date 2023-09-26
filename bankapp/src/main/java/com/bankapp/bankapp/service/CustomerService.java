@@ -26,8 +26,8 @@ public class CustomerService implements UserDetailsService {
 
 	}
 
-	public boolean validateUser(Login l) {
 
+	public boolean validateUser(Login l) {
 		Optional<Customer> obj = customerRepo.findById(l.getUsername());
 		if (obj == null) {
 			return false;
@@ -64,6 +64,29 @@ public class CustomerService implements UserDetailsService {
 		}
 		return User.builder().username(Long.toString(customer.getCustomer_Id())).password(customer.getPassword()).roles("USER").build();
 		
+	}
+
+	@Transactional
+	public String forgotPassword(Login l) {
+		String result = "Unsuccessful Password Update";
+		if(l.getOtp()!=1234) {
+			result="OTP entered is wrong";
+			return result;
+		}
+		
+		if(!customerRepo.findById(l.getUserID()).isPresent()){
+			result="Invalid Credentials";
+			return result;
+		}
+		
+		int a =customerRepo.changePassword(l.getPassword(),l.getUserID());
+		
+		if(a!=0)
+		{		
+			result="Password updated successfully";
+				return result;
+		}
+		return result;
 	}
 
 }

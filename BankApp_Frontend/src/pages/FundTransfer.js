@@ -71,7 +71,7 @@ export default function FundTransfer() {
             //navigate("/dashboard");
           })
           .catch((err) => {
-            alert("error- " + err)
+            alert(err.response.data.errors)
           }); 
       };
 

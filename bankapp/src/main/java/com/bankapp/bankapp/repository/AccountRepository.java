@@ -17,6 +17,9 @@ public interface AccountRepository extends JpaRepository<Account,Long> {
 
     @Query("Select a.balance from Account a where a.account_id=?1")
     public double getBalance(Long accountno);
+    
+    @Query("Select a.status from Account a where a.account_id=?1")
+    public String getStatus(Long accountno);
 
     @Modifying
 	@Query("Update Account a set a.balance=a.balance-?1 where a.account_id=?2" )
@@ -25,5 +28,9 @@ public interface AccountRepository extends JpaRepository<Account,Long> {
 	@Modifying
 	@Query("Update Account a set a.balance=a.balance+?1 where a.account_id=?2" )
 	public int deposit(double amount,Long accountno);
+	
+	@Modifying
+	@Query("Update Account a set a.status=?1 where a.account_id=?2" )
+	public void Access(String s, Long accountno);
 }
 

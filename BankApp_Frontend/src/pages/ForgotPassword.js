@@ -14,37 +14,38 @@ import { passwordHashService } from '../services/PasswordHashService';
 
 const defaultTheme = createTheme();
 
-export default function LoginPage() {
-  const baseURL = "http://localhost:3000/changepassword";
+export default function ForgotPassowrd() {
+  const baseURL = "http://localhost:3000/forgotpassword";
   const [customerId, setCustomerId] = useState("");
-  const [username, setUsername] = useState("");
+  const [otp, setOtp] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
 
-  function onUsernameChange() {
-    setUsername(window.sessionStorage.getItem("customer_id"));
-  };
+  const onCustomerIdChange=(event)=> {
+        setCustomerId(event.target.value);
+    };
 
   const onPasswordChange = (event) => {
-    setPassword(passwordHashService(event.target.value));
+    setPassword(event.target.value);
   };
 
-  useEffect(() => {
-    onUsernameChange();
-  }, []);
+  const onOtpChange = (event) => {
+        setOtp(event.target.value);
+  };
 
-  const onChangePassword = (event) => {
+  
+  const onForgotPassword = (event) => {
     
     event.preventDefault();
-    console.log(username," ",password);
     axios
       .put(baseURL, {
-        username: username,
-        password: password
+        username: customerId,
+        password: passwordHashService(password),
+        otp:otp
       })
       .then((response) => {
         alert(response.data);
-        window.location.assign("/dashboard");
+        window.location.assign("/login");
       })
       .catch((err) => {
         alert("error- " + err)
@@ -68,10 +69,24 @@ export default function LoginPage() {
             <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
             </Avatar>
             <Typography component="h1" variant="h5">
-              Login
+              Forgot Password
             </Typography>
-            <Box component="form" onSubmit={onChangePassword} noValidate sx={{ mt: 1 }}>
+            <Box component="form" onSubmit={onForgotPassword} noValidate sx={{ mt: 1 }}>
               <Grid containter>
+              <Grid item xm={12}>
+                  <TextField
+                    margin="normal"
+                    required
+                    fullWidth
+                    id="customerId"
+                    label="Customer ID"
+                    name="customerId"
+                    type='text'
+                    value={customerId}
+                    onChange={onCustomerIdChange}
+                    autoFocus
+                  />
+                </Grid>
 
                 <Grid item xm={12}>
                   <TextField
@@ -79,11 +94,26 @@ export default function LoginPage() {
                     required
                     fullWidth
                     id="password"
-                    label="Password"
+                    label="New Password"
                     name="password"
                     type='password'
                     value={password}
                     onChange={onPasswordChange}
+                    autoFocus
+                  />
+                </Grid>
+
+                <Grid item xm={12}>
+                  <TextField
+                    margin="normal"
+                    required
+                    fullWidth
+                    id="otp"
+                    label="OTP"
+                    name="otp"
+                    type='text'
+                    value={otp}
+                    onChange={onOtpChange}
                     autoFocus
                   />
                 </Grid>

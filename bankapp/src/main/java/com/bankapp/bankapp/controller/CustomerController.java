@@ -6,9 +6,12 @@ import javax.validation.ValidatorFactory;
 
 import java.util.Set;
 import java.util.List;
+import java.util.Optional;
 import java.util.ArrayList;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -17,7 +20,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.PathVariable;
 
-
+import com.bankapp.bankapp.exception.InvalidCredentialException;
+import com.bankapp.bankapp.model.Account;
 import com.bankapp.bankapp.model.Customer;
 import com.bankapp.bankapp.model.Login;
 import com.bankapp.bankapp.service.CustomerService;
@@ -41,8 +45,11 @@ public class CustomerController {
 
 		List<String> resp = new ArrayList<String>();
 		if(violations.size() == 0){
-			customerService.createNewCustomer(c);
-			resp.add("Customer created succesfully");
+
+			Customer obj = customerService.createNewCustomer(c);
+			String result="Your new Customer ID is "+obj.getCustomer_Id().toString();
+			resp.add(result);
+
 			return resp;
 		}
 
@@ -51,9 +58,19 @@ public class CustomerController {
 		}
 
 		return resp;
+
 		
 	}
 	
+	@PostMapping("/login")
+	public ResponseEntity<String> validateUser(@Valid @RequestBody Login l) throws InvalidCredentialException {
+		String res=customerService.validateUser(l);
+		if(res.equals("Invalid User")){
+			throw new InvalidCredentialException("No user could be found");
+		}
+		return new ResponseEntity<>(res,HttpStatus.OK);
+		
+	}
 
 	@GetMapping("/user/{uid}")
 	public Customer getUser(@PathVariable("uid") Long uid){
@@ -64,6 +81,14 @@ public class CustomerController {
 	public String chagnePassword(@RequestBody Login l){
 		return customerService.changePassword(l);
 	}
+	
+	@PutMapping("/forgotpassword")
+	public String forgotPassword(@RequestBody Login l) {
+		return customerService.forgotPassword(l);
+	}
+	
+	
+
 	
 	/*@GetMapping("/account/{uid}")
 	public List<Account> getAccount(@PathVariable("uid") Long uid){

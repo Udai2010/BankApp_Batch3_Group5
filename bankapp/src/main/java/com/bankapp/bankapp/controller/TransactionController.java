@@ -20,4 +20,11 @@ public class TransactionController {
     public List<Transaction> geTransactions(@PathVariable("accountId")Long accountId){
         return transactionService.getTransactionForAnAccount(accountId);
     }
+    
+    @GetMapping("statement/{accountId}/{sdate}/{edate}")
+    public List<Transaction> getStatement(@PathVariable("accountId")Long accountId,
+    		@PathVariable("sdate") String sdate,
+    		@PathVariable("edate") String edate){
+        return transactionService.getStatement(accountId,sdate,edate);
+    }
 }
