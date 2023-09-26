@@ -49,35 +49,34 @@ export default function WithdrawPage() {
     setAmount(event.target.value);
   };
 
-    const onSelectAccount = (event) => {
-      setSelectedAccont(event.target.value);
-      getBalance(selectedAccount, setBalance);
-    }
+  const onSelectAccount = (event) => {
+    setSelectedAccont(event.target.value);
+  };
 
-    useEffect(() => {
-      getAccounts(window.sessionStorage.getItem("customer_id"), setAccounts);
-    }, [customerId]);
-    useEffect(() => {
-      if(accounts.length > 0) setSelectedAccont(accounts[0].account_id);
-    }, [accounts]);
+  useEffect(() => {
+    getAccounts(window.sessionStorage.getItem("customer_id"), setAccounts);
+  }, [customerId]);
+  useEffect(() => {
+    if (accounts.length > 0) setSelectedAccont(accounts[0].account_id);
+  }, [accounts]);
 
-    const onWithdraw=(event) => {
-        event.preventDefault();
-        const url='http://localhost:3000/withdraw';
-        axios
-          .put(url, {
-            account_id: selectedAccount,
-            amount: amount
-          })
-          .then((response) => {
-            alert(response.data);
-            //console.log(response);
-            //navigate("/dashboard");
-          })
-          .catch((err) => {
-            alert(err.response.data.errors)
-          }); 
-      };
+  const onWithdraw = (event) => {
+    event.preventDefault();
+    const url = "http://localhost:3000/withdraw";
+    axios
+      .put(url, {
+        account_id: selectedAccount,
+        amount: amount,
+      })
+      .then((response) => {
+        alert(response.data);
+        //console.log(response);
+        //navigate("/dashboard");
+      })
+      .catch((err) => {
+        alert(err.response.data.errors);
+      });
+  };
 
   return (
     <>
@@ -95,37 +94,49 @@ export default function WithdrawPage() {
             <Typography component="h1" variant="h5">
               Withdrawal
             </Typography>
-            <Box component="form" onSubmit={onWithdraw} noValidate sx={{ mt: 1 }}>
-            {accounts.length > 0 ?<div>
-              <FormControl>
-                <InputLabel id="selectAccount">Account number</InputLabel>
-                <Select 
-                  id="selectAccount"
-                  value={selectedAccount}
-                  label="Account number"
-                  onChange={onSelectAccount}>
-                    {accounts.map((acc) => {
-                      return <MenuItem value={acc.account_id}>{acc.account_id}</MenuItem>
-                    })}
-                  </Select>
-              </FormControl>
-              </div>: <p>No accounts</p>
-            }
-                <Grid item xm={12}>
-                  <TextField
-                    margin="normal"
-                    required
-                    fullWidth
-                    id="amount"
-                    label="Amount"
-                    name="amount"
-                    type="text"
-                    value={amount}
-                    onChange={onAmountChange}
-                    autoFocus
-                  />
-                </Grid>
-                <Typography variant='h6'>Balance: {balance}</Typography>
+            <Box
+              component="form"
+              onSubmit={onWithdraw}
+              noValidate
+              sx={{ mt: 1 }}
+            >
+              {accounts.length > 0 ? (
+                <div>
+                  <FormControl>
+                    <InputLabel id="selectAccount">Account number</InputLabel>
+                    <Select
+                      id="selectAccount"
+                      value={selectedAccount}
+                      label="Account number"
+                      onChange={onSelectAccount}
+                    >
+                      {accounts.map((acc) => {
+                        return (
+                          <MenuItem value={acc.account_id}>
+                            {acc.account_id}
+                          </MenuItem>
+                        );
+                      })}
+                    </Select>
+                  </FormControl>
+                </div>
+              ) : (
+                <p>No accounts</p>
+              )}
+              <Grid item xm={12}>
+                <TextField
+                  margin="normal"
+                  required
+                  fullWidth
+                  id="amount"
+                  label="Amount"
+                  name="amount"
+                  type="text"
+                  value={amount}
+                  onChange={onAmountChange}
+                  autoFocus
+                />
+              </Grid>
               <Button
                 type="submit"
                 fullWidth

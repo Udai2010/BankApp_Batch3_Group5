@@ -73,6 +73,7 @@ export default function LoginPage() {
   };
 
   const onLogin = async (event) => {
+  const onLogin = async (event) => {
     event.preventDefault();
     const hashedPassword = passwordHashService(password);
     console.log(username);
@@ -108,19 +109,16 @@ export default function LoginPage() {
         password: hashedPassword
       })
 
-      .then((response) => {
-        setMessage(response.data);
-        setView(true);
-        setSuccess(true);
-        
-        console.log(response);
-        window.sessionStorage.setItem("customer_id", username);
-      })
-      .catch((err) => {
-        setMessage(err.response.data.errors);
-        setSuccess(true);
-      });
-
+      const token = localStorage.getItem("token");
+      if (token) {
+        console.log(token);
+      }
+      
+      window.sessionStorage.setItem("customer_id", username);
+      window.location.assign("/dashboard");
+    } else {
+      alert("error in authentication");
+    }
   };
 
   return (
@@ -264,6 +262,5 @@ export default function LoginPage() {
       </>
     } 
     </>
-
   )
 }

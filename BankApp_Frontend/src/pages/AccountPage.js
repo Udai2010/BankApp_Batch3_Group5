@@ -19,9 +19,15 @@ import axios from "axios";
 const defaultTheme = createTheme();
 export default function AccountPage() {
   const token = localStorage.getItem("token");
+  const token = localStorage.getItem("token");
 
   const [customerId, setCustomerId] = useState("");
   const [accounts, setAccounts] = useState([]);
+
+  const [selectedAccount, setSelectedAccont] = useState(-1);
+  const [transactions, setTransactions] = useState([]);
+  const [startdate, setstartdate] = useState("");
+  const [enddate, setenddate] = useState("");
 
   async function getAccounts(customer_id, setAccounts) {
     const authToken = `Bearer ${token}`;
@@ -57,11 +63,12 @@ export default function AccountPage() {
       setTransactions(response.data);
     });
   };
-
-  const handleChange = (event) => {
-    setSelectedAccont(event.target.value);
-    //console.log(selectedAccount);
   };
+
+    const handleChange = (event) => {
+        setSelectedAccont(event.target.value);
+        //console.log(selectedAccount);
+      }
 
   useEffect(() => {
     getAccounts(window.sessionStorage.getItem("customer_id"), setAccounts);
@@ -74,125 +81,6 @@ export default function AccountPage() {
   return (
     <>
       <h2>Account dashboard</h2>
-
-      {accounts.length > 0 ? (
-        <TableContainer>
-          <Table>
-            <TableHead>
-              <TableRow>
-                <TableCell>Account Id</TableCell>
-                <TableCell>IFSC</TableCell>
-                <TableCell>Branch</TableCell>
-                <TableCell>Account type</TableCell>
-                <TableCell>Balance</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {accounts.map((row) => {
-                return (
-                  <TableRow key={row.account_id}>
-                    <TableCell>{row.account_id}</TableCell>
-                    <TableCell>{row.ifsc}</TableCell>
-                    <TableCell>{row.branch}</TableCell>
-                    <TableCell>{row.account_type}</TableCell>
-                    <TableCell>{row.balance}</TableCell>
-                  </TableRow>
-                );
-              })}
-            </TableBody>
-          </Table>
-        </TableContainer>
-      ) : (
-        <p>There are no accounts for this user.</p>
-      )}
-
-      <Button
-        variant="contained"
-        component={Link}
-        to="/openaccount"
-        sx={{ mt: 3, mb: 2 }}
-      >
-        Create a new account
-      </Button>
-
-      <h2>Account Statement</h2>
-
-      {accounts.length > 0 ? (
-        <div>
-          <FormControl>
-            <InputLabel id="selectAccount">Account number</InputLabel>
-            <Select
-              id="selectAccount"
-              value={selectedAccount}
-              label="Account number"
-              onChange={handleChange}
-            >
-              {accounts.map((acc) => {
-                return (
-                  <MenuItem value={acc.account_id}>{acc.account_id}</MenuItem>
-                );
-              })}
-            </Select>
-          </FormControl>
-        </div>
-      ) : (
-        <p>No accounts</p>
-      )}
-
-      <form onSubmit={submitHandler}>
-        <label for="sdate"> Start Date </label>
-        <input type="date" id="sdate" onChange={sdateChangeHandler}></input>
-        <br />
-        <label for="edate"> End Date </label>
-        <input type="date" id="edate" onChange={edateChangeHandler} />
-        <br />
-        <input type="submit" color="blue" />
-      </form>
-
-      {transactions.length > 0 ? (
-        <TableContainer>
-          <Table>
-            <TableHead>
-              <TableRow>
-                <TableCell>Transaction Id</TableCell>
-                <TableCell>Sender</TableCell>
-                <TableCell>Receiver</TableCell>
-                <TableCell>Amount</TableCell>
-                <TableCell>Transaction type</TableCell>
-                <TableCell>Date</TableCell>
-                <TableCell>Status</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {transactions.map((row) => {
-                return (
-                  <TableRow key={row.transaction_id}>
-                    <TableCell>{row.transaction_id}</TableCell>
-                    <TableCell>{row.sender_account.account_id}</TableCell>
-                    <TableCell>{row.receiver_account?.account_id}</TableCell>
-                    <TableCell>{row.amount}</TableCell>
-                    <TableCell>{row.transactionType}</TableCell>
-                    <TableCell>{row.transactionDate}</TableCell>
-                    <TableCell>{row.status}</TableCell>
-                  </TableRow>
-                );
-              })}
-            </TableBody>
-          </Table>
-        </TableContainer>
-      ) : (
-        <p>No transactions found for this date range in the account .</p>
-      )}
-    </>
-  );
-
-    useEffect(() => {
-        getAccounts(window.sessionStorage.getItem("customer_id"), setAccounts);
-        console.log(accounts);
-    }, [])
-    return(
-        <>
-                <h2>Account dashboard</h2> 
 
                 {accounts.length>0?<TableContainer>
                     <Table>
@@ -221,7 +109,69 @@ export default function AccountPage() {
                 
                 <Button 
                         variant="contained" component={Link} to="/openaccount"
-                        sx={{ mt: 3, mb: 2 }}>Create a new account</Button>   
-        </>
+                        sx={{ mt: 3, mb: 2 }}>Create a new account</Button> 
+
+            <h2>Account Statement</h2> 
+            
+      {accounts.length > 0 ?<div>
+        <FormControl>
+          <InputLabel id="selectAccount">Account number</InputLabel>
+          <Select 
+            id="selectAccount"
+            value={selectedAccount}
+            label="Account number"
+            onChange={handleChange}>
+              {accounts.map((acc) => {
+                return <MenuItem value={acc.account_id}>{acc.account_id}</MenuItem>
+              })}
+            </Select>
+        </FormControl>
+        </div>: <p>No accounts</p>
+      }
+    
+      
+
+    <form onSubmit={submitHandler}>
+        <label for="sdate">     Start Date     </label>
+        <input type="date" id="sdate" onChange={sdateChangeHandler}></input>
+        <br/>
+        <label for="edate">     End Date    </label>
+        <input type="date" id="edate" onChange={edateChangeHandler}/>
+        <br/>
+        <input type="submit" color="blue" />
+        
+        </form>
+        
+    {transactions.length>0?<TableContainer>
+        <Table>
+            <TableHead>
+                <TableRow>
+                    <TableCell>Transaction Id</TableCell>
+                    <TableCell>Sender</TableCell>
+                    <TableCell>Receiver</TableCell>
+                    <TableCell>Amount</TableCell>
+                    <TableCell>Transaction type</TableCell>
+                    <TableCell>Date</TableCell>
+                    <TableCell>Status</TableCell>
+                </TableRow>
+            </TableHead>
+            <TableBody>
+                {transactions.map((row) => {
+                    return (<TableRow key={row.transaction_id}>
+                        <TableCell>{row.transaction_id}</TableCell>
+                        <TableCell>{row.sender_account.account_id}</TableCell>
+                        <TableCell>{row.receiver_account?.account_id}</TableCell>
+                        <TableCell>{row.amount}</TableCell>
+                        <TableCell>{row.transactionType}</TableCell>
+                        <TableCell>{row.transactionDate}</TableCell>
+                        <TableCell>{row.status}</TableCell>
+                    </TableRow>)
+                })}
+            </TableBody>
+        </Table>
+    </TableContainer>: <p>No transactions found for this date range in the account .</p>}
+
+                </>
     )
 }
+
