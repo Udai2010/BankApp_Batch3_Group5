@@ -33,7 +33,6 @@ const defaultTheme = createTheme();
 
 export default function OpenAccountPage() {
   const token = localStorage.getItem("token");
-
   const baseURL = "http://localhost:3000/createAccount/";
   const [customerId, setCustomerId] = useState("");
   const [occupationType, setOccupationType] = useState("");
@@ -49,13 +48,14 @@ const [account_type, setAccountType]=useState("");
 
   useEffect(() => {
     setCustomerId(window.sessionStorage.getItem("customer_id"));
-  }, [customerId])
-  
+  }, [customerId]);
+
   // Model Handler
   const [open, setOpen] = useState(true);
   const handleClose = () => {
-    setOpen(false)
-    navigate('/')
+    setOpen(false);
+    setSuccess(false);
+    navigate("/account");
   };
 
   const onCustomerIdChange = (event) => {
@@ -84,36 +84,35 @@ const [account_type, setAccountType]=useState("");
 
   const onBranchChange = (event) => {
     setBranch(event.target.value);
-  }
+  };
 
   const onAccountTypeChange = (event) => {
     setAccountType(event.target.value);
     console.log(account_type);
-  }
+  };
 
   const onSubmitForm = (event) => {
     event.preventDefault();
     const authToken = `Bearer ${token}`;
     const axiosInstance = axios.create({
-      baseURL: "http://localhost:3000", // Replace with your API URL
+      baseURL: "http://localhost:3000/createAccount/", // Replace with your API URL
       headers: {
         Authorization: authToken,
         "Content-Type": "application/json", // You can include other headers if needed
       },
     });
-
     axiosInstance
       .post(baseURL + customerId, {
-        occupation_type: occupationType,
-        income_source: sourceOfIncome,
-        annual_income: grossSalary,
         debit_card: debit_card,
-        branch: "BLR",
-        account_type: "Savings",
+        branch: branch,
+        account_type: account_type,
         net_banking: net_banking,
         status: "active",
         ifsc: "BLR1234A",
         balance: 5000,
+        occupation_type: occupationType,
+        income_source: sourceOfIncome,
+        annual_income: grossSalary,
       })
       .then((response) => {
         setMessage(response.data);
@@ -205,21 +204,21 @@ const [account_type, setAccountType]=useState("");
                       />
                     </Grid>
 
-                    <Grid item xs={6} >
+                    <Grid item xs={6}>
                       <TextField
-                          margin="normal"
-                          required
-                          fullWidth
-                          id="branch"
-                          label="Branch"
-                          name="branch"
-                          autoComplete="branch"
-                          onChange={onBranchChange}
-                          autoFocus
-                        />
+                        margin="normal"
+                        required
+                        fullWidth
+                        id="branch"
+                        label="Branch"
+                        name="branch"
+                        autoComplete="branch"
+                        onChange={onBranchChange}
+                        autoFocus
+                      />
                     </Grid>
 
-                    <Grid item xs={6} >
+                    <Grid item xs={6}>
                       <Select
                         margin="normal"
                         id="accountType"
@@ -231,16 +230,23 @@ const [account_type, setAccountType]=useState("");
                         fullWidth
                       >
                         <MenuItem value={"Savings"}>Savings</MenuItem>
-                        <MenuItem value={"Fixed Deposit"}>Fixed Deposit</MenuItem>
+                        <MenuItem value={"Fixed Deposit"}>
+                          Fixed Deposit
+                        </MenuItem>
                         <MenuItem value={"Salary"}>Salary</MenuItem>
                       </Select>
                     </Grid>
 
-                    <Grid item xs={6} >
-                        <FormControlLabel
-                          label="Do you need a debit card?"
-                          control={<Checkbox checked={debit_card} onChange={onDebitChange}/>}
-                        />
+                    <Grid item xs={6}>
+                      <FormControlLabel
+                        label="Do you need a debit card?"
+                        control={
+                          <Checkbox
+                            checked={debit_card}
+                            onChange={onDebitChange}
+                          />
+                        }
+                      />
                     </Grid>
                     <Grid item xs={6}>
                       <FormControlLabel
@@ -293,8 +299,7 @@ const [account_type, setAccountType]=useState("");
             </Modal>
           </div>
         </>
-      )
-        }
+      )}
     </>
   );
 }
