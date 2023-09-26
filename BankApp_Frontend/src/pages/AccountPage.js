@@ -14,7 +14,8 @@ export default function AccountPage() {
     const [selectedAccount, setSelectedAccont] = useState(-1);
     const [transactions, setTransactions] = useState([]);
     const [startdate, setstartdate] = useState("")
-     const [enddate, setenddate] = useState("")
+    const [enddate, setenddate] = useState("")
+
 
 
     async function getAccounts(customer_id, setAccounts) {
@@ -95,7 +96,7 @@ export default function AccountPage() {
             <h2>Account Statement</h2> 
             
       {accounts.length > 0 ?<div>
-        <FormControl>
+        <FormControl style={{display:"inline", margin:"20px", padding:"20px"}}>
           <InputLabel id="selectAccount">Account number</InputLabel>
           <Select 
             id="selectAccount"
@@ -106,22 +107,24 @@ export default function AccountPage() {
                 return <MenuItem value={acc.account_id}>{acc.account_id}</MenuItem>
               })}
             </Select>
+            <form onSubmit={submitHandler} style={{display:"inline", margin:"50px"}}>
+        
+            <label for="sdate">     Start Date     </label>
+            <input type="date" id="sdate" onChange={sdateChangeHandler}></input>
+            {/* <br/> */}
+            <label for="edate">     End Date    </label>
+            <input type="date" id="edate" min={startdate} onChange={edateChangeHandler}/>
+            {/* <br/> */}
+            <input type="submit" color="blue" />
+            
+            </form>
         </FormControl>
         </div>: <p>No accounts</p>
       }
     
       
 
-    <form onSubmit={submitHandler}>
-        <label for="sdate">     Start Date     </label>
-        <input type="date" id="sdate" onChange={sdateChangeHandler}></input>
-        <br/>
-        <label for="edate">     End Date    </label>
-        <input type="date" id="edate" onChange={edateChangeHandler}/>
-        <br/>
-        <input type="submit" color="blue" />
-        
-        </form>
+    
         
     {transactions.length>0?<TableContainer>
         <Table>

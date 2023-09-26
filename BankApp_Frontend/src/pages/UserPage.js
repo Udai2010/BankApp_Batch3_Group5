@@ -26,7 +26,7 @@ export default function UserPage(){
         
         <ThemeProvider theme={defaultTheme}>
         <NavBar/>
-
+            <center>
             <Paper>
                 <Typography variant='h4'>Customer details</Typography>
                 <Typography variant='h6'>Name: {customer.name}</Typography>
@@ -37,6 +37,7 @@ export default function UserPage(){
                 <Typography variant='h6'>Mother name: {customer.mothername}</Typography>
                 <Typography variant='h6'>Address: {customer.address}</Typography>
             </Paper>
+            </center>
         </ThemeProvider>
     
     </>)
