@@ -5,6 +5,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityConfiguration;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
@@ -20,16 +21,23 @@ public class SecurityConfig {
     @Autowired
     private JwtAuthenticationFilter filter;
 
+    @Autowired
+    private JwtAccessDeniedHandler accessDeniedHandler;
+
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
-        http.csrf(csrf -> csrf.disable())
-                .cors(cors->cors.disable())
-                .authorizeRequests()
-                .antMatchers("/auth/login").permitAll()
-                .anyRequest()
-                .authenticated()
-                .and().exceptionHandling(ex -> ex.authenticationEntryPoint(point))
+        http
+                .cors().and()
+                .authorizeRequests(authorizeRequest -> authorizeRequest.antMatchers("/auth/createCustomer","/auth/login").permitAll()
+                        .anyRequest().authenticated()
+                ).csrf().disable()
+                .exceptionHandling(ex -> {
+                    ex.authenticationEntryPoint(point);
+                    if (accessDeniedHandler != null) {
+                        ex.accessDeniedHandler(accessDeniedHandler);
+                    }
+                })
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
         http.addFilterBefore(filter, UsernamePasswordAuthenticationFilter.class);
         return http.build();
