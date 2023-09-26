@@ -106,10 +106,14 @@ export default function LoginPage() {
           <CssBaseline />
           <Box
             sx={{
+              p:3,
+              color: '#000',
               marginTop: 8,
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              backgroundColor: 'rgba(225, 225, 225, 0.8)',
+              borderRadius: '10px'
             }}
           >
             <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}></Avatar>
@@ -124,7 +128,7 @@ export default function LoginPage() {
                     required
                     fullWidth
                     id="username"
-                    label="Customer ID"
+                    placeholder="Customer ID"
                     name="username"
                     value={username}
                     onChange={onUsernameChange}
@@ -137,7 +141,7 @@ export default function LoginPage() {
                     required
                     fullWidth
                     id="password"
-                    label="Password"
+                    placeholder="Password"
                     name="password"
                     type="password"
                     value={password}
@@ -172,7 +176,7 @@ export default function LoginPage() {
       <>
         <div>
             <Modal
-              aria-labelledby="transition-modal-title"
+              aria-placeholderledby="transition-modal-title"
               aria-describedby="transition-modal-description"
               open={open}
               onClose={handleValidClose}
@@ -198,7 +202,7 @@ export default function LoginPage() {
       <>
         <div>
             <Modal
-              aria-labelledby="transition-modal-title"
+              aria-placeholderledby="transition-modal-title"
               aria-describedby="transition-modal-description"
               open={open}
               onClose={handleInvalidClose}

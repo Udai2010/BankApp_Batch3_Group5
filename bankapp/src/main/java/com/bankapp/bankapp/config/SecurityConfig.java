@@ -29,7 +29,7 @@ public class SecurityConfig {
 
         http
                 .cors().and()
-                .authorizeRequests(authorizeRequest -> authorizeRequest.antMatchers("/auth/createCustomer","/auth/login").permitAll()
+                .authorizeRequests(authorizeRequest -> authorizeRequest.antMatchers("/auth/createCustomer","/auth/login","/adminLogin").permitAll()
                         .anyRequest().authenticated()
                 ).csrf().disable()
                 .exceptionHandling(ex -> {
