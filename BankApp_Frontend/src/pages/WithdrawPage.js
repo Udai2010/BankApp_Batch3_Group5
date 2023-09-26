@@ -57,9 +57,11 @@ export default function WithdrawPage() {
       getAccounts(window.sessionStorage.getItem("customer_id"), setAccounts);
     }, [customerId]);
     useEffect(() => {
-      if(accounts.length > 0) {setSelectedAccont(accounts[0].account_id); getBalance(selectedAccount, setBalance);}
+      if(accounts.length > 0) {setSelectedAccont(accounts[0].account_id); }
     }, [accounts]);
-
+    useEffect(()=>{
+      if(selectedAccount!==-1) {getBalance(selectedAccount,setBalance)}
+    },[selectedAccount]);
     const onWithdraw=(event) => {
         event.preventDefault();
         const url='http://localhost:3000/withdraw';
