@@ -35,11 +35,6 @@ const style = {
 
 export default function LoginPage() {
   const baseURL = "http://localhost:3000/auth/login";
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-
-  // const navigate = useNavigate();
-  const baseURL = "http://localhost:3000/login";
 
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");

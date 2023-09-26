@@ -1,6 +1,7 @@
 package com.bankapp.bankapp.controller;
 
 import javax.validation.ConstraintViolation;
+import javax.validation.Valid;
 import javax.validation.Validation;
 import javax.validation.ValidatorFactory;
 
@@ -59,16 +60,6 @@ public class CustomerController {
 
 		return resp;
 
-		
-	}
-	
-	@PostMapping("/login")
-	public ResponseEntity<String> validateUser(@Valid @RequestBody Login l) throws InvalidCredentialException {
-		String res=customerService.validateUser(l);
-		if(res.equals("Invalid User")){
-			throw new InvalidCredentialException("No user could be found");
-		}
-		return new ResponseEntity<>(res,HttpStatus.OK);
 		
 	}
 
