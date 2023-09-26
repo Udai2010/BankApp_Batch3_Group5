@@ -1,20 +1,29 @@
-import React, { useState,useEffect } from 'react';
+import React, { useState, useEffect } from "react";
 import axios from "axios";
-import Avatar from '@mui/material/Avatar';
-import Button from '@mui/material/Button';
-import CssBaseline from '@mui/material/CssBaseline';
-import TextField from '@mui/material/TextField';
-import Box from '@mui/material/Box';
-import Typography from '@mui/material/Typography';
-import Container from '@mui/material/Container';
-import {FormControl, InputLabel, Select, MenuItem } from '@mui/material';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { Grid } from '@mui/material';
+import Avatar from "@mui/material/Avatar";
+import Button from "@mui/material/Button";
+import CssBaseline from "@mui/material/CssBaseline";
+import TextField from "@mui/material/TextField";
+import Box from "@mui/material/Box";
+import Typography from "@mui/material/Typography";
+import Container from "@mui/material/Container";
+import { FormControl, InputLabel, Select, MenuItem } from "@mui/material";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
+import { Grid } from "@mui/material";
 
 const defaultTheme = createTheme();
 
-
 export default function WithdrawPage() {
+  const token = localStorage.getItem("token");
+
+  const authToken = `Bearer ${token}`;
+  const axiosInstance = axios.create({
+    baseURL: "http://localhost:3000", // Replace with your API URL
+    headers: {
+      Authorization: authToken,
+      "Content-Type": "application/json", // You can include other headers if needed
+    },
+  });
 
     const [customerId, setCustomerId] = useState("");
     const [accounts, setAccounts] = useState([]);
@@ -30,14 +39,6 @@ export default function WithdrawPage() {
       });
       
   }
-
-  async function getBalance(account_id, setBalance) {
-    const url = `http://localhost:3000/balance/${account_id}`;
-    await axios.get(url).then((response) => {
-      setBalance(response.data);
-      console.log(balance);
-    });
-  }
     
     const onAmountChange = (event) => {
       if(event.target.value<0){
@@ -45,8 +46,8 @@ export default function WithdrawPage() {
         //document.getElementById('amount').value = '';
         return;
     }
-        setAmount(event.target.value);
-    }
+    setAmount(event.target.value);
+  };
 
     const onSelectAccount = (event) => {
       setSelectedAccont(event.target.value);
@@ -57,11 +58,9 @@ export default function WithdrawPage() {
       getAccounts(window.sessionStorage.getItem("customer_id"), setAccounts);
     }, [customerId]);
     useEffect(() => {
-      if(accounts.length > 0) {setSelectedAccont(accounts[0].account_id); }
+      if(accounts.length > 0) setSelectedAccont(accounts[0].account_id);
     }, [accounts]);
-    useEffect(()=>{
-      if(selectedAccount!==-1) {getBalance(selectedAccount,setBalance)}
-    },[selectedAccount]);
+
     const onWithdraw=(event) => {
         event.preventDefault();
         const url='http://localhost:3000/withdraw';
@@ -80,19 +79,17 @@ export default function WithdrawPage() {
           }); 
       };
 
-    return(
-        <>
-
-
-        <ThemeProvider theme={defaultTheme}>
+  return (
+    <>
+      <ThemeProvider theme={defaultTheme}>
         <Container component="main" maxWidth="sm">
           <CssBaseline />
           <Box
             sx={{
               marginTop: 8,
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'center',
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
             }}
           >
             <Typography component="h1" variant="h5">
@@ -138,9 +135,9 @@ export default function WithdrawPage() {
                 Withdrawal
               </Button>
             </Box>
-            </Box>
+          </Box>
         </Container>
       </ThemeProvider>
-        </>
-    )
+    </>
+  );
 }
