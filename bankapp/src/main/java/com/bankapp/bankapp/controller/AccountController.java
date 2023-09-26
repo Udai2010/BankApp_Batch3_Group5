@@ -28,7 +28,6 @@ import com.bankapp.bankapp.service.CustomerService;
 
 
 @RestController
-@CrossOrigin("*")
 public class AccountController {
     @Autowired
     AccountService accountService;

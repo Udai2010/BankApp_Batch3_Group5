@@ -12,7 +12,6 @@ import com.bankapp.bankapp.model.Transaction;
 import com.bankapp.bankapp.service.TransactionService;
 
 @RestController
-@CrossOrigin("*")
 public class TransactionController {
     @Autowired
     TransactionService transactionService;

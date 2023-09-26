@@ -23,7 +23,6 @@ import com.bankapp.bankapp.model.Login;
 import com.bankapp.bankapp.service.CustomerService;
 
 @RestController
-@CrossOrigin("*")
 public class CustomerController {
 	
 	@Autowired
@@ -34,7 +33,7 @@ public class CustomerController {
 		return "Controller is working";
 	}
 	
-	@PostMapping("/createCustomer")
+	@PostMapping("/auth/createCustomer")
 	public List<String> createNewCustomer(@RequestBody Customer c) {
 		ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
 		javax.validation.Validator validator = factory.getValidator();
