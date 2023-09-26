@@ -75,10 +75,10 @@ public class AdminController {
         accService.Access(User.getAccess(),User.getAccount_id());
     	
     	String s = User.getAccess();
-    	if(s == "active") {
+    	System.out.print(s);
+    	if(s.equals("active")) {
 			return "Account activated successfully";
 		}
-		
 		else {
 			return "Account de-activated successfully";
 		}
