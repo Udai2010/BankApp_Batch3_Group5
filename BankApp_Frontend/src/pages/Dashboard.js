@@ -1,5 +1,5 @@
-import React from "react";
-
+import React, { useState, useEffect } from "react";
+import axios from 'axios';
 
 import { createTheme, ThemeProvider, AppBar,Box,Toolbar,Typography,Button } from "@mui/material";
 
@@ -16,6 +16,22 @@ import NavBar from "./NavBar";
 const defaultTheme = createTheme();
 
 export default function Dashboard () {
+
+    const [customer_id, setCustomerId] = useState("")
+    const [customer, setCustomer] = useState([])
+
+    async function getCustomer(customer_id, setCustomer) {
+        const url = `http://localhost:3000/user/${customer_id}`;
+        await axios.get(url).then((response) => {
+            setCustomer(response.data);
+        });
+
+    }
+
+    useEffect(() => {
+        getCustomer(window.sessionStorage.getItem("customer_id"), setCustomer);
+    }, [customer_id])
+    
     return(
         <>
             <ThemeProvider theme={defaultTheme}>
@@ -34,7 +50,7 @@ export default function Dashboard () {
             <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
             </Avatar>
             <Typography variant="h4" component="div" sx={{ flexGrow: 1 }}>
-                        Hello User
+                        Hello {customer.name}, what do you want to do today?
             </Typography>
             
             <Box sx={{ flexGrow: 2 }}>
