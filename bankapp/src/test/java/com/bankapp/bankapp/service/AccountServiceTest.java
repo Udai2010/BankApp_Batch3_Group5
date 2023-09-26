@@ -25,8 +25,6 @@ import java.util.List;
 
 import java.util.Optional;
 
-import org.junit.jupiter.api.Disabled;
-
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mockito;
@@ -52,9 +50,6 @@ class AccountServiceTest {
     @MockBean
     private TransactionRepository transactionRepository;
 
-    /**
-     * Method under test: {@link AccountService#createAccount(Account, Long)}
-     */
     @Test
     void testCreateAccount() {
         Customer customer = new Customer();
@@ -126,79 +121,6 @@ class AccountServiceTest {
         assertSame(customer2, account2.getCustomer());
     }
 
-    /**
-     * Method under test: {@link AccountService#createAccount(Account, Long)}
-     */
-    @Test
-    @Disabled("TODO: Complete this test")
-    void testCreateAccount2() {
-        // TODO: Complete this test.
-        //   Reason: R013 No inputs found that don't throw a trivial exception.
-        //   Diffblue Cover tried to run the arrange/act section, but the method under
-        //   test threw
-        //   java.util.NoSuchElementException: No value present
-        //       at java.util.Optional.get(Optional.java:143)
-        //       at com.bankapp.bankapp.service.AccountService.createAccount(AccountService.java:30)
-        //   See https://diff.blue/R013 to resolve this issue.
-
-        Customer customer = new Customer();
-        customer.setAddress("42 Main St");
-        customer.setCustomer_Id(1L);
-        customer.setDob("Dob");
-        customer.setEmail("jane.doe@example.org");
-        customer.setFathername("Fathername");
-        customer.setMothername("Mothername");
-        customer.setName("Name");
-        customer.setPan_number("42");
-        customer.setPassword("iloveyou");
-
-        Account account = new Account();
-        account.setAccount_id(1L);
-        account.setAccount_type("3");
-        account.setAnnual_income(10.0d);
-        account.setBalance(10.0d);
-        account.setBranch("janedoe/featurebranch");
-        account.setCustomer(customer);
-        account.setDebit_card("Debit card");
-        account.setIFSC("I FSC");
-        account.setIncome_source("Income source");
-        account.setNet_banking("Net banking");
-        account.setOccupation_type("Occupation type");
-        account.setStatus("Status");
-        when(accountRepository.save(Mockito.<Account>any())).thenReturn(account);
-        Optional<Customer> emptyResult = Optional.empty();
-        when(customerRepository.findById(Mockito.<Long>any())).thenReturn(emptyResult);
-
-        Customer customer2 = new Customer();
-        customer2.setAddress("42 Main St");
-        customer2.setCustomer_Id(1L);
-        customer2.setDob("Dob");
-        customer2.setEmail("jane.doe@example.org");
-        customer2.setFathername("Fathername");
-        customer2.setMothername("Mothername");
-        customer2.setName("Name");
-        customer2.setPan_number("42");
-        customer2.setPassword("iloveyou");
-
-        Account account2 = new Account();
-        account2.setAccount_id(1L);
-        account2.setAccount_type("3");
-        account2.setAnnual_income(10.0d);
-        account2.setBalance(10.0d);
-        account2.setBranch("janedoe/featurebranch");
-        account2.setCustomer(customer2);
-        account2.setDebit_card("Debit card");
-        account2.setIFSC("I FSC");
-        account2.setIncome_source("Income source");
-        account2.setNet_banking("Net banking");
-        account2.setOccupation_type("Occupation type");
-        account2.setStatus("Status");
-        accountService.createAccount(account2, 1L);
-    }
-
-    /**
-     * Method under test: {@link AccountService#getBalance(Long)}
-     */
     @Test
     void testGetBalance() {
         when(accountRepository.getBalance(Mockito.<Long>any())).thenReturn(10.0d);
@@ -206,9 +128,6 @@ class AccountServiceTest {
         verify(accountRepository).getBalance(Mockito.<Long>any());
     }
 
-    /**
-     * Method under test: {@link AccountService#Access(String, Long)}
-     */
     @Test
     void testAccess() {
         doNothing().when(accountRepository).Access(Mockito.<String>any(), Mockito.<Long>any());
@@ -216,9 +135,6 @@ class AccountServiceTest {
         verify(accountRepository).Access(Mockito.<String>any(), Mockito.<Long>any());
     }
 
-    /**
-     * Method under test: {@link AccountService#getStatus(Long)}
-     */
     @Test
     void testGetStatus() {
         when(accountRepository.getStatus(Mockito.<Long>any())).thenReturn("Status");
@@ -226,9 +142,6 @@ class AccountServiceTest {
         verify(accountRepository).getStatus(Mockito.<Long>any());
     }
 
-    /**
-     * Method under test: {@link AccountService#withdrawAmount(double, Long, boolean)}
-     */
     @Test
     void testWithdrawAmount() {
         when(accountRepository.withdraw(anyDouble(), Mockito.<Long>any())).thenReturn(1);
@@ -238,9 +151,6 @@ class AccountServiceTest {
         verify(accountRepository).withdraw(anyDouble(), Mockito.<Long>any());
     }
 
-    /**
-     * Method under test: {@link AccountService#withdrawAmount(double, Long, boolean)}
-     */
     @Test
     void testWithdrawAmount2() {
         when(accountRepository.getBalance(Mockito.<Long>any())).thenReturn(0.5d);
@@ -248,9 +158,6 @@ class AccountServiceTest {
         verify(accountRepository).getBalance(Mockito.<Long>any());
     }
 
-    /**
-     * Method under test: {@link AccountService#withdrawAmount(double, Long, boolean)}
-     */
     @Test
     void testWithdrawAmount3() {
         Customer customer = new Customer();
@@ -400,9 +307,6 @@ class AccountServiceTest {
         verify(transactionRepository).save(Mockito.<Transaction>any());
     }
 
-    /**
-     * Method under test: {@link AccountService#depositAmount(double, Long, boolean)}
-     */
     @Test
     void testDepositAmount() {
         when(accountRepository.deposit(anyDouble(), Mockito.<Long>any())).thenReturn(1);
@@ -410,9 +314,6 @@ class AccountServiceTest {
         verify(accountRepository).deposit(anyDouble(), Mockito.<Long>any());
     }
 
-    /**
-     * Method under test: {@link AccountService#depositAmount(double, Long, boolean)}
-     */
     @Test
     void testDepositAmount2() {
         Customer customer = new Customer();
@@ -560,9 +461,6 @@ class AccountServiceTest {
         verify(transactionRepository).save(Mockito.<Transaction>any());
     }
 
-    /**
-     * Method under test: {@link AccountService#fundTransfer(FundTransfer)}
-     */
     @Test
     void testFundTransfer() {
         Customer customer = new Customer();
@@ -714,9 +612,6 @@ class AccountServiceTest {
         verify(transactionRepository).save(Mockito.<Transaction>any());
     }
 
-    /**
-     * Method under test: {@link AccountService#fundTransfer(FundTransfer)}
-     */
     @Test
     void testFundTransfer2() {
         when(accountRepository.getBalance(Mockito.<Long>any())).thenReturn(0.5d);
@@ -725,9 +620,6 @@ class AccountServiceTest {
         verify(accountRepository).getBalance(Mockito.<Long>any());
     }
 
-    /**
-     * Method under test: {@link AccountService#getAllAccounts(Long)}
-     */
     @Test
     void testGetAllAccounts() {
         ArrayList<Account> accountList = new ArrayList<>();
@@ -738,9 +630,6 @@ class AccountServiceTest {
         verify(accountRepository).findAllAccounts(Mockito.<Long>any());
     }
 
-    /**
-     * Method under test: {@link AccountService#getAccountDetails(Long)}
-     */
     @Test
     void testGetAccountDetails() {
         Customer customer = new Customer();

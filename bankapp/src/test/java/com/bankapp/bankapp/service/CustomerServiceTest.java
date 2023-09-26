@@ -14,8 +14,6 @@ import com.bankapp.bankapp.repository.CustomerRepository;
 
 import java.util.Optional;
 
-import org.junit.jupiter.api.Disabled;
-
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mockito;
@@ -33,9 +31,6 @@ class CustomerServiceTest {
     @Autowired
     private CustomerService customerService;
 
-    /**
-     * Method under test: {@link CustomerService#createNewCustomer(Customer)}
-     */
     @Test
     void testCreateNewCustomer() {
         Customer customer = new Customer();
@@ -64,9 +59,6 @@ class CustomerServiceTest {
         verify(customerRepository).save(Mockito.<Customer>any());
     }
 
-    /**
-     * Method under test: {@link CustomerService#validateUser(Login)}
-     */
     @Test
     void testValidateUser() {
         Customer customer = new Customer();
@@ -91,9 +83,6 @@ class CustomerServiceTest {
         verify(customerRepository).findById(Mockito.<Long>any());
     }
 
-    /**
-     * Method under test: {@link CustomerService#validateUser(Login)}
-     */
     @Test
     void testValidateUser2() {
         Customer customer = mock(Customer.class);
@@ -138,35 +127,6 @@ class CustomerServiceTest {
         verify(customer).setPassword(Mockito.<String>any());
     }
 
-    /**
-     * Method under test: {@link CustomerService#validateUser(Login)}
-     */
-    @Test
-    @Disabled("TODO: Complete this test")
-    void testValidateUser3() {
-        // TODO: Complete this test.
-        //   Reason: R013 No inputs found that don't throw a trivial exception.
-        //   Diffblue Cover tried to run the arrange/act section, but the method under
-        //   test threw
-        //   java.util.NoSuchElementException: No value present
-        //       at java.util.Optional.get(Optional.java:143)
-        //       at com.bankapp.bankapp.service.CustomerService.validateUser(CustomerService.java:34)
-        //   See https://diff.blue/R013 to resolve this issue.
-
-        Optional<Customer> emptyResult = Optional.empty();
-        when(customerRepository.findById(Mockito.<Long>any())).thenReturn(emptyResult);
-
-        Login l = new Login();
-        l.setOtp(1L);
-        l.setPassword("iloveyou");
-        l.setUserID(1L);
-        l.setUsername(1L);
-        customerService.validateUser(l);
-    }
-
-    /**
-     * Method under test: {@link CustomerService#validateUser(Login)}
-     */
     @Test
     void testValidateUser4() {
         when(customerRepository.findById(Mockito.<Long>any())).thenReturn(null);
@@ -180,9 +140,6 @@ class CustomerServiceTest {
         verify(customerRepository).findById(Mockito.<Long>any());
     }
 
-    /**
-     * Method under test: {@link CustomerService#getCustomer(Long)}
-     */
     @Test
     void testGetCustomer() {
         Customer customer = new Customer();
@@ -201,29 +158,6 @@ class CustomerServiceTest {
         verify(customerRepository).findById(Mockito.<Long>any());
     }
 
-    /**
-     * Method under test: {@link CustomerService#getCustomer(Long)}
-     */
-    @Test
-    @Disabled("TODO: Complete this test")
-    void testGetCustomer2() {
-        // TODO: Complete this test.
-        //   Reason: R013 No inputs found that don't throw a trivial exception.
-        //   Diffblue Cover tried to run the arrange/act section, but the method under
-        //   test threw
-        //   java.util.NoSuchElementException: No value present
-        //       at java.util.Optional.get(Optional.java:143)
-        //       at com.bankapp.bankapp.service.CustomerService.getCustomer(CustomerService.java:46)
-        //   See https://diff.blue/R013 to resolve this issue.
-
-        Optional<Customer> emptyResult = Optional.empty();
-        when(customerRepository.findById(Mockito.<Long>any())).thenReturn(emptyResult);
-        customerService.getCustomer(1L);
-    }
-
-    /**
-     * Method under test: {@link CustomerService#changePassword(Login)}
-     */
     @Test
     void testChangePassword() {
         Customer customer = new Customer();
@@ -250,9 +184,6 @@ class CustomerServiceTest {
         verify(customerRepository).findById(Mockito.<Long>any());
     }
 
-    /**
-     * Method under test: {@link CustomerService#changePassword(Login)}
-     */
     @Test
     void testChangePassword2() {
         Customer customer = mock(Customer.class);
@@ -299,36 +230,6 @@ class CustomerServiceTest {
         verify(customer).setPassword(Mockito.<String>any());
     }
 
-    /**
-     * Method under test: {@link CustomerService#changePassword(Login)}
-     */
-    @Test
-    @Disabled("TODO: Complete this test")
-    void testChangePassword3() {
-        // TODO: Complete this test.
-        //   Reason: R013 No inputs found that don't throw a trivial exception.
-        //   Diffblue Cover tried to run the arrange/act section, but the method under
-        //   test threw
-        //   java.util.NoSuchElementException: No value present
-        //       at java.util.Optional.get(Optional.java:143)
-        //       at com.bankapp.bankapp.service.CustomerService.changePassword(CustomerService.java:53)
-        //   See https://diff.blue/R013 to resolve this issue.
-
-        when(customerRepository.changePassword(Mockito.<String>any(), Mockito.<Long>any())).thenReturn(1);
-        Optional<Customer> emptyResult = Optional.empty();
-        when(customerRepository.findById(Mockito.<Long>any())).thenReturn(emptyResult);
-
-        Login l = new Login();
-        l.setOtp(1L);
-        l.setPassword("iloveyou");
-        l.setUserID(1L);
-        l.setUsername(1L);
-        customerService.changePassword(l);
-    }
-
-    /**
-     * Method under test: {@link CustomerService#forgotPassword(Login)}
-     */
     @Test
     void testForgotPassword() {
         Login l = new Login();
@@ -339,9 +240,6 @@ class CustomerServiceTest {
         assertEquals("OTP entered is wrong", customerService.forgotPassword(l));
     }
 
-    /**
-     * Method under test: {@link CustomerService#forgotPassword(Login)}
-     */
     @Test
     void testForgotPassword2() {
         Login l = mock(Login.class);
@@ -362,9 +260,6 @@ class CustomerServiceTest {
         verify(l).setUsername(Mockito.<Long>any());
     }
 
-    /**
-     * Method under test: {@link CustomerService#forgotPassword(Login)}
-     */
     @Test
     void testForgotPassword3() {
         Customer customer = new Customer();
@@ -404,9 +299,6 @@ class CustomerServiceTest {
         verify(l).setUsername(Mockito.<Long>any());
     }
 
-    /**
-     * Method under test: {@link CustomerService#forgotPassword(Login)}
-     */
     @Test
     void testForgotPassword4() {
         Customer customer = new Customer();
@@ -446,9 +338,6 @@ class CustomerServiceTest {
         verify(l).setUsername(Mockito.<Long>any());
     }
 
-    /**
-     * Method under test: {@link CustomerService#forgotPassword(Login)}
-     */
     @Test
     void testForgotPassword5() {
         Optional<Customer> emptyResult = Optional.empty();

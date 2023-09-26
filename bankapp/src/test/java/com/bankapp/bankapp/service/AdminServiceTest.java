@@ -46,9 +46,6 @@ class AdminServiceTest {
     @MockBean
     private TransactionRepository transactionRepository;
 
-    /**
-     * Method under test: {@link AdminService#createAdmin(Admin)}
-     */
     @Test
     void testCreateAdmin() {
         Admin admin = new Admin();
@@ -71,9 +68,6 @@ class AdminServiceTest {
         verify(adminRepository).save(Mockito.<Admin>any());
     }
 
-    /**
-     * Method under test: {@link AdminService#validateAdmin(AdminLogin)}
-     */
     @Test
     void testValidateAdmin() {
         Admin admin = new Admin();
@@ -93,9 +87,6 @@ class AdminServiceTest {
         verify(adminRepository).findById(Mockito.<Long>any());
     }
 
-    /**
-     * Method under test: {@link AdminService#validateAdmin(AdminLogin)}
-     */
     @Test
     void testValidateAdmin2() {
         Admin admin = mock(Admin.class);
@@ -129,9 +120,6 @@ class AdminServiceTest {
         verify(admin).setPassword(Mockito.<String>any());
     }
 
-    /**
-     * Method under test: {@link AdminService#validateAdmin(AdminLogin)}
-     */
     @Test
     void testValidateAdmin3() {
         Optional<Admin> emptyResult = Optional.empty();
@@ -144,9 +132,6 @@ class AdminServiceTest {
         verify(adminRepository).findById(Mockito.<Long>any());
     }
 
-    /**
-     * Method under test: {@link AdminService#getTransactions(Long)}
-     */
     @Test
     void testGetTransactions() {
         when(accountRepository.findAllAccounts(Mockito.<Long>any())).thenReturn(new ArrayList<>());
@@ -168,9 +153,6 @@ class AdminServiceTest {
         verify(customerRepository).findById(Mockito.<Long>any());
     }
 
-    /**
-     * Method under test: {@link AdminService#getTransactions(Long)}
-     */
     @Test
     void testGetTransactions2() {
         Customer customer = new Customer();
@@ -221,9 +203,6 @@ class AdminServiceTest {
         verify(transactionRepository).getTransactions(Mockito.<Long>any());
     }
 
-    /**
-     * Method under test: {@link AdminService#getTransactions(Long)}
-     */
     @Test
     void testGetTransactions3() {
         Optional<Customer> emptyResult = Optional.empty();

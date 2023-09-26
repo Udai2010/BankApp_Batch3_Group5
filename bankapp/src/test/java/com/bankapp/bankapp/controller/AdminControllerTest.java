@@ -42,9 +42,6 @@ class AdminControllerTest {
     @MockBean
     private CustomerService customerService;
 
-    /**
-     * Method under test: {@link AdminController#createAdmin(Admin)}
-     */
     @Test
     void testCreateAdmin() throws Exception {
         Admin admin = new Admin();
@@ -75,9 +72,6 @@ class AdminControllerTest {
                 .andExpect(MockMvcResultMatchers.content().string("Admin Created Successfully"));
     }
 
-    /**
-     * Method under test: {@link AdminController#validateAdmin(AdminLogin)}
-     */
     @Test
     void testValidateAdmin() throws Exception {
         when(adminService.validateAdmin(Mockito.<AdminLogin>any())).thenReturn("2020-03-01");
@@ -97,9 +91,6 @@ class AdminControllerTest {
                 .andExpect(MockMvcResultMatchers.content().string("2020-03-01"));
     }
 
-    /**
-     * Method under test: {@link AdminController#getTransactions(Long)}
-     */
     @Test
     void testGetTransactions() throws Exception {
         when(adminService.getTransactions(Mockito.<Long>any())).thenReturn(new ArrayList<>());
@@ -112,9 +103,6 @@ class AdminControllerTest {
                 .andExpect(MockMvcResultMatchers.content().string("[]"));
     }
 
-    /**
-     * Method under test: {@link AdminController#getstatus(Long)}
-     */
     @Test
     void testGetstatus() throws Exception {
         when(accountService.getStatus(Mockito.<Long>any())).thenReturn("Status");
@@ -127,9 +115,6 @@ class AdminControllerTest {
                 .andExpect(MockMvcResultMatchers.content().string("Status"));
     }
 
-    /**
-     * Method under test: {@link AdminController#serach(Long)}
-     */
     @Test
     void testSerach() throws Exception {
         Customer customer = new Customer();
@@ -155,9 +140,6 @@ class AdminControllerTest {
                                         + "\",\"dob\":\"Dob\",\"fathername\":\"Fathername\",\"mothername\":\"Mothername\",\"address\":\"42 Main St\"}"));
     }
 
-    /**
-     * Method under test: {@link AdminController#UserAcess(UserAccess)}
-     */
     @Test
     void testUserAcess() throws Exception {
         doNothing().when(accountService).Access(Mockito.<String>any(), Mockito.<Long>any());

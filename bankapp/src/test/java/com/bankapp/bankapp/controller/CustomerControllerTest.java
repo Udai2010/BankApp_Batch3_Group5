@@ -28,9 +28,6 @@ class CustomerControllerTest {
     @MockBean
     private CustomerService customerService;
 
-    /**
-     * Method under test: {@link CustomerController#chagnePassword(Login)}
-     */
     @Test
     void testChagnePassword() throws Exception {
         when(customerService.changePassword(Mockito.<Login>any())).thenReturn("iloveyou");
@@ -52,9 +49,6 @@ class CustomerControllerTest {
                 .andExpect(MockMvcResultMatchers.content().string("iloveyou"));
     }
 
-    /**
-     * Method under test: {@link CustomerController#createNewCustomer(Customer)}
-     */
     @Test
     void testCreateNewCustomer2() throws Exception {
         Customer customer = new Customer();
@@ -91,9 +85,6 @@ class CustomerControllerTest {
                 .andExpect(MockMvcResultMatchers.content().string("[\"Your new Customer ID is 1\"]"));
     }
 
-    /**
-     * Method under test: {@link CustomerController#validateUser(Login)}
-     */
     @Test
     void testValidateUser() throws Exception {
         when(customerService.validateUser(Mockito.<Login>any())).thenReturn("2020-03-01");
@@ -115,9 +106,6 @@ class CustomerControllerTest {
                 .andExpect(MockMvcResultMatchers.content().string("2020-03-01"));
     }
 
-    /**
-     * Method under test: {@link CustomerController#forgotPassword(Login)}
-     */
     @Test
     void testForgotPassword() throws Exception {
         when(customerService.forgotPassword(Mockito.<Login>any())).thenReturn("iloveyou");
@@ -139,9 +127,6 @@ class CustomerControllerTest {
                 .andExpect(MockMvcResultMatchers.content().string("iloveyou"));
     }
 
-    /**
-     * Method under test: {@link CustomerController#createNewCustomer(Customer)}
-     */
     @Test
     void testCreateNewCustomer() throws Exception {
         Customer customer = new Customer();
@@ -166,9 +151,6 @@ class CustomerControllerTest {
                 .andExpect(MockMvcResultMatchers.content().string("[\"pan number must be 10 characters\"]"));
     }
 
-    /**
-     * Method under test: {@link CustomerController#getUser(Long)}
-     */
     @Test
     void testGetUser() throws Exception {
         Customer customer = new Customer();
@@ -194,9 +176,6 @@ class CustomerControllerTest {
                                         + "\",\"dob\":\"Dob\",\"fathername\":\"Fathername\",\"mothername\":\"Mothername\",\"address\":\"42 Main St\"}"));
     }
 
-    /**
-     * Method under test: {@link CustomerController#testMessage()}
-     */
     @Test
     void testTestMessage() throws Exception {
         MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.get("/test");
@@ -208,9 +187,6 @@ class CustomerControllerTest {
                 .andExpect(MockMvcResultMatchers.content().string("Controller is working"));
     }
 
-    /**
-     * Method under test: {@link CustomerController#testMessage()}
-     */
     @Test
     void testTestMessage2() throws Exception {
         MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.get("/test");

@@ -27,9 +27,6 @@ class TransactionControllerTest {
     @MockBean
     private TransactionService transactionService;
 
-    /**
-     * Method under test: {@link TransactionController#geTransactions(Long)}
-     */
     @Test
     void testGeTransactions() throws Exception {
         when(transactionService.getTransactionForAnAccount(Mockito.<Long>any())).thenReturn(new ArrayList<>());
@@ -42,9 +39,6 @@ class TransactionControllerTest {
                 .andExpect(MockMvcResultMatchers.content().string("[]"));
     }
 
-    /**
-     * Method under test: {@link TransactionController#getStatement(Long, String, String)}
-     */
     @Test
     void testGetStatement() throws Exception {
         when(transactionService.getStatement(Mockito.<Long>any(), Mockito.<String>any(), Mockito.<String>any()))

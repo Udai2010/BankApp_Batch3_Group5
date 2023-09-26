@@ -37,9 +37,6 @@ class TransactionServiceTest {
     @Autowired
     private TransactionService transactionService;
 
-    /**
-     * Method under test: {@link TransactionService#createNewTransaction(Transaction)}
-     */
     @Test
     void testCreateNewTransaction() {
         Customer customer = new Customer();
@@ -269,9 +266,6 @@ class TransactionServiceTest {
         verify(transactionRepository).save(Mockito.<Transaction>any());
     }
 
-    /**
-     * Method under test: {@link TransactionService#getTransactionForAnAccount(Long)}
-     */
     @Test
     void testGetTransactionForAnAccount() {
         ArrayList<Transaction> transactionList = new ArrayList<>();
@@ -282,9 +276,6 @@ class TransactionServiceTest {
         verify(transactionRepository).getTransactions(Mockito.<Long>any());
     }
 
-    /**
-     * Method under test: {@link TransactionService#getStatement(Long, String, String)}
-     */
     @Test
     void testGetStatement() {
         ArrayList<Transaction> transactionList = new ArrayList<>();
@@ -296,9 +287,6 @@ class TransactionServiceTest {
         verify(transactionRepository).getStatement(Mockito.<Long>any(), Mockito.<Date>any(), Mockito.<Date>any());
     }
 
-    /**
-     * Method under test: {@link TransactionService#getStatement(Long, String, String)}
-     */
     @Test
     void testGetStatement2() {
         ArrayList<Transaction> transactionList = new ArrayList<>();
@@ -310,9 +298,6 @@ class TransactionServiceTest {
         verify(transactionRepository).getStatement(Mockito.<Long>any(), Mockito.<Date>any(), Mockito.<Date>any());
     }
 
-    /**
-     * Method under test: {@link TransactionService#getStatement(Long, String, String)}
-     */
     @Test
     void testGetStatement3() {
         ArrayList<Transaction> transactionList = new ArrayList<>();

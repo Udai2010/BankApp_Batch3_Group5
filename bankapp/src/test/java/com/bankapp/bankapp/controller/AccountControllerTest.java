@@ -1,19 +1,15 @@
 package com.bankapp.bankapp.controller;
 
-import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 import com.bankapp.bankapp.model.Account;
 import com.bankapp.bankapp.model.Customer;
-import com.bankapp.bankapp.model.FundTransfer;
-import com.bankapp.bankapp.model.Withdraw;
 import com.bankapp.bankapp.service.AccountService;
 import com.bankapp.bankapp.service.CustomerService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.util.ArrayList;
 
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mockito;
@@ -22,7 +18,6 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
-// import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
@@ -42,7 +37,7 @@ class AccountControllerTest {
 
 
     // @Test
-    // void testWithdrawAccount3() throws Exception {
+    // void testWithdrawAccount() throws Exception {
     //     AccountController accountController = new AccountController();
     //     Withdraw withdraw = mock(Withdraw.class);
     //     when(withdraw.getAmount()).thenReturn(500.0d);
@@ -67,9 +62,6 @@ class AccountControllerTest {
         
     // }
 
-    /**
-     * Method under test: {@link AccountController#Balance(Long)}
-     */
     @Test
     void testBalance() throws Exception {
         when(accountService.getBalance(Mockito.<Long>any())).thenReturn(10.0d);
@@ -81,9 +73,7 @@ class AccountControllerTest {
                 .andExpect(MockMvcResultMatchers.content().contentType("application/json"))
                 .andExpect(MockMvcResultMatchers.content().string("10.0"));
     }
-    /**
-     * Method under test: {@link AccountController#createNewAccount(Account, Long)}
-     */
+    
     @Test
     void testCreateNewAccount() throws Exception {
         Customer customer = new Customer();
@@ -148,9 +138,6 @@ class AccountControllerTest {
                 .andExpect(MockMvcResultMatchers.content().string("[\"Your new Account ID is 1\"]"));
     }
 
-    /**
-     * Method under test: {@link AccountController#createNewAccount(Account, Long)}
-     */
     @Test
     void testCreateNewAccount2() throws Exception {
         Customer customer = new Customer();
@@ -215,9 +202,6 @@ class AccountControllerTest {
                 .andExpect(MockMvcResultMatchers.content().string("[\"Account type can not be blank.\"]"));
     }
 
-    /**
-     * Method under test: {@link AccountController#getAccount(Long)}
-     */
     @Test
     void testGetAccount() throws Exception {
         when(accountService.getAllAccounts(Mockito.<Long>any())).thenReturn(new ArrayList<>());
