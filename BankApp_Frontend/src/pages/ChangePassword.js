@@ -11,7 +11,7 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { Grid } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import { passwordHashService } from '../services/PasswordHashService';
-
+import NavBar from './NavBar';
 const defaultTheme = createTheme();
 
 export default function LoginPage() {
@@ -55,6 +55,7 @@ export default function LoginPage() {
   return (
     <>
       <ThemeProvider theme={defaultTheme}>
+         <NavBar/>
         <Container component="main" maxWidth="sm">
           <CssBaseline />
           <Box

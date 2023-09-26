@@ -11,7 +11,7 @@ import {FormControl, InputLabel, Select, MenuItem } from '@mui/material';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { Grid } from '@mui/material';
 import { ElevenMp } from '@mui/icons-material';
-
+import NavBar from './NavBar';
 const defaultTheme = createTheme();
 
 
@@ -80,6 +80,8 @@ export default function FundTransfer() {
 
 
         <ThemeProvider theme={defaultTheme}>
+        <NavBar/>
+
         <Container component="main" maxWidth="sm">
           <CssBaseline />
           <Box

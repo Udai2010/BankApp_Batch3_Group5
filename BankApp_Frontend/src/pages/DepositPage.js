@@ -10,7 +10,7 @@ import Container from '@mui/material/Container';
 import {FormControl, InputLabel, Select, MenuItem } from '@mui/material';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { Grid } from '@mui/material';
-
+import NavBar from './NavBar';
 const defaultTheme = createTheme();
 
 
@@ -73,6 +73,8 @@ export default function DepositPage() {
 
 
         <ThemeProvider theme={defaultTheme}>
+        <NavBar/>
+
         <Container component="main" maxWidth="sm">
           <CssBaseline />
           <Box

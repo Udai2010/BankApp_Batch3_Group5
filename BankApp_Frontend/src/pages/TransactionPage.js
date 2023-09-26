@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { FormControl, InputLabel, MenuItem, Select, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import axios from 'axios';
-
+import NavBar from './NavBar';
 const defaultTheme = createTheme();
 export default function TransactionPage() {
   const [customerId, setCustomerId] = useState("");
@@ -42,6 +42,9 @@ export default function TransactionPage() {
   }, [selectedAccount]); 
   
   return (
+    <>
+               <NavBar/>
+
     <div>TransactionPage
 
       {accounts.length > 0 ?<div>
@@ -91,5 +94,6 @@ export default function TransactionPage() {
     </TableContainer>: <p>There are no transactions for this account.</p>}
     
   </div>
+  </>
   )
 }

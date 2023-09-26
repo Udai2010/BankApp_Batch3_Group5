@@ -16,7 +16,7 @@ import Fade from '@mui/material/Fade';
 import {Select} from '@mui/material';
 import {MenuItem} from '@mui/material';
 import { useNavigate } from 'react-router-dom';
-
+import NavBar from './NavBar';
 const style = {
   position: 'absolute',
   top: '50%',
@@ -122,6 +122,8 @@ export default function OpenAccountPage() {
       {!success ?
         <>
           <ThemeProvider theme={defaultTheme}>
+          <NavBar/>
+
             <Container component="main" maxWidth="sm">
               <CssBaseline />
               <Box

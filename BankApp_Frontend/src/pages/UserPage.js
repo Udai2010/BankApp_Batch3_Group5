@@ -3,7 +3,7 @@ import { Paper, Typography } from '@mui/material';
 import { Link } from 'react-router-dom';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import axios from 'axios';
-
+import NavBar from './NavBar';
 const defaultTheme = createTheme();
 export default function UserPage(){
     const [customer_id, setCustomerId] = useState("")
@@ -25,6 +25,8 @@ export default function UserPage(){
     return(<>
         
         <ThemeProvider theme={defaultTheme}>
+        <NavBar/>
+
             <Paper>
                 <Typography variant='h4'>Customer details</Typography>
                 <Typography variant='h6'>Name: {customer.name}</Typography>

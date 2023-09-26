@@ -12,27 +12,15 @@ import IndeterminateCheckBoxIcon from '@mui/icons-material/IndeterminateCheckBox
 import LoopIcon from '@mui/icons-material/Loop';
 import CompareArrowsIcon from '@mui/icons-material/CompareArrows';
 import { Link } from "react-router-dom";
-
+import NavBar from "./NavBar";
 const defaultTheme = createTheme();
 
 export default function Dashboard () {
     return(
         <>
             <ThemeProvider theme={defaultTheme}>
-                <Box sx={{ flexGrow: 1 }}>
-                    <AppBar position="static">
-                    <Toolbar>
-                    
-                    <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-                        Online Banking App
-                    </Typography>
-                    <Button color="inherit">Home</Button>
-                    <Button color="inherit">About</Button>
-                    <Button color="inherit">Contact</Button>
-                    <Button color="inherit" href="/changepassword">Change password</Button>
-                    </Toolbar>
-                    </AppBar>
-                </Box>
+                <NavBar/>
+
             <Container component="div" maxWidth="85%">
           <CssBaseline />
           <Box

@@ -10,7 +10,7 @@ import Container from '@mui/material/Container';
 import {FormControl, InputLabel, Select, MenuItem } from '@mui/material';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { Grid } from '@mui/material';
-
+import NavBar from './NavBar';
 const defaultTheme = createTheme();
 
 
@@ -20,14 +20,23 @@ export default function WithdrawPage() {
     const [accounts, setAccounts] = useState([]);
     const [amount,setAmount]=useState("");
     const [selectedAccount, setSelectedAccont] = useState(-1);
+    const [balance, setBalance] = useState(0);
 
     async function getAccounts(customer_id, setAccounts) {
-      const url = `http://localhost:3000/account/${customer_id}`;
+      const url = `http://localhost:3000/account/${customer_id}`
       await axios.get(url).then((response) => {
           setAccounts(response.data);
           console.log(accounts);
       });
       
+  }
+
+  async function getBalance(account_id, setBalance) {
+    const url = `http://localhost:3000/balance/${account_id}`;
+    await axios.get(url).then((response) => {
+      setBalance(response.data);
+      console.log(balance);
+    });
   }
     
     const onAmountChange = (event) => {
@@ -41,15 +50,18 @@ export default function WithdrawPage() {
 
     const onSelectAccount = (event) => {
       setSelectedAccont(event.target.value);
+      getBalance(selectedAccount, setBalance);
     }
 
     useEffect(() => {
       getAccounts(window.sessionStorage.getItem("customer_id"), setAccounts);
     }, [customerId]);
     useEffect(() => {
-      if(accounts.length > 0) setSelectedAccont(accounts[0].account_id);
+      if(accounts.length > 0) {setSelectedAccont(accounts[0].account_id); }
     }, [accounts]);
-
+    useEffect(()=>{
+      if(selectedAccount!==-1) {getBalance(selectedAccount,setBalance)}
+    },[selectedAccount]);
     const onWithdraw=(event) => {
         event.preventDefault();
         const url='http://localhost:3000/withdraw';
@@ -73,6 +85,8 @@ export default function WithdrawPage() {
 
 
         <ThemeProvider theme={defaultTheme}>
+        <NavBar/>
+
         <Container component="main" maxWidth="sm">
           <CssBaseline />
           <Box
@@ -116,6 +130,7 @@ export default function WithdrawPage() {
                     autoFocus
                   />
                 </Grid>
+                <Typography variant='h6'>Balance: {balance}</Typography>
               <Button
                 type="submit"
                 fullWidth

@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { FormControl, InputLabel, MenuItem, Select, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
 import axios from 'axios';
-
+import NavBar from './NavBar';
 const defaultTheme = createTheme();
 export default function AccountPage() {
 
@@ -59,7 +59,9 @@ export default function AccountPage() {
 
     return(
         <>
+                <NavBar/>
                 <h2>Account dashboard</h2> 
+                
 
                 {accounts.length>0?<TableContainer>
                     <Table>
