@@ -15,6 +15,8 @@ export default function AdminViewTransactions() {
     await axios.get(url).then((response) => {
       console.log(response);
         setTransactions(response.data);
+    }).catch((err) => {
+      alert(err);
     });
   }
 
