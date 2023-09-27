@@ -161,6 +161,15 @@ export default function LoginPage() {
                 Forgot Password
               </Button>
 
+              <Button
+                fullWidth
+                variant="contained"
+                component={Link} to="/register"
+                sx={{ mt: 3, mb: 2 }}
+              >
+                Register
+              </Button>
+
             </Box>
           </Box>
         </Container>

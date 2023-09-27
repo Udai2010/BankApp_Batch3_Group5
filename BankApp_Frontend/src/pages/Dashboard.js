@@ -47,19 +47,19 @@ export default function Dashboard () {
               alignItems: 'center',
             }}
           >
-            <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
+            <Avatar sx={{ m: 1, bgcolor: 'black' }} variant='rounded'>
             </Avatar>
-            <Typography variant="h4" component="div" sx={{ flexGrow: 1 }}>
+            <Typography variant="h4" component="div" sx={{ flexGrow: 1, color: 'steelblue', fontWeight: 'bold' }}>
                         Hello {customer.name}, what do you want to do today?
             </Typography>
             
             <Box sx={{ flexGrow: 2 }}>
                 <Grid container spacing={2}>
                     <Grid item xs={4} alignItems="center">
-                    <Card sx={{ minWidth: 275 }}>
-                    <CardContent style={{alignItems:"center"}}>
+                    <Card sx={{ minWidth: 275, border: '0.5rem outset skyblue' }}>
+                    <CardContent sx={{margin: 'auto', width: '50%', display: 'flex', justifyContent: 'center'}}>
                     
-                        <AccountBoxIcon style={{ fontSize: 60 }}/>
+                        <AccountBoxIcon align='center' style={{ fontSize: 60 }}/>
                     
                     </CardContent>
                     <CardActions>
@@ -70,9 +70,9 @@ export default function Dashboard () {
                 </Card>
                     </Grid>
                     <Grid item xs={4}>
-                    <Card sx={{ minWidth: 275 }}>
-                    <CardContent>
-                        <BadgeIcon style={{ fontSize: 60 }}/>
+                    <Card sx={{ minWidth: 275, border: '0.5rem outset skyblue' }}>
+                    <CardContent sx={{margin: 'auto', width: '50%', display: 'flex', justifyContent: 'center'}}>
+                        <BadgeIcon style={{ fontSize: 60 }} align ='center'/>
                     </CardContent>
 
                     <CardActions>
@@ -83,9 +83,9 @@ export default function Dashboard () {
                     </Card>
                     </Grid>
                     <Grid item xs={4}>
-                    <Card sx={{ minWidth: 275 }}>
-                    <CardContent>
-                        <AddBoxIcon style={{ fontSize: 60 }}/>
+                    <Card sx={{ minWidth: 275, border: '0.5rem outset skyblue' }}>
+                    <CardContent sx={{margin: 'auto', width: '50%', display: 'flex', justifyContent: 'center'}}>
+                        <AddBoxIcon align = 'center' style={{ fontSize: 60 }}/>
                     </CardContent>
 
                     <CardActions>
@@ -96,9 +96,9 @@ export default function Dashboard () {
                     </Card> 
                     </Grid>
                     <Grid item xs={4}>
-                        <Card sx={{ minWidth: 275 }}>
-                        <CardContent>
-                            <IndeterminateCheckBoxIcon style={{ fontSize: 60 }}/>
+                    <Card sx={{ minWidth: 275, border: '0.5rem outset skyblue' }}>
+                    <CardContent sx={{margin: 'auto', width: '50%', display: 'flex', justifyContent: 'center'}}>
+                            <IndeterminateCheckBoxIcon align='center' style={{ fontSize: 60 }}/>
                         </CardContent>
 
                         <CardActions>
@@ -110,9 +110,9 @@ export default function Dashboard () {
                     </Grid>
 
                     <Grid item xs={4}>
-                        <Card sx={{ minWidth: 275 }}>
-                        <CardContent>
-                            <CompareArrowsIcon style={{ fontSize: 60 }}/>
+                    <Card sx={{ minWidth: 275, border: '0.5rem outset skyblue' }}>
+                    <CardContent sx={{margin: 'auto', width: '50%', display: 'flex', justifyContent: 'center'}}>
+                            <CompareArrowsIcon align='center' style={{ fontSize: 60 }}/>
                         </CardContent>
 
                         <CardActions>
@@ -124,9 +124,9 @@ export default function Dashboard () {
                     </Grid>
 
                     <Grid item xs={4}>
-                        <Card sx={{ minWidth: 275 }}>
-                        <CardContent>
-                            <LoopIcon style={{ fontSize: 60 }}/>
+                    <Card sx={{ minWidth: 275, border: '0.5rem outset skyblue' }}>
+                    <CardContent sx={{margin: 'auto', width: '50%', display: 'flex', justifyContent: 'center'}}>
+                            <LoopIcon align='center' style={{ fontSize: 60 }}/>
                         </CardContent>
 
                         <CardActions>

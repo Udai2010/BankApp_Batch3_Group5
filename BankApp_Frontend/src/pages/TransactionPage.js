@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { FormControl, InputLabel, MenuItem, Select, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
+import { Typography, FormControl, InputLabel, MenuItem, Select, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import axios from 'axios';
 import NavBar from './NavBar';
@@ -43,12 +43,15 @@ export default function TransactionPage() {
   
   return (
     <>
-               <NavBar/>
+            <ThemeProvider theme={defaultTheme}>
+              <NavBar/>
 
-    <div>TransactionPage
+      <Typography component="h1" variant="h5" align='center' sx={{color: 'darkblue', fontSize: '20px', fontWeight: 'bold'}}>
+                        VIEW TRANSACTION HISTORY
+                </Typography> 
 
       {accounts.length > 0 ?<div>
-        <FormControl>
+        <FormControl style={{display:"inline", margin:"20px", padding:"20px"}}>
           <InputLabel id="selectAccount">Account number</InputLabel>
           <Select 
             id="selectAccount"
@@ -92,8 +95,7 @@ export default function TransactionPage() {
             </TableBody>
         </Table>
     </TableContainer>: <p>There are no transactions for this account.</p>}
-    
-  </div>
+  </ThemeProvider>
   </>
   )
 }
