@@ -18,6 +18,7 @@ import AdminViewTransactions from './pages/AdminViewTransactions';
 import AdminSearchuser from './pages/AdminSearchuser';
 import ForgotPassowrd from './pages/ForgotPassword';
 import EnableDisable from './pages/EnableDisable';
+import ErrorPage from './pages/ErrorPage';
 function App() {
   return (
     <div>
@@ -41,6 +42,7 @@ function App() {
             <Route path="/adminsearch" element={<AdminSearchuser/>}/>
             <Route path="/forgotpassword" element={<ForgotPassowrd/>}/>
             <Route path='/enable' element={<EnableDisable/>}/>
+            <Route path="/*" element={<ErrorPage/>}/>
           </Routes>
         </BrowserRouter>
     </div>

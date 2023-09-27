@@ -114,7 +114,7 @@ export default function WithdrawPage() {
                       <Box component="form" onSubmit={onWithdraw} noValidate sx={{ mt: 1 }}>
                         {accounts.length > 0 ?<div>
                           <FormControl fullWidth>
-                            <InputLabel id="selectAccount">Account number</InputLabel>
+                            <InputLabel id="selectAccount">Account Number</InputLabel>
                             <Select 
                               fullWidth
                               id="selectAccount"
@@ -127,7 +127,7 @@ export default function WithdrawPage() {
                                 })}
                               </Select>
                           </FormControl>
-                          </div>: <p>No accounts</p>
+                          </div>: <p>NO ACCOUNTS AVAILABLE</p>
                         }
                             <Grid item xm={12}>
                               <TextField
@@ -152,7 +152,7 @@ export default function WithdrawPage() {
                             variant="contained"
                             sx={{ mt: 3, mb: 2 }}
                           >
-                            Withdrawal
+                            WITHDRAW
                           </Button>
                         </Box>
                    </CardActions>
