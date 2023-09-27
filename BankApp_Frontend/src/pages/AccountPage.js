@@ -42,7 +42,9 @@ export default function AccountPage() {
         axios.get(url).then((response) => {
         console.log(response);
         setTransactions(response.data);
-    });
+        }).catch((err) => {
+            alert(err);
+        });
       }
 
     const handleChange = (event) => {
