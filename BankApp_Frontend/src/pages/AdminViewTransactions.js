@@ -1,88 +1,114 @@
-import React, { useEffect, useState } from 'react';
-import { FormControl, Button, MenuItem, Select, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField } from '@mui/material';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
-import axios from 'axios';
+import React, { useEffect, useState } from "react";
+import {
+  FormControl,
+  Button,
+  MenuItem,
+  Select,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  TextField,
+} from "@mui/material";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
+import axios from "axios";
 
 const defaultTheme = createTheme();
 export default function AdminViewTransactions() {
+  const token = localStorage.getItem("token");
+
+  const authToken = `Bearer ${token}`;
+  const axiosInstance = axios.create({
+    baseURL: "http://localhost:3000", // Replace with your API URL
+    headers: {
+      Authorization: authToken,
+      "Content-Type": "application/json", // You can include other headers if needed
+    },
+  });
+
   const [customerId, setCustomerId] = useState("");
   const [transactions, setTransactions] = useState([]);
   const [selectedCustomer, setSelectedCustomer] = useState(-1);
 
-
   async function getTransactions(customer_id, setTransactions) {
     const url = `http://localhost:3000/admingettransactions/${customer_id}`;
-    await axios.get(url).then((response) => {
+    await axiosInstance.get(url).then((response) => {
       console.log(response);
+
         setTransactions(response.data);
     }).catch((err) => {
       alert(err);
+
     });
   }
 
   const handleChange = (event) => {
     console.log(event.target.value);
     setSelectedCustomer(event.target.value);
-  }
+  };
   const handleKeyPress = (event) => {
-    if(event.key == 'Enter'){
-        handleSearch();
+    if (event.key == "Enter") {
+      handleSearch();
     }
-  }
+  };
 
-//   useEffect(() => {
-//     if(selectedCustomer !== -1) getTransactions(selectedCustomer, setTransactions);
-//   }, [selectedCustomer]); 
+  //   useEffect(() => {
+  //     if(selectedCustomer !== -1) getTransactions(selectedCustomer, setTransactions);
+  //   }, [selectedCustomer]);
   const handleSearch = () => {
     getTransactions(selectedCustomer, setTransactions);
-  }
-  
-  return (
-    <div>TransactionPage
+  };
 
+  return (
+    <div>
+      TransactionPage
       <div>
         <FormControl>
-          <TextField 
+          <TextField
             id="selectedCustomer"
             // value={selectedCustomer}
             label="Customer id"
             onChange={handleChange}
             onKeyPress={handleKeyPress}
-            />
+          />
         </FormControl>
-        </div>
-
-
-      
-      {transactions.length>0?<TableContainer>
-        <Table>
+      </div>
+      {transactions.length > 0 ? (
+        <TableContainer>
+          <Table>
             <TableHead>
-                <TableRow>
-                    <TableCell>Transaction Id</TableCell>
-                    <TableCell>Sender</TableCell>
-                    <TableCell>Receiver</TableCell>
-                    <TableCell>Amount</TableCell>
-                    <TableCell>Transaction type</TableCell>
-                    <TableCell>Date</TableCell>
-                    <TableCell>Status</TableCell>
-                </TableRow>
+              <TableRow>
+                <TableCell>Transaction Id</TableCell>
+                <TableCell>Sender</TableCell>
+                <TableCell>Receiver</TableCell>
+                <TableCell>Amount</TableCell>
+                <TableCell>Transaction type</TableCell>
+                <TableCell>Date</TableCell>
+                <TableCell>Status</TableCell>
+              </TableRow>
             </TableHead>
             <TableBody>
-                {transactions.map((row) => {
-                    return (<TableRow key={row.transaction_id}>
-                        <TableCell>{row.transaction_id}</TableCell>
-                        <TableCell>{row.sender_account.account_id}</TableCell>
-                        <TableCell>{row.receiver_account?.account_id}</TableCell>
-                        <TableCell>{row.amount}</TableCell>
-                        <TableCell>{row.transactionType}</TableCell>
-                        <TableCell>{row.transactionDate}</TableCell>
-                        <TableCell>{row.status}</TableCell>
-                    </TableRow>)
-                })}
+              {transactions.map((row) => {
+                return (
+                  <TableRow key={row.transaction_id}>
+                    <TableCell>{row.transaction_id}</TableCell>
+                    <TableCell>{row.sender_account.account_id}</TableCell>
+                    <TableCell>{row.receiver_account?.account_id}</TableCell>
+                    <TableCell>{row.amount}</TableCell>
+                    <TableCell>{row.transactionType}</TableCell>
+                    <TableCell>{row.transactionDate}</TableCell>
+                    <TableCell>{row.status}</TableCell>
+                  </TableRow>
+                );
+              })}
             </TableBody>
-        </Table>
-    </TableContainer>: <p>There are no transactions for this Customer.</p>}
-    
-  </div>
-  )
+          </Table>
+        </TableContainer>
+      ) : (
+        <p>There are no transactions for this Customer.</p>
+      )}
+    </div>
+  );
 }
