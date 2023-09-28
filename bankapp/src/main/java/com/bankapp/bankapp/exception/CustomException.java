@@ -47,4 +47,17 @@ public class CustomException{
 
 		return new ResponseEntity<>(responseBody, HttpStatus.BAD_REQUEST);
 	}
+
+	@ExceptionHandler(AccountDisabledException.class)
+    protected ResponseEntity<Object> handleAccountDisabledException(AccountDisabledException ex
+			) {
+
+		Map<String, Object> responseBody = new LinkedHashMap<>();
+		responseBody.put("timestamp", new Date());
+		responseBody.put("status", HttpStatus.BAD_REQUEST);
+
+		responseBody.put("errors", "Account is disabled. Please contact support for clarification.");
+
+		return new ResponseEntity<>(responseBody, HttpStatus.BAD_REQUEST);
+	}
 }

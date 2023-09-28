@@ -26,11 +26,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.context.request.WebRequest;
 
+import com.bankapp.bankapp.exception.AccountDisabledException;
 import com.bankapp.bankapp.exception.InsufficientBalanceException;
 import com.bankapp.bankapp.model.Account;
 import com.bankapp.bankapp.model.FundTransfer;
 import com.bankapp.bankapp.model.Withdraw;
 import com.bankapp.bankapp.service.AccountService;
+import com.bankapp.bankapp.service.AdminService;
 import com.bankapp.bankapp.service.CustomerService;
 
 
@@ -69,6 +71,9 @@ public class AccountController {
 	
 	@PutMapping("withdraw")
 	public String withdrawAccount(@RequestBody Withdraw withdraw){
+		if(accountService.getStatus(withdraw.getAccount_id()).compareTo("inactive")==0){
+			throw new AccountDisabledException("Account is disabled!");
+		}
 		String resp = accountService.withdrawAmount(withdraw.getAmount(), withdraw.getAccount_id(), false);
 		if(resp != "Withdraw successful") {
 			throw new InsufficientBalanceException("Not enough balance");
@@ -78,11 +83,17 @@ public class AccountController {
 
 	@PutMapping("deposit")
 	public String depositAccount(@RequestBody Withdraw deposit){
+		if(accountService.getStatus(deposit.getAccount_id()).compareTo("inactive")==0){
+			throw new AccountDisabledException("Account is disabled!");
+		}
 		return accountService.depositAmount(deposit.getAmount(), deposit.getAccount_id(), false);
 	}
 
 	@PutMapping("fundtransfer")
 	public String fundTransfer(@RequestBody FundTransfer ft){
+		if(accountService.getStatus(ft.getSourceAccount()).compareTo("inactive")==0 || accountService.getStatus(ft.getSourceAccount()).compareTo("inactive")==0){
+			throw new AccountDisabledException("Account is disabled!");
+		}
 		return accountService.fundTransfer(ft);
 	}
 	

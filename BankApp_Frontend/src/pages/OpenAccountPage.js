@@ -16,7 +16,8 @@ import Modal from "@mui/material/Modal";
 import Fade from "@mui/material/Fade";
 import {Select} from '@mui/material';
 import {MenuItem} from '@mui/material';
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from 'react-router-dom';
+import NavBar from './NavBar';
 
 const style = {
   position: "absolute",
@@ -121,6 +122,8 @@ const [account_type, setAccountType]=useState("");
       {!success ? (
         <>
           <ThemeProvider theme={defaultTheme}>
+          <NavBar/>
+
             <Container component="main" maxWidth="sm">
               <CssBaseline />
               <Box

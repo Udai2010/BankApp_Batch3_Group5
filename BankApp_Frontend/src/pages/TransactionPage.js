@@ -1,18 +1,9 @@
-import React, { useEffect, useState } from "react";
-import {
-  FormControl,
-  InputLabel,
-  MenuItem,
-  Select,
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
-} from "@mui/material";
-import { createTheme, ThemeProvider } from "@mui/material/styles";
-import axios from "axios";
+
+import React, { useEffect, useState } from 'react';
+import { Typography, FormControl, InputLabel, MenuItem, Select, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+import axios from 'axios';
+import NavBar from './NavBar';
 
 const defaultTheme = createTheme();
 export default function TransactionPage() {
@@ -58,23 +49,27 @@ export default function TransactionPage() {
     if (accounts.length > 0) setSelectedAccont(accounts[0].account_id);
   }, [accounts]);
   useEffect(() => {
-    if (selectedAccount !== -1)
-      getTransactions(selectedAccount, setTransactions);
-  }, [selectedAccount]);
-
+    if(selectedAccount !== -1) getTransactions(selectedAccount, setTransactions);
+  }, [selectedAccount]); 
+  
   return (
-    <div>
-      TransactionPage
-      {accounts.length > 0 ? (
-        <div>
-          <FormControl>
-            <InputLabel id="selectAccount">Account number</InputLabel>
-            <Select
-              id="selectAccount"
-              value={selectedAccount}
-              label="Account number"
-              onChange={handleChange}
-            >
+    <>
+            <ThemeProvider theme={defaultTheme}>
+              <NavBar/>
+
+      <Typography component="h1" variant="h5" align='center' sx={{color: 'darkblue', fontSize: '20px', fontWeight: 'bold'}}>
+                        VIEW TRANSACTION HISTORY
+                </Typography> 
+
+      {accounts.length > 0 ?<div>
+        <FormControl style={{display:"inline", margin:"20px", padding:"20px"}}>
+          <InputLabel id="selectAccount">Account number</InputLabel>
+          <Select 
+            id="selectAccount"
+            value={selectedAccount}
+            label="Account number"
+            onChange={handleChange}>
+
               {accounts.map((acc) => {
                 return (
                   <MenuItem value={acc.account_id}>{acc.account_id}</MenuItem>
@@ -115,11 +110,11 @@ export default function TransactionPage() {
                 );
               })}
             </TableBody>
-          </Table>
-        </TableContainer>
-      ) : (
-        <p>There are no transactions for this account.</p>
-      )}
-    </div>
-  );
+
+        </Table>
+    </TableContainer>: <p>There are no transactions for this account.</p>}
+  </ThemeProvider>
+  </>
+  )
+
 }

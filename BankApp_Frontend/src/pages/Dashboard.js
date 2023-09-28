@@ -1,4 +1,7 @@
-import React from "react";
+
+import React, { useState, useEffect } from "react";
+import axios from 'axios';
+
 
 import {
   createTheme,
@@ -27,29 +30,34 @@ import IndeterminateCheckBoxIcon from "@mui/icons-material/IndeterminateCheckBox
 import LoopIcon from "@mui/icons-material/Loop";
 import CompareArrowsIcon from "@mui/icons-material/CompareArrows";
 import { Link } from "react-router-dom";
-
+import NavBar from "./NavBar";
 const defaultTheme = createTheme();
 
-export default function Dashboard() {
-  return (
-    <>
-      <ThemeProvider theme={defaultTheme}>
-        <Box sx={{ flexGrow: 1 }}>
-          <AppBar position="static">
-            <Toolbar>
-              <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-                Liberty Bank
-              </Typography>
-              <Button color="inherit">Home</Button>
-              <Button color="inherit">About</Button>
-              <Button color="inherit">Contact</Button>
-              <Button color="inherit" href="/changepassword">
-                Change password
-              </Button>
-            </Toolbar>
-          </AppBar>
-        </Box>
-        <Container component="div" maxWidth="85%">
+
+export default function Dashboard () {
+
+    const [customer_id, setCustomerId] = useState("")
+    const [customer, setCustomer] = useState([])
+
+    async function getCustomer(customer_id, setCustomer) {
+        const url = `http://localhost:3000/user/${customer_id}`;
+        await axios.get(url).then((response) => {
+            setCustomer(response.data);
+        });
+
+    }
+
+    useEffect(() => {
+        getCustomer(window.sessionStorage.getItem("customer_id"), setCustomer);
+    }, [customer_id])
+    
+    return(
+        <>
+            <ThemeProvider theme={defaultTheme}>
+                <NavBar/>
+
+            <Container component="div" maxWidth="85%">
+
           <CssBaseline />
           <Box
             sx={{
@@ -59,23 +67,24 @@ export default function Dashboard() {
               alignItems: "center",
             }}
           >
-            <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}></Avatar>
-            <Typography variant="h4" component="div" sx={{ flexGrow: 1, mb:5 }}>
-              Hello User
+
+            <Avatar sx={{ m: 1, bgcolor: 'black' }} variant='rounded'>
+            </Avatar>
+            <Typography variant="h4" component="div" sx={{ flexGrow: 1, color: 'steelblue', fontWeight: 'bold' }}>
+                        Hello {customer.name}, what do you want to do today?
+
             </Typography>
 
             <Box sx={{ flexGrow: 2 }}>
-              <Grid container spacing={2}>
-                <Grid item xs={4} alignItems="center">
-                  <Card
-                    sx={{
-                      minWidth: 275,
-                      backgroundColor: "rgba(225, 225, 225, 0.8)",
-                      borderRadius: "10px",
-                    }}
-                  >
-                    <CardContent style={{ alignItems: "center" }}>
-                      <AccountBoxIcon style={{ fontSize: 60 }} />
+
+                <Grid container spacing={2}>
+                    <Grid item xs={4} alignItems="center">
+                    <Card sx={{ minWidth: 275, border: '0.5rem outset skyblue' }}>
+                    <CardContent sx={{margin: 'auto', width: '50%', display: 'flex', justifyContent: 'center'}}>
+                    
+                        <AccountBoxIcon align='center' style={{ fontSize: 60 }}/>
+                    
+
                     </CardContent>
                     <CardActions>
                       <Button
@@ -88,13 +97,14 @@ export default function Dashboard() {
                         Account
                       </Button>
                     </CardActions>
-                  </Card>
-                </Grid>
-                <Grid item xs={4}>
-                  <Card sx={{ minWidth: 275, backgroundColor: "rgba(225, 225, 225, 0.8)",
-                      borderRadius: "10px" }}>
-                    <CardContent>
-                      <BadgeIcon style={{ fontSize: 60 }} />
+
+                </Card>
+                    </Grid>
+                    <Grid item xs={4}>
+                    <Card sx={{ minWidth: 275, border: '0.5rem outset skyblue' }}>
+                    <CardContent sx={{margin: 'auto', width: '50%', display: 'flex', justifyContent: 'center'}}>
+                        <BadgeIcon style={{ fontSize: 60 }} align ='center'/>
+
                     </CardContent>
 
                     <CardActions>
@@ -108,13 +118,14 @@ export default function Dashboard() {
                         Profile
                       </Button>
                     </CardActions>
-                  </Card>
-                </Grid>
-                <Grid item xs={4}>
-                  <Card sx={{ minWidth: 275, backgroundColor: "rgba(225, 225, 225, 0.8)",
-                      borderRadius: "10px" }}>
-                    <CardContent>
-                      <AddBoxIcon style={{ fontSize: 60 }} />
+
+                    </Card>
+                    </Grid>
+                    <Grid item xs={4}>
+                    <Card sx={{ minWidth: 275, border: '0.5rem outset skyblue' }}>
+                    <CardContent sx={{margin: 'auto', width: '50%', display: 'flex', justifyContent: 'center'}}>
+                        <AddBoxIcon align = 'center' style={{ fontSize: 60 }}/>
+
                     </CardContent>
 
                     <CardActions>
@@ -128,14 +139,15 @@ export default function Dashboard() {
                         Deposit
                       </Button>
                     </CardActions>
-                  </Card>
-                </Grid>
-                <Grid item xs={4}>
-                  <Card sx={{ minWidth: 275, backgroundColor: "rgba(225, 225, 225, 0.8)",
-                      borderRadius: "10px" }}>
-                    <CardContent>
-                      <IndeterminateCheckBoxIcon style={{ fontSize: 60 }} />
-                    </CardContent>
+
+                    </Card> 
+                    </Grid>
+                    <Grid item xs={4}>
+                    <Card sx={{ minWidth: 275, border: '0.5rem outset skyblue' }}>
+                    <CardContent sx={{margin: 'auto', width: '50%', display: 'flex', justifyContent: 'center'}}>
+                            <IndeterminateCheckBoxIcon align='center' style={{ fontSize: 60 }}/>
+                        </CardContent>
+
 
                     <CardActions>
                       <Button
@@ -151,12 +163,13 @@ export default function Dashboard() {
                   </Card>
                 </Grid>
 
-                <Grid item xs={4}>
-                  <Card sx={{ minWidth: 275, backgroundColor: "rgba(225, 225, 225, 0.8)",
-                      borderRadius: "10px" }}>
-                    <CardContent>
-                      <CompareArrowsIcon style={{ fontSize: 60 }} />
-                    </CardContent>
+
+                    <Grid item xs={4}>
+                    <Card sx={{ minWidth: 275, border: '0.5rem outset skyblue' }}>
+                    <CardContent sx={{margin: 'auto', width: '50%', display: 'flex', justifyContent: 'center'}}>
+                            <CompareArrowsIcon align='center' style={{ fontSize: 60 }}/>
+                        </CardContent>
+
 
                     <CardActions>
                       <Button
@@ -172,12 +185,13 @@ export default function Dashboard() {
                   </Card>
                 </Grid>
 
-                <Grid item xs={4}>
-                  <Card sx={{ minWidth: 275, backgroundColor: "rgba(225, 225, 225, 0.8)",
-                      borderRadius: "10px" }}>
-                    <CardContent>
-                      <LoopIcon style={{ fontSize: 60 }} />
-                    </CardContent>
+
+                    <Grid item xs={4}>
+                    <Card sx={{ minWidth: 275, border: '0.5rem outset skyblue' }}>
+                    <CardContent sx={{margin: 'auto', width: '50%', display: 'flex', justifyContent: 'center'}}>
+                            <LoopIcon align='center' style={{ fontSize: 60 }}/>
+                        </CardContent>
+
 
                     <CardActions>
                       <Button

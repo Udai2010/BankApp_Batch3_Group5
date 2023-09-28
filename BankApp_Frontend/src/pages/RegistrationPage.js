@@ -139,7 +139,7 @@ export default function RegistrationPage() {
                 <Typography component="h1" variant="h5">
                   Register Customer
                 </Typography>
-                <Box component="form" onSubmit={submitHandler} noValidate sx={{ mt: 1 }}>
+                <Box component="form" onSubmit={submitHandler} sx={{ mt: 1 }}>
                   <Grid container columnSpacing={1.5}>
                     <Grid item xs={6} >
                       <TextField
@@ -224,6 +224,7 @@ export default function RegistrationPage() {
                         margin="normal"
                         required
                         fullWidth
+                        type="password"
                         id="password"
                         placeholder="Password"
                         name="password"

@@ -36,7 +36,11 @@ export default function AdminViewTransactions() {
     const url = `http://localhost:3000/admingettransactions/${customer_id}`;
     await axiosInstance.get(url).then((response) => {
       console.log(response);
-      setTransactions(response.data);
+
+        setTransactions(response.data);
+    }).catch((err) => {
+      alert(err);
+
     });
   }
 
