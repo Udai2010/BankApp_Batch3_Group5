@@ -33,9 +33,12 @@ export default function DepositPage() {
 
   async function getAccounts(customer_id, setAccounts) {
     const url = `http://localhost:3000/account/${customer_id}`;
-    await axios.get(url).then((response) => {
+    await axiosInstance.get(url).then((response) => {
       setAccounts(response.data);
       console.log(accounts);
+    }).catch((err) => {
+      console.log(err);
+      alert(err);
     });
   }
 

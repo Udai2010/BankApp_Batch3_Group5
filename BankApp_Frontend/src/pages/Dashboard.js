@@ -38,11 +38,22 @@ export default function Dashboard () {
 
     const [customer_id, setCustomerId] = useState("")
     const [customer, setCustomer] = useState([])
+    const token = localStorage.getItem("token");
+    const authToken = `Bearer ${token}`;
+    const axiosInstance = axios.create({
+      baseURL: "http://localhost:3000", // Replace with your API URL
+      headers: {
+        Authorization: authToken,
+        "Content-Type": "application/json", // You can include other headers if needed
+      },
+    });
 
     async function getCustomer(customer_id, setCustomer) {
         const url = `http://localhost:3000/user/${customer_id}`;
-        await axios.get(url).then((response) => {
+        await axiosInstance.get(url).then((response) => {
             setCustomer(response.data);
+        }).catch((err) => {
+          alert(err);
         });
 
     }

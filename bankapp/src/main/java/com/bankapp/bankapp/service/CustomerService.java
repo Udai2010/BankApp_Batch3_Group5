@@ -93,16 +93,5 @@ public class CustomerService implements UserDetailsService {
 		return result;
 	}
 	
-	
-	@Override
-	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		Customer customer = getCustomer(Long.parseLong(username));
-		if(customer == null) {
-			throw new UsernameNotFoundException("User not Found with Customer Id: " + username);
-		}
-		return User.builder().username(Long.toString(customer.getCustomer_Id())).password(customer.getPassword()).roles("USER").build();
-		
-	}
-
 
 }

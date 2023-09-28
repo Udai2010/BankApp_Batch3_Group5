@@ -10,7 +10,6 @@ import NavBar from './NavBar';
 const defaultTheme = createTheme();
 export default function AccountPage() {
   const token = localStorage.getItem("token");
-  const token = localStorage.getItem("token");
 
   const [customerId, setCustomerId] = useState("");
   const [accounts, setAccounts] = useState([]);
@@ -38,9 +37,6 @@ export default function AccountPage() {
     });
   }
 
-  const sdateChangeHandler = (event) => {
-    setstartdate(event.target.value);
-  };
 
     const sdateChangeHandler = (event) => {
         setstartdate(event.target.value);

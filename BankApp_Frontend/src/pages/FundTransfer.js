@@ -68,7 +68,7 @@ export default function FundTransfer() {
   const onFundTransfer = (event) => {
     event.preventDefault();
     const url = "http://localhost:3000/fundtransfer";
-    axios
+    axiosInstance
       .put(url, {
         sourceAccount: selectedAccount,
         destAccount: destinationAccount,

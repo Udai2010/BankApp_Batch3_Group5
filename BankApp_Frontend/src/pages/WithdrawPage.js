@@ -34,7 +34,7 @@ export default function WithdrawPage() {
 
     async function getAccounts(customer_id, setAccounts) {
       const url = `http://localhost:3000/account/${customer_id}`
-      await axios.get(url).then((response) => {
+      await axiosInstance.get(url).then((response) => {
           setAccounts(response.data);
           console.log(accounts);
       });
@@ -43,7 +43,7 @@ export default function WithdrawPage() {
 
   async function getBalance(account_id, setBalance) {
     const url = `http://localhost:3000/balance/${account_id}`;
-    await axios.get(url).then((response) => {
+    await axiosInstance.get(url).then((response) => {
       setBalance(response.data);
       console.log(balance);
     });

@@ -78,7 +78,7 @@ export default function TransactionPage() {
             </Select>
           </FormControl>
         </div>
-      ) : (
+       : (
         <p>No accounts</p>
       )}
       {transactions.length > 0 ? (
@@ -112,7 +112,7 @@ export default function TransactionPage() {
             </TableBody>
 
         </Table>
-    </TableContainer>: <p>There are no transactions for this account.</p>}
+    </TableContainer>): <p>There are no transactions for this account.</p>}
   </ThemeProvider>
   </>
   )

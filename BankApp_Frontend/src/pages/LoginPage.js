@@ -40,10 +40,10 @@ export default function LoginPage() {
   const [password, setPassword] = useState("");
 
   // const navigate = useNavigate();
-  const baseURL = "http://localhost:3000/login";
+  // const baseURL = "http://localhost:3000/login";
 
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
+  // const [username, setUsername] = useState("");
+  // const [password, setPassword] = useState("");
   const [message, setMessage] = useState("");
   const [success, setSuccess] = useState(false)
   const [view,setView]=useState(false); 
@@ -73,13 +73,15 @@ export default function LoginPage() {
   };
 
   const onLogin = async (event) => {
-  const onLogin = async (event) => {
     event.preventDefault();
     const hashedPassword = passwordHashService(password);
     console.log(username);
     let response = await axios.post(baseURL, {
       userID: username,
       password: hashedPassword,
+    }).catch((err) => {
+      console.log(err);
+      alert(err);
     });
     if (response.data) {
       const newToken = response.data;
@@ -101,24 +103,24 @@ export default function LoginPage() {
     } else {
       alert("error in authentication");
     }
-    const hashedPassword = passwordHashService(password)
-    console.log(username)
-    axios
-      .post(baseURL, {
-        userID: username,
-        password: hashedPassword
-      })
+    // const hashedPassword = passwordHashService(password)
+    // console.log(username)
+    // axios
+    //   .post(baseURL, {
+    //     userID: username,
+    //     password: hashedPassword
+    //   })
 
-      const token = localStorage.getItem("token");
-      if (token) {
-        console.log(token);
-      }
+    //   const token = localStorage.getItem("token");
+    //   if (token) {
+    //     console.log(token);
+    //   }
       
-      window.sessionStorage.setItem("customer_id", username);
-      window.location.assign("/dashboard");
-    } else {
-      alert("error in authentication");
-    }
+    //   window.sessionStorage.setItem("customer_id", username);
+    //   window.location.assign("/dashboard");
+    // } else {
+    //   alert("error in authentication");
+    // }
   };
 
   return (
@@ -202,17 +204,7 @@ export default function LoginPage() {
               </Button>
 
             </Box>
-{/* 
-            <div style={{ display: 'block', textAlign: 'center' }}>
-              <form onSubmit={onLogin} >
-                <h2>LoginPage</h2>
-                <label>Username</label>
-                <input type="text" value={username} required onChange={onUsernameChange} /><br />
-                <label>Password</label>
-                <input type="password" value={password} required onChange={onPasswordChange} /><br />
-                <button type="submit">Login</button>
-              </form>
-            </div> */}
+
           </Box>
         </Container>
       </ThemeProvider>
