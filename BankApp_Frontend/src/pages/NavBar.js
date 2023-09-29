@@ -16,15 +16,17 @@ export default function NavBar() {
         <>
             <Box sx={{ flexGrow: 1 }}>
                     <AppBar position="static">
-                        <Toolbar>
+                        <Toolbar sx={{justifyContent:'space-between'}}>
                         
                         <Button color="inherit" href="/dashboard">
                             <Typography variant="h6" component="div"  sx={{ flexGrow: 1 }}>
                                 Online Banking App
                             </Typography>
                         </Button>
-                        <Button color="inherit" href="/changepassword">Change password</Button>
-                        <Button color="inherit" onClick={onLogout}>Logout</Button>
+                        <Box sx={{display:'flex'}}>
+                            <Button align ='right' color="inherit" href="/changepassword">Change password</Button>
+                            <Button align='right'  color="inherit" onClick={onLogout}>Logout</Button>
+                        </Box>
                         </Toolbar>
                     </AppBar>
             </Box>

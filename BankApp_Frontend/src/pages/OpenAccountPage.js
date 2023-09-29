@@ -132,14 +132,15 @@ export default function OpenAccountPage() {
                   display: 'flex',
                   flexDirection: 'column',
                   alignItems: 'center',
+                  border: '0.5rem outset skyblue'
                 }}
               >
-                <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
+                <Avatar sx={{ m: 1, bgcolor: 'charcoal' }}>
                 </Avatar>
-                <Typography component="h1" variant="h5">
-                  Open a account
+                <Typography component="h1" variant="h5" sx={{color: 'steelblue', fontSize: '20px', fontWeight: 'bold'}}>
+                      OPEN AN ACCOUNT
                 </Typography>
-                <Box component="form" onSubmit={onSubmitForm} noValidate sx={{ mt: 1 }}>
+                <Box component="form" onSubmit={onSubmitForm}  sx={{ m: 2 }}>
                   <Grid container columnSpacing={1.5}>
                     <Grid item xs={6} >
                       <TextField
@@ -210,20 +211,20 @@ export default function OpenAccountPage() {
                     </Grid>
 
                     <Grid item xs={6} >
-                      <Select
-                        margin="normal"
-                        id="accountType"
-                        value={account_type}
-                        label="Account Type"
-                        name="accountType"
-                        onChange={onAccountTypeChange}
-                        required
-                        fullWidth
-                      >
-                        <MenuItem value={"Savings"}>Savings</MenuItem>
-                        <MenuItem value={"Fixed Deposit"}>Fixed Deposit</MenuItem>
-                        <MenuItem value={"Salary"}>Salary</MenuItem>
-                      </Select>
+                      <TextField
+                            margin="normal"
+                            label="Account Type"
+                            id="accountType"
+                            value={account_type}
+                            style={{minWidth:'15em'}}
+                            select
+                            required
+                            fullWidth
+                            onChange={onAccountTypeChange}>
+                            <MenuItem value={"Savings"}>Savings</MenuItem>
+                            <MenuItem value={"Fixed Deposit"}>Fixed Deposit</MenuItem>
+                            <MenuItem value={"Salary"}>Salary</MenuItem>
+                      </TextField>
                     </Grid>
 
                     <Grid item xs={6} >
