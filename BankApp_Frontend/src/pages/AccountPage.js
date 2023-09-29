@@ -58,8 +58,9 @@ export default function AccountPage() {
         axios.get(url).then((response) => {
         console.log(response);
         setTransactions(response.data);
-        console.log(transactions)
-    });
+        }).catch((err) => {
+            alert(err);
+        });
       }
 
     const handleChange = (event) => {
