@@ -98,7 +98,7 @@ export default function DepositPage() {
                       </Typography>
                     </CardContent>
                     <CardActions sx={{margin: 'auto', width: '50%', display: 'flex', justifyContent: 'center'}}>
-                        <Box component="form" onSubmit={onDeposit} noValidate sx={{ mt: 1 }}>
+                        <Box component="form" onSubmit={onDeposit} sx={{ mt: 1 }}>
                         {accounts.length > 0 ?<div>
                           <FormControl fullWidth>
                             <InputLabel id="selectAccount">Account number</InputLabel>
@@ -113,7 +113,9 @@ export default function DepositPage() {
                                 })}
                               </Select>
                           </FormControl>
-                          </div>: <p>NO ACCOUNTS AVAILABLE</p>
+                          </div>: <Typography component="h3" variant="h5" align='center' sx={{color: 'charcoal', fontSize: '20px', fontWeight: 'bold'}}>
+                                  NO ACCOUNTS AVAILABLE
+                                </Typography>
                         }
                             <Grid item xm={12}>
                               <TextField
