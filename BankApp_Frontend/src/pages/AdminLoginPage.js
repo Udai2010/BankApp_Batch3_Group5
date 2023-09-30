@@ -80,33 +80,40 @@ export default function AdminLoginPage() {
               noValidate
               sx={{ mt: 1 }}
             >
-              <Grid containter>
-                <Grid item xm={12}>
-                  <TextField
-                    margin="normal"
-                    required
-                    fullWidth
-                    id="admin_id"
-                    label="Admin ID"
-                    name="admin_id"
-                    value={admin_id}
-                    onChange={onAdminIdChange}
-                    autoFocus
-                  />
-                </Grid>
-                <Grid item xm={12}>
-                  <TextField
-                    margin="normal"
-                    required
-                    fullWidth
-                    id="password"
-                    label="Password"
-                    name="password"
-                    type="password"
-                    value={password}
-                    onChange={onPasswordChange}
-                    autoFocus
-                  />
+
+              <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
+              </Avatar>
+              <Typography component="h1" variant="h5">
+                Admin Login
+              </Typography>
+              <Box component="form" onSubmit={onAdminLogin} sx={{ mt: 1 }}>
+                <Grid containter>
+                  <Grid item xm={12}>
+                    <TextField
+                      margin="normal"
+                      required
+                      fullWidth
+                      id="admin_id"
+                      label="Admin ID"
+                      name="admin_id"
+                      value={admin_id}
+                      onChange={onAdminIdChange}
+                      autoFocus
+                    />
+                  </Grid>
+                  <Grid item xm={12}>
+                    <TextField
+                      margin="normal"
+                      required
+                      fullWidth
+                      id="password"
+                      label="Password"
+                      name="password"
+                      type='password'
+                      value={password}
+                      onChange={onPasswordChange}
+                    />
+                  </Grid>
                 </Grid>
               </Grid>
               <Button

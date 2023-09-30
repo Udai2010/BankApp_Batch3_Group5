@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { Button} from '@mui/material';
 import { Link } from 'react-router-dom';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { Box, Typography, FormControl, InputLabel, MenuItem, Select, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
+import { FormControl, InputLabel, MenuItem, Select, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
 import axios from 'axios';
 import NavBar from './NavBar';
 
@@ -54,9 +54,7 @@ export default function AccountPage() {
         axios.get(url).then((response) => {
         console.log(response);
         setTransactions(response.data);
-        }).catch((err) => {
-            alert(err);
-        });
+    });
       }
 
     const handleChange = (event) => {
@@ -74,45 +72,39 @@ export default function AccountPage() {
 
     return(
         <>
-                <ThemeProvider theme={defaultTheme}>
                 <NavBar/>
-                <Typography component="h1" variant="h5" align='center' sx={{color: 'darkblue', fontSize: '20px', fontWeight: 'bold'}}>
-                        ACCOUNT DASHBOARD
-                </Typography> 
+                <h2>Account dashboard</h2> 
                 
 
                 {accounts.length>0?<TableContainer>
-                    <Table sx={{border: '0.5rem outset skyblue'}}>
-                        <TableHead sx={{border: '0.5rem outset skyblue'}}>
-                            <TableRow sx={{border: '0.5rem outset skyblue'}}>
-                                <TableCell align="center" sx={{border: '0.5rem outset skyblue', color: 'firebrick', fontWeight:'bold'}}>ACCOUNT ID</TableCell>
-                                <TableCell align='center' sx={{border: '0.5rem outset skyblue', color: 'firebrick', fontWeight:'bold'}}>IFSC</TableCell>
-                                <TableCell align = 'center' sx={{border: '0.5rem outset skyblue', color: 'firebrick', fontWeight:'bold'}}>BRANCH</TableCell>
-                                <TableCell align='center' sx={{border: '0.5rem outset skyblue', color: 'firebrick', fontWeight:'bold'}}>ACCOUNT TYPE</TableCell>
-                                <TableCell align='center' sx={{border: '0.5rem outset skyblue', color: 'firebrick', fontWeight:'bold'}}>BALANCE</TableCell>
+                    <Table>
+                        <TableHead>
+                            <TableRow>
+                                <TableCell>Account Id</TableCell>
+                                <TableCell>IFSC</TableCell>
+                                <TableCell>Branch</TableCell>
+                                <TableCell>Account type</TableCell>
+                                <TableCell>Balance</TableCell>
                             </TableRow>
                         </TableHead>
                         <TableBody>
                             {accounts.map((row) => {
-                                return (<TableRow sx={{border: '0.5rem outset skyblue'}} key={row.account_id}>
-                                    <TableCell align='center' sx={{border: '0.5rem outset skyblue', color: 'charcoal', fontWeight:'bold'}}>{row.account_id}</TableCell>
-                                    <TableCell align='center' sx={{border: '0.5rem outset skyblue', color: 'charcoal', fontWeight:'bold'}}>{row.ifsc}</TableCell>
-                                    <TableCell align='center' sx={{border: '0.5rem outset skyblue', color: 'charcoal', fontWeight:'bold'}}>{row.branch}</TableCell>
-                                    <TableCell align='center' sx={{border: '0.5rem outset skyblue', color: 'charcoal', fontWeight:'bold'}}>{row.account_type}</TableCell>
-                                    <TableCell align='center' sx={{border: '0.5rem outset skyblue', color: 'charcoal', fontWeight:'bold'}}>{row.balance}</TableCell>
+                                return (<TableRow key={row.account_id}>
+                                    <TableCell>{row.account_id}</TableCell>
+                                    <TableCell>{row.ifsc}</TableCell>
+                                    <TableCell>{row.branch}</TableCell>
+                                    <TableCell>{row.account_type}</TableCell>
+                                    <TableCell>{row.balance}</TableCell>
                                 </TableRow>)
                             })}
                         </TableBody>
                     </Table>
-                </TableContainer>: <Typography component="h3" variant="h5" align='center' sx={{color: 'charcoal', fontSize: '20px', fontWeight: 'bold'}}>
-                        NO ACCOUNTS CREATED
-                </Typography>}
-                <Box sx={{margin: 'auto', width: '50%', display: 'flex', justifyContent: 'center'}}>
+                </TableContainer>: <p>There are no accounts for this user.</p>}
+                
                 <Button 
-                        align='center'
                         variant="contained" component={Link} to="/openaccount"
                         sx={{ mt: 3, mb: 2 }}>Create a new account</Button> 
-                </Box>
+
             <h2>Account Statement</h2> 
             
       {accounts.length > 0 ?<div>
@@ -173,10 +165,8 @@ export default function AccountPage() {
                 })}
             </TableBody>
         </Table>
-    </TableContainer>: <Typography component="h3" variant="h5" align='center' sx={{color: 'charcoal', fontSize: '20px', fontWeight: 'bold'}}>
-                        NO TRANSACTIONS FOR THIS DATE RANGE
-                </Typography>}
-                </ThemeProvider>
+    </TableContainer>: <p>No transactions found for this date range in the account .</p>}
+
                 </>
     )
 }

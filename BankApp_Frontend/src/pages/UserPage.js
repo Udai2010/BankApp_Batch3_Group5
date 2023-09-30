@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { Paper, Typography } from '@mui/material';
-import { Link } from 'react-router-dom';
+import {Typography, Container, CssBaseline, Box, Card, CardContent, CardActions, Grid } from '@mui/material';
+
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import axios from 'axios';
 import NavBar from './NavBar';
@@ -36,18 +36,75 @@ export default function UserPage() {
         
         <ThemeProvider theme={defaultTheme}>
         <NavBar/>
-            <center>
-            <Paper>
-                <Typography variant='h4'>Customer details</Typography>
-                <Typography variant='h6'>Name: {customer.name}</Typography>
-                <Typography variant='h6'>Email: {customer.email}</Typography>
-                <Typography variant='h6'>PAN: {customer.pan_number}</Typography>
-                <Typography variant='h6'>Date of birth: {customer.dob}</Typography>
-                <Typography variant='h6'>Father name: {customer.fathername}</Typography>
-                <Typography variant='h6'>Mother name: {customer.mothername}</Typography>
-                <Typography variant='h6'>Address: {customer.address}</Typography>
-            </Paper>
-            </center>
+        <Container component="main" maxWidth="sm">
+          <CssBaseline />
+          <Box
+            sx={{
+              marginTop: 10,
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+            }}
+          >
+            <Card
+                  sx={{
+                    border: '0.5rem outset skyblue',
+                    width: '25em'
+                  }}
+                 >
+                   <CardContent sx={{margin: 'auto', width: '50%', display: 'flex', justifyContent: 'center'}}>       
+                      <Typography component="h1" variant="h5" align='center' sx={{color: 'steelblue', fontSize: '20px', fontWeight: 'bold'}}>
+                            CUSTOMER DETAILS
+                      </Typography>
+                    </CardContent>
+                    <CardActions sx={{margin: 'auto', width: '75%', display: 'flex', justifyContent: 'center'}}>
+                        <Grid container spacing={2}>
+                            <Grid item xm={12} sx={{display:'flex'}}>
+                                <Typography sx={{fontSize:'20px', color: 'firebrick', fontWeight:'bold'}}>NAME: </Typography>
+                            
+                                <Typography sx={{ml:'5px', fontSize:'20px', color: 'charcoal', fontWeight:'bold'}}>{customer.name}</Typography>
+                            </Grid>
+                            
+                            <Grid item xm={12} sx={{display:'flex'}}>
+                                <Typography sx={{fontSize:'20px', color: 'firebrick', fontWeight:'bold'}}>EMAIL: </Typography>
+
+                                <Typography sx={{ml:'5px', fontSize:'20px', color: 'charcoal', fontWeight:'bold'}}>{customer.email}</Typography>
+                            </Grid>
+
+                            <Grid item xm={12} sx={{display:'flex'}}>
+                                <Typography sx={{fontSize:'20px', color: 'firebrick', fontWeight:'bold'}}>PAN: </Typography>
+                            
+                                <Typography sx={{ml:'5px', fontSize:'20px', color: 'charcoal', fontWeight:'bold'}}>{customer.pan_number}</Typography>
+                            </Grid>
+                            
+                            <Grid item xm={12} sx={{display:'flex'}}>
+                                <Typography sx={{fontSize:'20px', color: 'firebrick', fontWeight:'bold'}}>Date Of Birth: </Typography>
+                            
+                                <Typography sx={{ml:'5px', fontSize:'20px', color: 'charcoal', fontWeight:'bold'}}>{customer.dob}</Typography>
+                            </Grid>
+                            
+                            <Grid item xm={12} sx={{display:'flex'}}>
+                                <Typography sx={{fontSize:'20px', color: 'firebrick', fontWeight:'bold'}}>FATHER'S NAME: </Typography>
+                            
+                                <Typography sx={{ml:'5px',fontSize:'20px', color: 'charcoal', fontWeight:'bold'}}>{customer.fathername}</Typography>
+                            </Grid>
+
+                            <Grid item xm={12} sx={{display:'flex'}}>
+                                <Typography sx={{fontSize:'20px', color: 'firebrick', fontWeight:'bold'}}>MOTHER'S NAME: </Typography>
+                            
+                                <Typography sx={{ml:'5px', fontSize:'20px', color: 'charcoal', fontWeight:'bold'}}>{customer.mothername}</Typography>
+                            </Grid>
+                            
+                            <Grid item xm={12} sx={{display:'flex'}}>
+                                <Typography sx={{fontSize:'20px', color: 'firebrick', fontWeight:'bold'}}>ADDRESS: </Typography>
+                            
+                                <Typography sx={{ml:'5px', fontSize:'20px', color: 'charcoal', fontWeight:'bold'}}>{customer.address}</Typography>
+                            </Grid>           
+                        </Grid>
+                      </CardActions>
+                    </Card>
+              </Box>
+        </Container>            
         </ThemeProvider>
     
     </>)

@@ -147,7 +147,7 @@ export default function LoginPage() {
             <Typography component="h1" variant="h5">
               Login
             </Typography>
-            <Box component="form" onSubmit={onLogin} noValidate sx={{ mt: 1 }}>
+            <Box component="form" onSubmit={onLogin} sx={{ mt: 1 }}>
               <Grid containter>
                 <Grid item xm={12}>
                   <TextField

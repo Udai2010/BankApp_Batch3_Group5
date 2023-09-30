@@ -1,21 +1,15 @@
-import React, { useEffect, useState } from "react";
-import {
-  FormControl,
-  Button,
-  MenuItem,
-  Select,
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
-  TextField,
-} from "@mui/material";
-import { createTheme, ThemeProvider } from "@mui/material/styles";
-import axios from "axios";
+import React, { useEffect, useState } from 'react';
+import { Box, FormControl, Grid, Typography, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField } from '@mui/material';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+import axios from 'axios';
+import { purple } from "@mui/material/colors";
+import NavBar from './NavBar';
+const defaultTheme = createTheme(
+    {palette:{
+        primary: purple
+    }}
+);
 
-const defaultTheme = createTheme();
 export default function AdminViewTransactions() {
   const token = localStorage.getItem("token");
 
@@ -59,56 +53,70 @@ export default function AdminViewTransactions() {
   //   }, [selectedCustomer]);
   const handleSearch = () => {
     getTransactions(selectedCustomer, setTransactions);
-  };
 
+  }
+  
   return (
-    <div>
-      TransactionPage
-      <div>
-        <FormControl>
-          <TextField
-            id="selectedCustomer"
-            // value={selectedCustomer}
-            label="Customer id"
-            onChange={handleChange}
-            onKeyPress={handleKeyPress}
-          />
-        </FormControl>
-      </div>
-      {transactions.length > 0 ? (
-        <TableContainer>
-          <Table>
-            <TableHead>
-              <TableRow>
-                <TableCell>Transaction Id</TableCell>
-                <TableCell>Sender</TableCell>
-                <TableCell>Receiver</TableCell>
-                <TableCell>Amount</TableCell>
-                <TableCell>Transaction type</TableCell>
-                <TableCell>Date</TableCell>
-                <TableCell>Status</TableCell>
-              </TableRow>
+    <>
+    <ThemeProvider theme={defaultTheme}>
+      <NavBar/>
+
+      <Typography component="h1" variant="h5" align='center' sx={{color: 'mediumorchid', fontSize: '20px', fontWeight: 'bold'}}>
+                        VIEW TRANSACTION HISTORY
+                </Typography>
+
+      <Box sx={{ flexGrow: 2 }}>
+        <Grid container spacing={2} sx={{margin: 'auto', width: '75%', display: 'flex', justifyContent: 'center'}}>
+            <Grid item xm={6}>        
+            <Typography component="h4" variant="h5" align='center' sx={{mt:'5%', color: 'dimgrey', fontSize: '20px', fontWeight: 'bold'}}>
+                        Select Customer To View
+                </Typography>
+              </Grid>
+              <Grid item xm={6}> 
+                  <TextField 
+                  id="selectedCustomer"
+                  // value={selectedCustomer}
+                  label="Customer id"
+                  onChange={handleChange}
+                  onKeyPress={handleKeyPress}
+                  />
+              </Grid>
+              </Grid>
+        </Box> 
+            
+        {transactions.length>0?
+        <TableContainer >
+        <Table sx={{border: '0.5rem outset plum', marginTop:'2%'}}>
+            <TableHead sx={{border: '0.5rem outset plum'}}>
+                <TableRow sx={{border: '0.5rem outset plum'}}>
+                    <TableCell align="center" sx={{border: '0.5rem outset plum', color: 'darkolivegreen', fontWeight:'bold'}}>Transaction Id</TableCell>
+                    <TableCell align="center" sx={{border: '0.5rem outset plum', color: 'darkolivegreen', fontWeight:'bold'}}>Sender</TableCell>
+                    <TableCell align="center" sx={{border: '0.5rem outset plum', color: 'darkolivegreen', fontWeight:'bold'}}>Receiver</TableCell>
+                    <TableCell align="center" sx={{border: '0.5rem outset plum', color: 'darkolivegreen', fontWeight:'bold'}}>Amount</TableCell>
+                    <TableCell align="center" sx={{border: '0.5rem outset plum', color: 'darkolivegreen', fontWeight:'bold'}}>Transaction type</TableCell>
+                    <TableCell align="center" sx={{border: '0.5rem outset plum', color: 'darkolivegreen', fontWeight:'bold'}}>Date</TableCell>
+                    <TableCell align="center" sx={{border: '0.5rem outset plum', color: 'darkolivegreen', fontWeight:'bold'}}>Status</TableCell>
+                </TableRow>
             </TableHead>
             <TableBody>
-              {transactions.map((row) => {
-                return (
-                  <TableRow key={row.transaction_id}>
-                    <TableCell>{row.transaction_id}</TableCell>
-                    <TableCell>{row.sender_account.account_id}</TableCell>
-                    <TableCell>{row.receiver_account?.account_id}</TableCell>
-                    <TableCell>{row.amount}</TableCell>
-                    <TableCell>{row.transactionType}</TableCell>
-                    <TableCell>{row.transactionDate}</TableCell>
-                    <TableCell>{row.status}</TableCell>
-                  </TableRow>
-                );
-              })}
+                {transactions.map((row) => {
+                    return (<TableRow key={row.transaction_id} sx={{border: '0.5rem outset plum'}}>
+                        <TableCell align='center' sx={{border: '0.5rem outset plum', color: 'charcoal', fontWeight:'bold'}}>{row.transaction_id}</TableCell>
+                        <TableCell align='center' sx={{border: '0.5rem outset plum', color: 'charcoal', fontWeight:'bold'}}>{row.sender_account.account_id}</TableCell>
+                        <TableCell align='center' sx={{border: '0.5rem outset plum', color: 'charcoal', fontWeight:'bold'}}>{row.receiver_account?.account_id != null ? row.receiver_account.account_id : '-'}</TableCell>
+                        <TableCell align='center' sx={{border: '0.5rem outset plum', color: 'charcoal', fontWeight:'bold'}}>{row.amount}</TableCell>
+                        <TableCell align='center' sx={{border: '0.5rem outset plum', color: 'charcoal', fontWeight:'bold'}}>{row.transactionType}</TableCell>
+                        <TableCell align='center' sx={{border: '0.5rem outset plum', color: 'charcoal', fontWeight:'bold'}}>{row.transactionDate}</TableCell>
+                        <TableCell align='center' sx={{border: '0.5rem outset plum', color: 'charcoal', fontWeight:'bold'}}>{row.status}</TableCell>
+                    </TableRow>)
+                })}
             </TableBody>
-          </Table>
-        </TableContainer>
-      ) : (
-        <p>There are no transactions for this Customer.</p>
-      )}
-    </div>
-  );
+        </Table>
+    </TableContainer>: <Typography component="h3" variant="h5" align='center' sx={{color: 'charcoal', fontSize: '20px', fontWeight: 'bold'}}>
+                        NO TRANSACTIONS FOR THIS ACCOUNT
+                </Typography>
+    }
+    </ThemeProvider>
+    </>
+  )
 }

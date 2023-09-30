@@ -34,7 +34,9 @@ const style = {
 const defaultTheme = createTheme();
 
 export default function OpenAccountPage() {
+
   const token = localStorage.getItem("token");
+
 
   const baseURL = "http://localhost:3000/createAccount/";
   const [customerId, setCustomerId] = useState("");
@@ -129,21 +131,20 @@ const [account_type, setAccountType]=useState("");
               <Box
                 sx={{
                   marginTop: 8,
-                  display: "flex",
-                  flexDirection: "column",
-                  alignItems: "center",
+
+                  display: 'flex',
+                  flexDirection: 'column',
+                  alignItems: 'center',
+                  border: '0.5rem outset skyblue'
                 }}
               >
-                <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}></Avatar>
-                <Typography component="h1" variant="h5">
-                  Open a account
+                <Avatar sx={{ m: 1, bgcolor: 'charcoal' }}>
+                </Avatar>
+                <Typography component="h1" variant="h5" sx={{color: 'steelblue', fontSize: '20px', fontWeight: 'bold'}}>
+                      OPEN AN ACCOUNT
                 </Typography>
-                <Box
-                  component="form"
-                  onSubmit={onSubmitForm}
-                  noValidate
-                  sx={{ mt: 1 }}
-                >
+                <Box component="form" onSubmit={onSubmitForm}  sx={{ m: 2 }}>
+
                   <Grid container columnSpacing={1.5}>
                     <Grid item xs={6}>
                       <TextField
@@ -187,16 +188,35 @@ const [account_type, setAccountType]=useState("");
                     </Grid>
                     <Grid item xs={6}>
                       <TextField
-                        margin="normal"
-                        required
-                        fullWidth
-                        id="annualIncome"
-                        label="Annual income"
-                        name="annualIncome"
-                        autoComplete="annualIncome"
-                        onChange={onGrossSalaryChange}
-                        autoFocus
-                      />
+
+                          margin="normal"
+                          required
+                          fullWidth
+                          id="branch"
+                          label="Branch"
+                          name="branch"
+                          autoComplete="branch"
+                          onChange={onBranchChange}
+                          autoFocus
+                        />
+                    </Grid>
+
+                    <Grid item xs={6} >
+                      <TextField
+                            margin="normal"
+                            label="Account Type"
+                            id="accountType"
+                            value={account_type}
+                            style={{minWidth:'15em'}}
+                            select
+                            required
+                            fullWidth
+                            onChange={onAccountTypeChange}>
+                            <MenuItem value={"Savings"}>Savings</MenuItem>
+                            <MenuItem value={"Fixed Deposit"}>Fixed Deposit</MenuItem>
+                            <MenuItem value={"Salary"}>Salary</MenuItem>
+                      </TextField>
+
                     </Grid>
                     <Grid item xs={6}>
                       <FormControlLabel
