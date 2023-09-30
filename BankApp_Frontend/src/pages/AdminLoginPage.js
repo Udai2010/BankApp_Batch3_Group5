@@ -64,7 +64,7 @@ export default function AdminLoginPage() {
               <Typography component="h1" variant="h5">
                 Admin Login
               </Typography>
-              <Box component="form" onSubmit={onAdminLogin} noValidate sx={{ mt: 1 }}>
+              <Box component="form" onSubmit={onAdminLogin} sx={{ mt: 1 }}>
                 <Grid containter>
                   <Grid item xm={12}>
                     <TextField
@@ -90,7 +90,6 @@ export default function AdminLoginPage() {
                       type='password'
                       value={password}
                       onChange={onPasswordChange}
-                      autoFocus
                     />
                   </Grid>
                 </Grid>

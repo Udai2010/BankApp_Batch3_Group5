@@ -35,7 +35,7 @@ export default function Dashboard () {
     return(
         <>
             <ThemeProvider theme={defaultTheme}>
-                <NavBar/>
+                <NavBar userType="user"/>
 
             <Container component="div" maxWidth="85%">
           <CssBaseline />

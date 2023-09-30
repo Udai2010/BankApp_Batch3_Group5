@@ -1,18 +1,16 @@
-import React from "react";
-
-
+import React,{useState, useEffect} from "react";
+import axios from "axios";
 import { createTheme, ThemeProvider, AppBar,Box,Toolbar,Typography,Button } from "@mui/material";
 import { purple } from "@mui/material/colors";
 
 import { Grid, Avatar, CssBaseline, Container, Card, CardContent, CardActions } from '@mui/material';
 
-import BadgeIcon from '@mui/icons-material/Badge';
-import AccountBoxIcon from '@mui/icons-material/AccountBox';
-import AddBoxIcon from '@mui/icons-material/AddBox';
-import IndeterminateCheckBoxIcon from '@mui/icons-material/IndeterminateCheckBox';
-import LoopIcon from '@mui/icons-material/Loop';
-import CompareArrowsIcon from '@mui/icons-material/CompareArrows';
+import PageviewIcon from '@mui/icons-material/Pageview';
+import ContrastIcon from '@mui/icons-material/Contrast';
+import AddIcon from '@mui/icons-material/Add';
+import PersonSearchIcon from '@mui/icons-material/PersonSearch';
 import { Link } from "react-router-dom";
+import NavBar from "./NavBar";
 
 const defaultTheme = createTheme(
     {palette:{
@@ -21,23 +19,29 @@ const defaultTheme = createTheme(
 );
 
 export default function AdminDashboard () {
+
+    const [admin_id, setAdminId] = useState("")
+    const [admin, setAdmin] = useState([])
+
+    async function getAdmin(admin_id, setAdmin) {
+        const url = `http://localhost:3000/admin/${admin_id}`;
+        await axios.get(url).then((response) => {
+            setAdmin(response.data);
+        })
+        .catch((err)=>{
+            alert(err);
+        });
+
+    }
+
+    useEffect(() => {
+        getAdmin(window.sessionStorage.getItem("admin_id"), setAdmin);
+    }, [admin_id])
+
     return(
         <>
             <ThemeProvider theme={defaultTheme}>
-                <Box sx={{ flexGrow: 1 }}>
-                    <AppBar position="static">
-                    <Toolbar>
-                    
-                    <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-                        Online Banking App
-                    </Typography>
-                    <Button color="inherit">Home</Button>
-                    <Button color="inherit">About</Button>
-                    <Button color="inherit">Contact</Button>
-                    <Button color="inherit" >Change password</Button>
-                    </Toolbar>
-                    </AppBar>
-                </Box>
+                <NavBar userType="admin"/>
             <Container component="div" maxWidth="85%">
           <CssBaseline />
           <Box
@@ -50,17 +54,17 @@ export default function AdminDashboard () {
           >
             <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
             </Avatar>
-            <Typography variant="h4" component="div" sx={{ flexGrow: 1 }}>
-                        Welcome Admin
+            <Typography variant="h4" component="div" sx={{ flexGrow: 1, fontWeight: 'bold', color: 'mediumorchid' }}>
+                        Welcome {admin.name}, what would you like to do?
             </Typography>
             
             <Box sx={{ flexGrow: 2 }}>
                 <Grid container spacing={2}>
                     <Grid item xs={6} alignItems="center">
-                    <Card sx={{ minWidth: 275 }}>
-                    <CardContent style={{alignItems:"center"}}>
+                    <Card sx={{ minWidth: 200, border: '0.5rem outset plum' }}>
+                    <CardContent sx={{margin: 'auto', width: '50%', display: 'flex', justifyContent: 'center'}}>
                     
-                        <AccountBoxIcon style={{ fontSize: 60 }}/>
+                        <AddIcon align="center" style={{ fontSize: 60 }}/>
                     
                     </CardContent>
                     <CardActions>
@@ -71,9 +75,10 @@ export default function AdminDashboard () {
                 </Card>
                     </Grid>
                     <Grid item xs={6}>
-                    <Card sx={{ minWidth: 275 }}>
-                    <CardContent>
-                        <BadgeIcon style={{ fontSize: 60 }}/>
+                    <Card sx={{ minWidth: 200, border: '0.5rem outset plum' }}>
+                    <CardContent sx={{margin: 'auto', width: '50%', display: 'flex', justifyContent: 'center'}}>
+                    
+                        <ContrastIcon align="center" style={{ fontSize: 60 }}/>
                     </CardContent>
 
                     <CardActions>
@@ -84,9 +89,10 @@ export default function AdminDashboard () {
                     </Card>
                     </Grid>
                     <Grid item xs={6}>
-                    <Card sx={{ minWidth: 275 }}>
-                    <CardContent>
-                        <AddBoxIcon style={{ fontSize: 60 }}/>
+                    <Card sx={{ minWidth: 200, border: '0.5rem outset plum' }}>
+                    <CardContent sx={{margin: 'auto', width: '50%', display: 'flex', justifyContent: 'center'}}>
+                    
+                        <PersonSearchIcon align="center" style={{ fontSize: 60 }}/>
                     </CardContent>
 
                     <CardActions>
@@ -97,9 +103,9 @@ export default function AdminDashboard () {
                     </Card> 
                     </Grid>
                     <Grid item xs={6}>
-                        <Card sx={{ minWidth: 275 }}>
-                        <CardContent>
-                            <IndeterminateCheckBoxIcon style={{ fontSize: 60 }}/>
+                    <Card sx={{ minWidth: 200, border: '0.5rem outset plum' }}>
+                    <CardContent sx={{margin: 'auto', width: '50%', display: 'flex', justifyContent: 'center'}}>
+                            <PageviewIcon align="center" style={{ fontSize: 60 }}/>
                         </CardContent>
 
                         <CardActions>

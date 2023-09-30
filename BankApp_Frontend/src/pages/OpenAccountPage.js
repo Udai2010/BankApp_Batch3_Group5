@@ -32,6 +32,7 @@ const style = {
 const defaultTheme = createTheme();
 
 export default function OpenAccountPage() {
+
   const baseURL = "http://localhost:3000/createAccount/";
   const [customerId,setCustomerId]=useState("");
   const [occupationType,setOccupationType]=useState("");
