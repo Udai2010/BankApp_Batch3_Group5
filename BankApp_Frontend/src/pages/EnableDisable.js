@@ -11,69 +11,78 @@ const defaultTheme = createTheme(
     }}
 );
 
+
 export default function EnableDisable() {
-   
-    const [customerId, setCustomerId] = useState("");
-    const [accounts, setAccounts] = useState([]);
-    const [selectAccount,setSelectedAccount] = useState(-1);
-    const [access,setAccess]=useState("");
-    const isFirstRender = useRef(true);
+  const token = localStorage.getItem("token");
 
-    const onCustomerIdChange = (event) => {
-        setCustomerId(event.target.value);
+  const authToken = `Bearer ${token}`;
+  const axiosInstance = axios.create({
+    baseURL: "http://localhost:3000", // Replace with your API URL
+    headers: {
+      Authorization: authToken,
+      "Content-Type": "application/json", // You can include other headers if needed
+    },
+  });
+
+  const [customerId, setCustomerId] = useState("");
+  const [accounts, setAccounts] = useState([]);
+  const [selectAccount, setSelectedAccount] = useState(-1);
+  const [access, setAccess] = useState("");
+  const isFirstRender = useRef(true);
+
+  const onCustomerIdChange = (event) => {
+    setCustomerId(event.target.value);
+  };
+
+  const handleKeyPress = (event) => {
+    if (event.key == "Enter") {
+      handleSearch();
     }
-    
-    const handleKeyPress = (event) => {
-        if(event.key == 'Enter'){
-            handleSearch();
-        }
-    }
-    
-    const handleSearch = () => {
-        getAccounts(customerId);
+  };
+
+  const handleSearch = () => {
+    getAccounts(customerId);
+  };
+
+  async function getAccounts(customerId) {
+    const url = `http://localhost:3000/account/${customerId}`;
+    await axiosInstance.get(url).then((response) => {
+      console.log(response);
+      setAccounts(response.data);
+    });
+  }
+
+  useEffect(() => {
+    if (isFirstRender.current) isFirstRender.current = false;
+    else EnableDisableAccount();
+  }, [access, isFirstRender]);
+
+  const EnableDisableAccount = () => {
+    if (access == -1) return;
+    console.log(selectAccount);
+    console.log(access);
+    const url = "http://localhost:3000/enable-disable";
+    axios
+      .post(url, {
+        access: access,
+        account_id: selectAccount,
+      })
+      .then((response) => {
+        console.log(response);
+        alert(response.data);
+      });
+  };
+
+  const onEnableDisable = (event) => {
+    const accId = event.target.dataset.accid;
+    const status = event.target.dataset.status;
+    setSelectedAccount(accId);
+    if (status == "active") {
+      setAccess("inactive");
+    } else {
+      setAccess("active");
     }
 
-    async function getAccounts(customerId) {
-        const url = `http://localhost:3000/account/${customerId}`;
-        await axios.get(url).then((response) => {
-          console.log(response);
-            setAccounts(response.data);
-        });
-    }
-
-    useEffect(() => {
-        if(isFirstRender.current)
-            isFirstRender.current=false;
-        else
-            EnableDisableAccount();    
-    },[access,isFirstRender]);
-
-    const EnableDisableAccount = () => {
-        if(access==-1)
-            return
-        console.log(selectAccount);
-        console.log(access);
-        const url = 'http://localhost:3000/enable-disable'
-        axios.post(url,{
-            access: access,
-            account_id: selectAccount
-        }).then( (response) => {
-            console.log(response)
-            alert(response.data)
-        });
-    };
-
-    const onEnableDisable =  (event) => {
-        const accId = event.target.dataset.accid;
-        const status = event.target.dataset.status; 
-        setSelectedAccount(accId);
-        if(status == 'active'){
-            setAccess("inactive");
-        }
-        else{
-            setAccess("active");
-        }
-    }
     
     return (
         <>

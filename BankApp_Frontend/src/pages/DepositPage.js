@@ -1,4 +1,4 @@
-import React, { useState,useEffect } from 'react';
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
@@ -11,74 +11,86 @@ import {FormControl, InputLabel, Select, MenuItem, Card, CardActions, CardConten
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { Grid } from '@mui/material';
 import NavBar from './NavBar';
+
 const defaultTheme = createTheme();
 
-
 export default function DepositPage() {
+  const token = localStorage.getItem("token");
 
-    const [customerId, setCustomerId] = useState("");
-    const [accounts, setAccounts] = useState([]);
-    const [amount,setAmount]=useState("");
-    const [selectedAccount, setSelectedAccont] = useState(-1);
+  const authToken = `Bearer ${token}`;
+  const axiosInstance = axios.create({
+    baseURL: "http://localhost:3000", // Replace with your API URL
+    headers: {
+      Authorization: authToken,
+      "Content-Type": "application/json", // You can include other headers if needed
+    },
+  });
 
-    async function getAccounts(customer_id, setAccounts) {
-      const url = `http://localhost:3000/account/${customer_id}`;
-      await axios.get(url).then((response) => {
-          setAccounts(response.data);
-          console.log(accounts);
-      });
-      
+  const [customerId, setCustomerId] = useState("");
+  const [accounts, setAccounts] = useState([]);
+  const [amount, setAmount] = useState("");
+  const [selectedAccount, setSelectedAccont] = useState(-1);
+
+  async function getAccounts(customer_id, setAccounts) {
+    const url = `http://localhost:3000/account/${customer_id}`;
+    await axiosInstance.get(url).then((response) => {
+      setAccounts(response.data);
+      console.log(accounts);
+    }).catch((err) => {
+      console.log(err);
+      alert(err);
+    });
   }
-    
-    const onAmountChange = (event) => {
-        if(event.target.value<0){
-            alert("Negative amount not allowed");
-            //document.getElementById('amount').value = '';
-            return;
-        }
-        setAmount(event.target.value);
+
+  const onAmountChange = (event) => {
+    if (event.target.value < 0) {
+      alert("Negative amount not allowed");
+      //document.getElementById('amount').value = '';
+      return;
     }
+    setAmount(event.target.value);
+  };
 
-    const onSelectAccount = (event) => {
-      setSelectedAccont(event.target.value);
-    }
-
-    useEffect(() => {
-      getAccounts(window.sessionStorage.getItem("customer_id"), setAccounts);
-    }, [customerId]);
-    useEffect(() => {
-      if(accounts.length > 0) setSelectedAccont(accounts[0].account_id);
-    }, [accounts]);
-
-    const onDeposit=(event) => {
-        event.preventDefault();
-        const url='http://localhost:3000/deposit';
-        axios
-          .put(url, {
-            account_id: selectedAccount,
-            amount: amount
-          })
-          .then((response) => {
-            alert(response.data);
-            //console.log(response);
-            //navigate("/dashboard");
-          })
-          .catch((err) => {
-            alert(err.response.data.errors)
-          }); 
-      };
-
-    return(
-        <>
+  const onSelectAccount = (event) => {
+    setSelectedAccont(event.target.value);
+  };
 
 
-        <ThemeProvider theme={defaultTheme}>
-        <NavBar/>
+  useEffect(() => {
+    getAccounts(window.sessionStorage.getItem("customer_id"), setAccounts);
+  }, [customerId]);
+  useEffect(() => {
+    if (accounts.length > 0) setSelectedAccont(accounts[0].account_id);
+  }, [accounts]);
 
+  const onDeposit = (event) => {
+    event.preventDefault();
+    const url = "http://localhost:3000/deposit";
+    axiosInstance
+      .put(url, {
+        account_id: selectedAccount,
+        amount: amount,
+      })
+      .then((response) => {
+        alert(response.data);
+        //console.log(response);
+        //navigate("/dashboard");
+      })
+      .catch((err) => {
+        alert("error- " + err);
+      });
+  };
+
+
+  return (
+    <>
+      <ThemeProvider theme={defaultTheme}>
+      <NavBar/>
         <Container component="main" maxWidth="sm">
           <CssBaseline />
           <Box
             sx={{
+
               marginTop: 10,
               display: 'flex',
               flexDirection: 'column',
@@ -145,6 +157,6 @@ export default function DepositPage() {
               </Box>
         </Container>
       </ThemeProvider>
-        </>
-    )
+    </>
+  );
 }

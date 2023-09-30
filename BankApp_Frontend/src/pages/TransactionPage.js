@@ -1,41 +1,52 @@
+
 import React, { useEffect, useState } from 'react';
 import { Box, Grid, Typography, FormControl, TextField, MenuItem, Select, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import axios from 'axios';
 import NavBar from './NavBar';
+
 const defaultTheme = createTheme();
 export default function TransactionPage() {
+  const token = localStorage.getItem("token");
+
+  const authToken = `Bearer ${token}`;
+  const axiosInstance = axios.create({
+    baseURL: "http://localhost:3000", // Replace with your API URL
+    headers: {
+      Authorization: authToken,
+      "Content-Type": "application/json", // You can include other headers if needed
+    },
+  });
   const [customerId, setCustomerId] = useState("");
   const [accounts, setAccounts] = useState([]);
   const [transactions, setTransactions] = useState([]);
   const [selectedAccount, setSelectedAccont] = useState(-1);
 
   async function getAccounts(customer_id, setAccounts) {
-      const url = `http://localhost:3000/account/${customer_id}`;
-      await axios.get(url).then((response) => {
-          setAccounts(response.data);
-          console.log(accounts);
-      });
-      
+    const url = `http://localhost:3000/account/${customer_id}`;
+    await axiosInstance.get(url).then((response) => {
+      setAccounts(response.data);
+      console.log(accounts);
+    });
   }
 
   async function getTransactions(account_id, setTransactions) {
     const url = `http://localhost:3000/transactions/${account_id}`;
-    await axios.get(url).then((response) => {
+    await axiosInstance.get(url).then((response) => {
       console.log(response);
-        setTransactions(response.data);
+      setTransactions(response.data);
     });
   }
 
   const handleChange = (event) => {
     setSelectedAccont(event.target.value);
-  }
+  };
 
   useEffect(() => {
     getAccounts(window.sessionStorage.getItem("customer_id"), setAccounts);
   }, [customerId]);
   useEffect(() => {
-    if(accounts.length > 0) setSelectedAccont(accounts[0].account_id);
+    if (accounts.length > 0) setSelectedAccont(accounts[0].account_id);
   }, [accounts]);
   useEffect(() => {
     if(selectedAccount !== -1) getTransactions(selectedAccount, setTransactions);
@@ -51,6 +62,7 @@ export default function TransactionPage() {
                 </Typography> 
 
       {accounts.length > 0 ?<div>
+
         <Box sx={{ flexGrow: 2 }}>
         <Grid container spacing={2} sx={{margin: 'auto', width: '75%', display: 'flex', justifyContent: 'center'}}>
             <Grid item xm={6}>        
@@ -105,12 +117,16 @@ export default function TransactionPage() {
                     </TableRow>)
                 })}
             </TableBody>
+
         </Table>
+
     </TableContainer>: <Typography component="h3" variant="h5" align='center' sx={{color: 'charcoal', fontSize: '20px', fontWeight: 'bold'}}>
                         NO TRANSACTIONS FOR THIS DATE RANGE
                 </Typography>
       }
+
   </ThemeProvider>
   </>
   )
+
 }
