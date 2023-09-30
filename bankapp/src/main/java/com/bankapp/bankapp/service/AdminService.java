@@ -48,6 +48,10 @@ public class AdminService {
 			}
 		return result;
 	}
+	
+	public Admin getAdmin(Long admin_id){
+		return adminRepo.findById(admin_id).get();
+	}
 
 
     public List<Transaction> getTransactions(Long customer_id){

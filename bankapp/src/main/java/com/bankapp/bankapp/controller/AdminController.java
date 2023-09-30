@@ -49,6 +49,11 @@ public class AdminController {
 		return resp;
 	} 
 	
+	@GetMapping("/admin/{aid}")
+	public Admin getUser(@PathVariable("aid") Long aid){
+		return adminService.getAdmin(aid);
+	}
+	
 	@PostMapping("/adminLogin")
 	public String validateAdmin(@RequestBody AdminLogin l) {
 		return adminService.validateAdmin(l);
