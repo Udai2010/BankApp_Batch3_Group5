@@ -218,21 +218,6 @@ export default function RegistrationPage() {
                               value={dob} onChange={(dob)=>setdob(dob)} />
                       </Grid>
                     </LocalizationProvider>
-
-//                     <Grid item xs={6}>
-//                       <TextField
-//                         margin="normal"
-//                         required
-//                         fullWidth
-//                         type='date'
-//                         id="dob"
-//                         name="dob"
-//                         autoComplete="dob"
-//                         onChange={dobChangeHandler}
-//                         autoFocus
-//                       />
-//                     </Grid>
-
                     <Grid item xs={12}>
                       <TextField
                         margin="normal"
