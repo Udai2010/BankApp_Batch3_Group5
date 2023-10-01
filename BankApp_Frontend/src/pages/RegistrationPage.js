@@ -15,6 +15,10 @@ import Modal from '@mui/material/Modal';
 import Fade from '@mui/material/Fade';
 import { useNavigate } from 'react-router-dom';
 import { passwordHashService } from '../services/PasswordHashService';
+import { DatePicker, LocalizationProvider } from '@mui/x-date-pickers';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs/AdapterDayjs';
+import dayjs from 'dayjs';
+import { auto } from '@popperjs/core';
 
 const style = {
   position: 'absolute',
@@ -39,7 +43,7 @@ export default function RegistrationPage() {
   const [name, setname] = useState("")
   const [email, setemail] = useState("")
   const [pannumber, setpannumber] = useState("")
-  const [dob, setdob] = useState("")
+  const [dob, setdob] = useState(dayjs())
   const [password, setpassword] = useState("")
   const [fathername, setfathername] = useState("")
   const [mothername, setmothername] = useState("")
@@ -94,13 +98,15 @@ export default function RegistrationPage() {
   const submitHandler = (event) => {
     event.preventDefault();
     const hasedPassword = passwordHashService(password);
+    const birthdate = dob.year()+'-'+(dob.month()+1)+'-'+dob.date();
+    console.log(birthdate);
     axios.post(baseUrl, {
 
       name: name,
       email: email,
       pan_number: pannumber,
       password: hasedPassword,
-      dob: dob,
+      dob: birthdate,
       fathername: fathername,
       mothername: mothername,
       address: address
@@ -202,19 +208,12 @@ export default function RegistrationPage() {
                         autoFocus
                       />
                     </Grid>
-                    <Grid item xs={6}>
-                      <TextField
-                        margin="normal"
-                        required
-                        fullWidth
-                        id="dob"
-                        label="Date of Birth"
-                        name="dob"
-                        autoComplete="dob"
-                        onChange={dobChangeHandler}
-                        autoFocus
-                      />
-                    </Grid>
+                    <LocalizationProvider dateAdapter={AdapterDayjs}>
+                      <Grid item xm={6} marginTop={'15px'}>
+                          <DatePicker  required fullWidth label="Date Of Birth" disableFuture
+                              value={dob} onChange={(dob)=>setdob(dob)} />
+                      </Grid>
+                    </LocalizationProvider>
                     <Grid item xs={12}>
                       <TextField
                         margin="normal"

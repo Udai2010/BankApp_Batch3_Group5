@@ -39,8 +39,8 @@ export default function OpenAccountPage() {
   const [sourceOfIncome, setSourceOfIncome]=useState("");
   const [grossSalary, setGrossSalary]=useState("");
   const [debit_card, setDebitCard]=useState("");
-  const [net_banking, setNet_banking]=useState("");
-  const [account_type, setAccountType]=useState("");
+  const [net_banking, setNet_banking]=useState(false);
+  const [account_type, setAccountType]=useState(false);
   const [branch, setBranch] = useState("");
   const [success, setSuccess] = useState(false)
   const [message, setMessage] = useState("");
@@ -76,11 +76,11 @@ export default function OpenAccountPage() {
   };
 
   const onDebitChange = (event) => {
-    setDebitCard(event.target.value);
+    setDebitCard(event.target.checked);
   }
 
   const onNetBankingChange = (event) => {
-    setNet_banking(event.target.value);
+    setNet_banking(event.target.checked);
   }
 
   const onBranchChange = (event) => {
@@ -92,16 +92,28 @@ export default function OpenAccountPage() {
     console.log(account_type);
   }
 
+  const ifscGenerate = () => {
+    const characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+    let result='';
+    for(let i=0;i<5;i++){
+      result+=characters.charAt(Math.floor(Math.random() * characters.length));
+    }
+    return result;
+  }
+
   const onSubmitForm = (event) => {
     event.preventDefault();
+    const debitCardValue = debit_card? "yes" : "no";
+    const netBankingValue = net_banking? "yes" : "no";
+    const ifsc = branch+ifscGenerate();
     axios
       .post(baseURL+customerId,{
-          debit_card: debit_card,
+          debit_card: debitCardValue,
           branch: branch,
           account_type: account_type,
-          net_banking:net_banking,
-          status:"active",
-          ifsc:"BLR1234A",
+          net_banking: netBankingValue,
+          status:"inactive",
+          ifsc:ifsc,
           balance:5000,
           occupation_type: occupationType,
           income_source: sourceOfIncome,
