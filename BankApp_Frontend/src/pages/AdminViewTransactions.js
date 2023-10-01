@@ -59,7 +59,7 @@ export default function AdminViewTransactions() {
   return (
     <>
     <ThemeProvider theme={defaultTheme}>
-      <NavBar/>
+      <NavBar userType="admin"/>
 
       <Typography component="h1" variant="h5" align='center' sx={{color: 'mediumorchid', fontSize: '20px', fontWeight: 'bold'}}>
                         VIEW TRANSACTION HISTORY
