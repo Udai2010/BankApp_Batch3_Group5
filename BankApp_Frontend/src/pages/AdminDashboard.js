@@ -19,13 +19,23 @@ const defaultTheme = createTheme(
 );
 
 export default function AdminDashboard () {
+    const token = localStorage.getItem("token");
 
+    const authToken = `Bearer ${token}`;
+    const axiosInstance = axios.create({
+        baseURL: "http://localhost:3000", // Replace with your API URL
+        headers: {
+        Authorization: authToken,
+        "Content-Type": "application/json", // You can include other headers if needed
+        },
+    });
     const [admin_id, setAdminId] = useState("")
     const [admin, setAdmin] = useState([])
 
     async function getAdmin(admin_id, setAdmin) {
+        console.log(token);
         const url = `http://localhost:3000/admin/${admin_id}`;
-        await axios.get(url).then((response) => {
+        await axiosInstance.get(url).then((response) => {
             setAdmin(response.data);
         })
         .catch((err)=>{

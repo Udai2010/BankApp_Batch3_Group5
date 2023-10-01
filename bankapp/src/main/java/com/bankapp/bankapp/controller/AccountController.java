@@ -8,6 +8,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import javax.validation.ConstraintViolation;
+import javax.validation.Validation;
+import javax.validation.ValidatorFactory;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -31,13 +35,9 @@ import com.bankapp.bankapp.service.AccountService;
 import com.bankapp.bankapp.service.AdminService;
 import com.bankapp.bankapp.service.CustomerService;
 
-import jakarta.validation.ConstraintViolation;
-import jakarta.validation.Validation;
-import jakarta.validation.ValidatorFactory;
 
 
 @RestController
-@CrossOrigin("*")
 public class AccountController {
     @Autowired
     AccountService accountService;
@@ -48,7 +48,7 @@ public class AccountController {
 	@PostMapping("/createAccount/{uid}")
 	public List<String> createNewAccount(@RequestBody Account account,@PathVariable("uid") Long userID) {
 		ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
-		jakarta.validation.Validator validator = factory.getValidator();
+		javax.validation.Validator validator = factory.getValidator();
 		Set<ConstraintViolation<Account>> violations = validator.validate(account);
 
 		List<String> resp = new ArrayList<String>();
@@ -91,7 +91,7 @@ public class AccountController {
 
 	@PutMapping("fundtransfer")
 	public String fundTransfer(@RequestBody FundTransfer ft){
-		if(accountService.getStatus(ft.getSourceAccount()).compareTo("inactive")==0 || accountService.getStatus(ft.getSourceAccount()).compareTo("inactive")==0){
+		if(accountService.getStatus(ft.getSourceAccount()).compareTo("inactive")==0 || accountService.getStatus(ft.getDestAccount()).compareTo("inactive")==0){
 			throw new AccountDisabledException("Account is disabled!");
 		}
 		return accountService.fundTransfer(ft);

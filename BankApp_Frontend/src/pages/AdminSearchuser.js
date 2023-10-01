@@ -12,32 +12,40 @@ const defaultTheme = createTheme(
 );
 
 export default function AdminSearchuser() {
-    const [selectedCustomer, setSelectedCustomer] = useState(-1);
-    const [customer, setCustomer] = useState({});
+  const token = localStorage.getItem("token");
 
+  const [selectedCustomer, setSelectedCustomer] = useState(-1);
+  const [customer, setCustomer] = useState({});
 
-async function getCustomer() {
+  async function getCustomer() {
+    const authToken = `Bearer ${token}`;
+    const axiosInstance = axios.create({
+      baseURL: "http://localhost:3000", // Replace with your API URL
+      headers: {
+        Authorization: authToken,
+        "Content-Type": "application/json", // You can include other headers if needed
+      },
+    });
     const url = `http://localhost:3000/searchUser/${selectedCustomer}`;
-    await axios.get(url).then((response) => {
+    await axiosInstance.get(url).then((response) => {
       console.log(response);
-        setCustomer(response.data);
+      setCustomer(response.data);
     });
   }
 
-const handleChange = (event) => {
+  const handleChange = (event) => {
     console.log(event.target.value);
     setSelectedCustomer(event.target.value);
-  }
+  };
   const handleKeyPress = (event) => {
-    if(event.key == 'Enter'){
-        handleSearch();
+    if (event.key == "Enter") {
+      handleSearch();
     }
-  }
+  };
 
   const handleSearch = () => {
     getCustomer(selectedCustomer);
-  }
-
+  };
 
   return (
     <>
@@ -135,5 +143,5 @@ const handleChange = (event) => {
         </Container>    
         </ThemeProvider>
     </>
-  )
+  );
 }
