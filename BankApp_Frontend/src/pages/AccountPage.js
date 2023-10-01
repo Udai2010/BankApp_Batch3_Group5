@@ -49,9 +49,17 @@ export default function AccountPage() {
         event.preventDefault();
         console.log(startdate);
         console.log(enddate);
+        const authToken = `Bearer ${token}`;
+        const axiosInstance = axios.create({
+          baseURL: "http://localhost:3000", // Replace with your API URL
+          headers: {
+            Authorization: authToken,
+            "Content-Type": "application/json", // You can include other headers if needed
+          },
+        });
 
         const url = `http://localhost:3000/statement/${selectedAccount}/${startdate}/${enddate}`;
-        axios.get(url).then((response) => {
+        axiosInstance.get(url).then((response) => {
         console.log(response);
         setTransactions(response.data);
     });

@@ -73,11 +73,11 @@ export default function DepositPage() {
       })
       .then((response) => {
         alert(response.data);
-        //console.log(response);
+        console.log(response);
         //navigate("/dashboard");
       })
       .catch((err) => {
-        alert("error- " + err);
+        alert(err.response.data.errors);
       });
   };
 

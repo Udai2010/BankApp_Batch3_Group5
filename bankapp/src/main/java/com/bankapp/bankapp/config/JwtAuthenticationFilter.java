@@ -39,7 +39,9 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     private boolean shouldSkipProcessing(HttpServletRequest request) {
         // Define the URLs for which you want to skip JWT processing
         String requestURI = request.getRequestURI();
-        return "/auth/register".equals(requestURI) || "/auth/login".equals(requestURI);
+        return "/auth/register".equals(requestURI) 
+        || "/auth/login".equals(requestURI) 
+        || "/auth/adminlogin".equals(requestURI);
     }
 
     @Override

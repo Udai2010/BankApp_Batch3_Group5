@@ -91,7 +91,7 @@ public class AccountController {
 
 	@PutMapping("fundtransfer")
 	public String fundTransfer(@RequestBody FundTransfer ft){
-		if(accountService.getStatus(ft.getSourceAccount()).compareTo("inactive")==0 || accountService.getStatus(ft.getSourceAccount()).compareTo("inactive")==0){
+		if(accountService.getStatus(ft.getSourceAccount()).compareTo("inactive")==0 || accountService.getStatus(ft.getDestAccount()).compareTo("inactive")==0){
 			throw new AccountDisabledException("Account is disabled!");
 		}
 		return accountService.fundTransfer(ft);

@@ -14,7 +14,7 @@ import { useNavigate } from "react-router-dom";
 const defaultTheme = createTheme();
 
 export default function AdminLoginPage() {
-  const baseURL = "http://localhost:3000/adminLogin";
+  const baseURL = "http://localhost:3000/auth/adminlogin";
   const [admin_id, setAdmin_Id] = useState("");
   const [password, setPassword] = useState("");
 
@@ -26,14 +26,15 @@ export default function AdminLoginPage() {
     setPassword(event.target.value);
   };
 
-  const onAdminLogin = (event) => {
+  const onAdminLogin = async (event) => {
     event.preventDefault();
-    axios
+    await axios
       .post(baseURL, {
         admin_id: admin_id,
         password: password,
       })
       .then((response) => {
+        console.log(response);
         const newToken = response.data;
 
         try {
@@ -53,6 +54,7 @@ export default function AdminLoginPage() {
         window.location.assign("/admindashboard");
       })
       .catch((err) => {
+        console.log(err);
         alert("error- " + err);
       });
   };
@@ -81,11 +83,11 @@ export default function AdminLoginPage() {
               sx={{ mt: 1 }}
             >
 
-              <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
+              {/* <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
               </Avatar>
               <Typography component="h1" variant="h5">
                 Admin Login
-              </Typography>
+              </Typography> */}
               <Box component="form" onSubmit={onAdminLogin} sx={{ mt: 1 }}>
                 <Grid containter>
                   <Grid item xm={12}>
@@ -115,7 +117,9 @@ export default function AdminLoginPage() {
                     />
                   </Grid>
                 </Grid>
-              </Grid>
+                
+              {/* </Grid> */}
+              </Box>
               <Button
                 type="submit"
                 fullWidth

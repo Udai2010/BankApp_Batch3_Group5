@@ -46,6 +46,8 @@ export default function WithdrawPage() {
     await axiosInstance.get(url).then((response) => {
       setBalance(response.data);
       console.log(balance);
+    }).catch((err) => {
+      alert(err);
     });
   }
     
@@ -69,11 +71,14 @@ export default function WithdrawPage() {
   useEffect(() => {
     if (accounts.length > 0) setSelectedAccont(accounts[0].account_id);
   }, [accounts]);
+  useEffect(()=>{
+    if(selectedAccount!==-1) {getBalance(selectedAccount,setBalance)}
+  },[selectedAccount]);
 
   const onWithdraw = (event) => {
     event.preventDefault();
     const url = "http://localhost:3000/withdraw";
-    axios
+    axiosInstance
       .put(url, {
         account_id: selectedAccount,
         amount: amount,
