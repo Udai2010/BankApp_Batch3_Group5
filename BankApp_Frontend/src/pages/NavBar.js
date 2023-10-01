@@ -2,11 +2,12 @@ import React from "react";
 import { Box, AppBar, Toolbar, Typography, Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 
-export default function NavBar(userType) {
+export default function NavBar({userType}) {
 
     const navigate = useNavigate();
 
     const onLogout = () => {
+        console.log(userType);
         sessionStorage.clear();
         alert("Thank you for Banking with us.")
         navigate("/login")
@@ -17,7 +18,8 @@ export default function NavBar(userType) {
             <Box sx={{ flexGrow: 1 }}>
                     <AppBar position="static">
                         <Toolbar sx={{justifyContent:'space-between'}}>
-                        { userType === "admin" ? 
+                        {   
+                            userType === "admin" ? 
                              <>
                              <Button color="inherit" href="/admindashboard">
                                  <Typography variant="h6" component="div"  sx={{ flexGrow: 1 }}>
