@@ -12,7 +12,15 @@ const defaultTheme = createTheme(
 );
 
 export default function EnableDisable() {
-   
+  const token = localStorage.getItem("token");
+  const authToken = `Bearer ${token}`;
+  const axiosInstance = axios.create({
+    baseURL: "http://localhost:3000", // Replace with your API URL
+    headers: {
+      Authorization: authToken,
+      "Content-Type": "application/json", // You can include other headers if needed
+    },
+  });
     const [customerId, setCustomerId] = useState("");
     const [accounts, setAccounts] = useState([]);
     const [selectAccount,setSelectedAccount] = useState(-1);
@@ -35,7 +43,7 @@ export default function EnableDisable() {
 
     async function getAccounts(customerId) {
         const url = `http://localhost:3000/account/${customerId}`;
-        await axios.get(url).then((response) => {
+        await axiosInstance.get(url).then((response) => {
           console.log(response);
             setAccounts(response.data);
         });
@@ -54,7 +62,7 @@ export default function EnableDisable() {
         console.log(selectAccount);
         console.log(access);
         const url = 'http://localhost:3000/enable-disable'
-        axios.post(url,{
+        axiosInstance.post(url,{
             access: access,
             account_id: selectAccount
         }).then( (response) => {

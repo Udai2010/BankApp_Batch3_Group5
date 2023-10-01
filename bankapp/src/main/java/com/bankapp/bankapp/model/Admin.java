@@ -2,20 +2,17 @@ package com.bankapp.bankapp.model;
 
 import org.hibernate.validator.constraints.Length;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotBlank;
+import javax.persistence.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+
 
 @Entity
 @Table(name="admin")
 public class Admin {
 	
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@GeneratedValue(strategy= GenerationType.IDENTITY)
 	private Long admin_id;
 	@NotBlank(message="Name can not be blank.")
 	private String name;

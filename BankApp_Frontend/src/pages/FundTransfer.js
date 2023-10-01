@@ -1,4 +1,4 @@
-import React, { useState,useEffect } from 'react';
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
@@ -12,76 +12,82 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { Grid } from '@mui/material';
 import { ElevenMp } from '@mui/icons-material';
 import NavBar from './NavBar';
+
 const defaultTheme = createTheme();
 
-
 export default function FundTransfer() {
+  const token = localStorage.getItem("token");
 
-    const [customerId, setCustomerId] = useState("");
-    const [accounts, setAccounts] = useState([]);
-    const [amount,setAmount]=useState("");
-    const [selectedAccount, setSelectedAccont] = useState(-1);
-    const [destinationAccount,setDestinationAccount]=useState("");
+  const authToken = `Bearer ${token}`;
+  const axiosInstance = axios.create({
+    baseURL: "http://localhost:3000", // Replace with your API URL
+    headers: {
+      Authorization: authToken,
+      "Content-Type": "application/json", // You can include other headers if needed
+    },
+  });
 
-    async function getAccounts(customer_id, setAccounts) {
-      const url = `http://localhost:3000/account/${customer_id}`;
-      await axios.get(url).then((response) => {
-          setAccounts(response.data);
-          console.log(accounts);
-      });
-      
+  const [customerId, setCustomerId] = useState("");
+  const [accounts, setAccounts] = useState([]);
+  const [amount, setAmount] = useState("");
+  const [selectedAccount, setSelectedAccont] = useState(-1);
+  const [destinationAccount, setDestinationAccount] = useState("");
+
+  async function getAccounts(customer_id, setAccounts) {
+    const url = `http://localhost:3000/account/${customer_id}`;
+    await axiosInstance.get(url).then((response) => {
+      setAccounts(response.data);
+      console.log(accounts);
+    });
   }
-    
-    const onAmountChange = (event) => {
-      if(event.target.value<0){
-        alert("Negative amount not allowed");
-        //document.getElementById('amount').value = '';
-        return;
+
+  const onAmountChange = (event) => {
+    if (event.target.value < 0) {
+      alert("Negative amount not allowed");
+      //document.getElementById('amount').value = '';
+      return;
     }
-        setAmount(event.target.value);
-    }
+    setAmount(event.target.value);
+  };
 
-    const onSelectAccount = (event) => {
-      setSelectedAccont(event.target.value);
-    }
+  const onSelectAccount = (event) => {
+    setSelectedAccont(event.target.value);
+  };
 
-    const onDestAccount = (event) => {
-        setDestinationAccount(event.target.value);
-    }
+  const onDestAccount = (event) => {
+    setDestinationAccount(event.target.value);
+  };
 
-    useEffect(() => {
-      getAccounts(window.sessionStorage.getItem("customer_id"), setAccounts);
-    }, [customerId]);
-    useEffect(() => {
-      if(accounts.length > 0) setSelectedAccont(accounts[0].account_id);
-    }, [accounts]);
+  useEffect(() => {
+    getAccounts(window.sessionStorage.getItem("customer_id"), setAccounts);
+  }, [customerId]);
+  useEffect(() => {
+    if (accounts.length > 0) setSelectedAccont(accounts[0].account_id);
+  }, [accounts]);
 
-    const onFundTransfer=(event) => {
-        event.preventDefault();
-        const url='http://localhost:3000/fundtransfer';
-        axios
-          .put(url, {
-            sourceAccount: selectedAccount,
-            destAccount: destinationAccount,
-            amount: amount
-          })
-          .then((response) => {
-            alert(response.data);
-            //console.log(response);
-            //navigate("/dashboard");
-          })
-          .catch((err) => {
-            alert(err.response.data.errors)
-          }); 
-      };
+  const onFundTransfer = (event) => {
+    event.preventDefault();
+    const url = "http://localhost:3000/fundtransfer";
+    axiosInstance
+      .put(url, {
+        sourceAccount: selectedAccount,
+        destAccount: destinationAccount,
+        amount: amount,
+      })
+      .then((response) => {
+        alert(response.data);
+        //console.log(response);
+        //navigate("/dashboard");
+      })
+      .catch((err) => {
+        alert(err.response.data.errors);
+      });
+  };
 
-    return(
-        <>
-
-
-        <ThemeProvider theme={defaultTheme}>
-          <NavBar/>
-
+  return (
+    <>
+      <ThemeProvider theme={defaultTheme}>
+        <NavBar/>
         <Container component="main" maxWidth="sm">
           <CssBaseline />
           <Box
@@ -165,6 +171,6 @@ export default function FundTransfer() {
             </Box>
         </Container>
       </ThemeProvider>
-        </>
-    )
+    </>
+  );
 }

@@ -1,57 +1,64 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
 import axios from "axios";
-import Avatar from '@mui/material/Avatar';
-import Button from '@mui/material/Button';
-import CssBaseline from '@mui/material/CssBaseline';
-import TextField from '@mui/material/TextField';
-import Box from '@mui/material/Box';
-import Typography from '@mui/material/Typography';
-import Container from '@mui/material/Container';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { Grid } from '@mui/material';
-import { useNavigate } from 'react-router-dom';
-import { passwordHashService } from '../services/PasswordHashService';
+import Avatar from "@mui/material/Avatar";
+import Button from "@mui/material/Button";
+import CssBaseline from "@mui/material/CssBaseline";
+import TextField from "@mui/material/TextField";
+import Box from "@mui/material/Box";
+import Typography from "@mui/material/Typography";
+import Container from "@mui/material/Container";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
+import { Grid } from "@mui/material";
+import { useNavigate } from "react-router-dom";
+import { passwordHashService } from "../services/PasswordHashService";
 
 const defaultTheme = createTheme();
 
 export default function ForgotPassowrd() {
+  const token = localStorage.getItem("token");
+
+  const authToken = `Bearer ${token}`;
+  const axiosInstance = axios.create({
+    baseURL: "http://localhost:3000", // Replace with your API URL
+    headers: {
+      Authorization: authToken,
+      "Content-Type": "application/json", // You can include other headers if needed
+    },
+  });
   const baseURL = "http://localhost:3000/forgotpassword";
   const [customerId, setCustomerId] = useState("");
   const [otp, setOtp] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
 
-  const onCustomerIdChange=(event)=> {
-        setCustomerId(event.target.value);
-    };
+  const onCustomerIdChange = (event) => {
+    setCustomerId(event.target.value);
+  };
 
   const onPasswordChange = (event) => {
     setPassword(event.target.value);
   };
 
   const onOtpChange = (event) => {
-        setOtp(event.target.value);
+    setOtp(event.target.value);
   };
 
-  
   const onForgotPassword = (event) => {
-    
     event.preventDefault();
-    axios
+    axiosInstance
       .put(baseURL, {
         username: customerId,
         password: passwordHashService(password),
-        otp:otp
+        otp: otp,
       })
       .then((response) => {
         alert(response.data);
         window.location.assign("/login");
       })
       .catch((err) => {
-        alert("error- " + err)
+        alert("error- " + err);
       });
   };
-
 
   return (
     <>
@@ -61,19 +68,23 @@ export default function ForgotPassowrd() {
           <Box
             sx={{
               marginTop: 8,
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'center',
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
             }}
           >
-            <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
-            </Avatar>
+            <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}></Avatar>
             <Typography component="h1" variant="h5">
               Forgot Password
             </Typography>
-            <Box component="form" onSubmit={onForgotPassword} noValidate sx={{ mt: 1 }}>
+            <Box
+              component="form"
+              onSubmit={onForgotPassword}
+              noValidate
+              sx={{ mt: 1 }}
+            >
               <Grid containter>
-              <Grid item xm={12}>
+                <Grid item xm={12}>
                   <TextField
                     margin="normal"
                     required
@@ -81,7 +92,7 @@ export default function ForgotPassowrd() {
                     id="customerId"
                     label="Customer ID"
                     name="customerId"
-                    type='text'
+                    type="text"
                     value={customerId}
                     onChange={onCustomerIdChange}
                     autoFocus
@@ -96,7 +107,7 @@ export default function ForgotPassowrd() {
                     id="password"
                     label="New Password"
                     name="password"
-                    type='password'
+                    type="password"
                     value={password}
                     onChange={onPasswordChange}
                     autoFocus
@@ -111,7 +122,7 @@ export default function ForgotPassowrd() {
                     id="otp"
                     label="OTP"
                     name="otp"
-                    type='text'
+                    type="text"
                     value={otp}
                     onChange={onOtpChange}
                     autoFocus
@@ -131,5 +142,5 @@ export default function ForgotPassowrd() {
         </Container>
       </ThemeProvider>
     </>
-  )
+  );
 }

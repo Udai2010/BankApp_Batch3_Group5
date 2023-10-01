@@ -32,6 +32,16 @@ const style = {
 const defaultTheme = createTheme();
 
 export default function OpenAccountPage() {
+  const token = localStorage.getItem("token");
+
+  const authToken = `Bearer ${token}`;
+  const axiosInstance = axios.create({
+    baseURL: "http://localhost:3000", // Replace with your API URL
+    headers: {
+      Authorization: authToken,
+      "Content-Type": "application/json", // You can include other headers if needed
+    },
+  });
 
   const baseURL = "http://localhost:3000/createAccount/";
   const [customerId,setCustomerId]=useState("");
@@ -106,7 +116,7 @@ export default function OpenAccountPage() {
     const debitCardValue = debit_card? "yes" : "no";
     const netBankingValue = net_banking? "yes" : "no";
     const ifsc = branch+ifscGenerate();
-    axios
+    axiosInstance
       .post(baseURL+customerId,{
           debit_card: debitCardValue,
           branch: branch,
