@@ -38,7 +38,7 @@ const defaultTheme = createTheme();
 
 export default function RegistrationPage() {
 
-  const baseUrl = "http://localhost:3000/createCustomer"
+  const baseUrl = "http://localhost:3000/auth/createCustomer"
 
   const [name, setname] = useState("")
   const [email, setemail] = useState("")
@@ -130,10 +130,14 @@ export default function RegistrationPage() {
               <CssBaseline />
               <Box
                 sx={{
+                  p:3,
+                  color: '#000',
                   marginTop: 8,
                   display: 'flex',
                   flexDirection: 'column',
                   alignItems: 'center',
+                  backgroundColor: 'rgba(225, 225, 225, 0.8)',
+                  borderRadius: '10px'
                 }}
               >
                 <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
@@ -149,7 +153,7 @@ export default function RegistrationPage() {
                         required
                         fullWidth
                         id="name"
-                        label="Name"
+                        placeholder="Name"
                         name="name"
                         autoComplete="name"
                         onChange={nameChangeHandler}
@@ -162,7 +166,7 @@ export default function RegistrationPage() {
                         required
                         fullWidth
                         id="email"
-                        label="Email Address"
+                        placeholder="Email Address"
                         name="email"
                         autoComplete="email"
                         onChange={emailChangeHandler}
@@ -175,7 +179,7 @@ export default function RegistrationPage() {
                         required
                         fullWidth
                         id="fathername"
-                        label="Father Name"
+                        placeholder="Father Name"
                         name="fathername"
                         autoComplete="fathername"
                         onChange={fathernameChangeHandler}
@@ -188,7 +192,7 @@ export default function RegistrationPage() {
                         required
                         fullWidth
                         id="mothername"
-                        label="Mother Name"
+                        placeholder="Mother Name"
                         name="mothername"
                         autoComplete="mothername"
                         onChange={mothernameChangeHandler}
@@ -201,7 +205,7 @@ export default function RegistrationPage() {
                         required
                         fullWidth
                         id="pannumber"
-                        label="Pan Number"
+                        placeholder="Pan Number"
                         name="pannumber"
                         autoComplete="pannumber"
                         onChange={pannumberChangeHandler}
@@ -214,6 +218,21 @@ export default function RegistrationPage() {
                               value={dob} onChange={(dob)=>setdob(dob)} />
                       </Grid>
                     </LocalizationProvider>
+
+//                     <Grid item xs={6}>
+//                       <TextField
+//                         margin="normal"
+//                         required
+//                         fullWidth
+//                         type='date'
+//                         id="dob"
+//                         name="dob"
+//                         autoComplete="dob"
+//                         onChange={dobChangeHandler}
+//                         autoFocus
+//                       />
+//                     </Grid>
+
                     <Grid item xs={12}>
                       <TextField
                         margin="normal"
@@ -221,7 +240,7 @@ export default function RegistrationPage() {
                         fullWidth
                         type="password"
                         id="password"
-                        label="Password"
+                        placeholder="Password"
                         name="password"
                         onChange={passwordChangeHandler}
                         autoFocus
@@ -233,7 +252,7 @@ export default function RegistrationPage() {
                         required
                         fullWidth
                         id="address"
-                        label="Current Address"
+                        placeholder="Current Address"
                         name="address"
                         autoComplete="address"
                         onChange={addressChangeHandler}
@@ -258,7 +277,7 @@ export default function RegistrationPage() {
         <>
           <div>
             <Modal
-              aria-labelledby="transition-modal-title"
+              aria-placeholderledby="transition-modal-title"
               aria-describedby="transition-modal-description"
               open={open}
               onClose={handleClose}

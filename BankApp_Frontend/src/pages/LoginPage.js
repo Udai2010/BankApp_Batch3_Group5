@@ -1,22 +1,22 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from 'react-router-dom';
 
 import axios from "axios";
-import Avatar from '@mui/material/Avatar';
-import Button from '@mui/material/Button';
-import CssBaseline from '@mui/material/CssBaseline';
-import TextField from '@mui/material/TextField';
-import Box from '@mui/material/Box';
-import Typography from '@mui/material/Typography';
-import Container from '@mui/material/Container';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { Grid } from '@mui/material';
+import Avatar from "@mui/material/Avatar";
+import Button from "@mui/material/Button";
+import CssBaseline from "@mui/material/CssBaseline";
+import TextField from "@mui/material/TextField";
+import Box from "@mui/material/Box";
+import Typography from "@mui/material/Typography";
+import Container from "@mui/material/Container";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
+import { Grid } from "@mui/material";
 
 import Backdrop from '@mui/material/Backdrop';
 import Modal from '@mui/material/Modal';
 import Fade from '@mui/material/Fade';
-import { passwordHashService } from '../services/PasswordHashService';
+import { passwordHashService } from "../services/PasswordHashService";
 
 const defaultTheme = createTheme();
 
@@ -35,10 +35,15 @@ const style = {
 
 
 export default function LoginPage() {
-  const baseURL = "http://localhost:3000/login";
-
+  const baseURL = "http://localhost:3000/auth/login";
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+
+  // const navigate = useNavigate();
+  // const baseURL = "http://localhost:3000/login";
+
+  // const [username, setUsername] = useState("");
+  // const [password, setPassword] = useState("");
   const [message, setMessage] = useState("");
   const [success, setSuccess] = useState(false)
   const [view,setView]=useState(false); 
@@ -67,31 +72,56 @@ export default function LoginPage() {
     setPassword(event.target.value);
   };
 
-  const onLogin = (event) => {
+  const onLogin = async (event) => {
     event.preventDefault();
-    const hashedPassword = passwordHashService(password)
-    console.log(username)
-    axios
-      .post(baseURL, {
-        userID: username,
-        password: hashedPassword
-      })
+    const hashedPassword = passwordHashService(password);
+    console.log(username);
+    let response = await axios.post(baseURL, {
+      userID: username,
+      password: hashedPassword,
+    }).catch((err) => {
+      console.log(err);
+      alert(err);
+    });
+    if (response.data) {
+      const newToken = response.data;
 
-      .then((response) => {
-        setMessage(response.data);
-        setView(true);
-        setSuccess(true);
-        
-        console.log(response);
-        window.sessionStorage.setItem("customer_id", username);
-      })
-      .catch((err) => {
-        setMessage(err.response.data.errors);
-        setSuccess(true);
-      });
+      try {
+        localStorage.setItem("token", newToken);
+        console.log("Token saved to local storage:", newToken);
+      } catch (error) {
+        console.error("Error saving token to local storage:", error);
+      }
 
+      const token = localStorage.getItem("token");
+      if (token) {
+        console.log(token);
+      }
+      
+      window.sessionStorage.setItem("customer_id", username);
+      window.location.assign("/dashboard");
+    } else {
+      alert("error in authentication");
+    }
+    // const hashedPassword = passwordHashService(password)
+    // console.log(username)
+    // axios
+    //   .post(baseURL, {
+    //     userID: username,
+    //     password: hashedPassword
+    //   })
+
+    //   const token = localStorage.getItem("token");
+    //   if (token) {
+    //     console.log(token);
+    //   }
+      
+    //   window.sessionStorage.setItem("customer_id", username);
+    //   window.location.assign("/dashboard");
+    // } else {
+    //   alert("error in authentication");
+    // }
   };
-
 
   return (
 
@@ -103,14 +133,17 @@ export default function LoginPage() {
           <CssBaseline />
           <Box
             sx={{
+              p:3,
+              color: '#000',
               marginTop: 8,
               display: 'flex',
               flexDirection: 'column',
               alignItems: 'center',
+              backgroundColor: 'rgba(225, 225, 225, 0.8)',
+              borderRadius: '10px'
             }}
           >
-            <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
-            </Avatar>
+            <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}></Avatar>
             <Typography component="h1" variant="h5">
               Login
             </Typography>
@@ -122,7 +155,7 @@ export default function LoginPage() {
                     required
                     fullWidth
                     id="username"
-                    label="Customer ID"
+                    placeholder="Customer ID"
                     name="username"
                     value={username}
                     onChange={onUsernameChange}
@@ -135,9 +168,9 @@ export default function LoginPage() {
                     required
                     fullWidth
                     id="password"
-                    label="Password"
+                    placeholder="Password"
                     name="password"
-                    type='password'
+                    type="password"
                     value={password}
                     onChange={onPasswordChange}
                   />
@@ -171,6 +204,7 @@ export default function LoginPage() {
               </Button>
 
             </Box>
+
           </Box>
         </Container>
       </ThemeProvider>
@@ -179,7 +213,7 @@ export default function LoginPage() {
       <>
         <div>
             <Modal
-              aria-labelledby="transition-modal-title"
+              aria-placeholderledby="transition-modal-title"
               aria-describedby="transition-modal-description"
               open={open}
               onClose={handleValidClose}
@@ -205,7 +239,7 @@ export default function LoginPage() {
       <>
         <div>
             <Modal
-              aria-labelledby="transition-modal-title"
+              aria-placeholderledby="transition-modal-title"
               aria-describedby="transition-modal-description"
               open={open}
               onClose={handleInvalidClose}
@@ -229,6 +263,5 @@ export default function LoginPage() {
       </>
     } 
     </>
-
   )
 }
