@@ -44,7 +44,7 @@ public class CustomerController {
 	}
 	
 	@PostMapping("/auth/createCustomer")
-	public List<String> createNewCustomer(@RequestBody Customer c) {
+	public ResponseEntity<List<String>> createNewCustomer(@RequestBody Customer c) {
 		ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
 		javax.validation.Validator validator = factory.getValidator();
 		Set<ConstraintViolation<Customer>> violations = validator.validate(c);
@@ -56,14 +56,14 @@ public class CustomerController {
 			String result="Your new Customer ID is "+obj.getCustomer_Id().toString();
 			resp.add(result);
 
-			return resp;
-		}
+			return ResponseEntity.ok().body(resp);
+			}
 
 		for(ConstraintViolation<Customer> t: violations){
 			resp.add(t.getMessage());
 		}
 
-		return resp;
+		return ResponseEntity.badRequest().body(resp);
 
 		
 	}
