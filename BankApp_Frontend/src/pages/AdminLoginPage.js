@@ -92,7 +92,6 @@ export default function AdminLoginPage() {
               onSubmit={onAdminLogin}
               sx={{ mt: 1 }}
             >
-              <Box component="form" onSubmit={onAdminLogin} sx={{ mt: 1 }}>
                 <Grid containter>
                   <Grid item xm={12}>
                     <TextField
@@ -122,8 +121,6 @@ export default function AdminLoginPage() {
                   </Grid>
                 </Grid>
                 
-              {/* </Grid> */}
-              </Box>
               <Button
                 type="submit"
                 fullWidth
