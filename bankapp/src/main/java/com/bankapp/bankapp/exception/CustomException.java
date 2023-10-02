@@ -30,7 +30,7 @@ public class CustomException{
 		responseBody.put("timestamp", new Date());
 		responseBody.put("status", HttpStatus.UNAUTHORIZED);
 
-		responseBody.put("errors", "Invalid credentials. User can not be authenticated.");
+		responseBody.put("error", "Invalid credentials. User can not be authenticated.");
 
 		return new ResponseEntity<>(responseBody, HttpStatus.UNAUTHORIZED);
 	}

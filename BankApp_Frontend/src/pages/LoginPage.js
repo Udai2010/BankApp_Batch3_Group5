@@ -108,7 +108,7 @@ export default function LoginPage() {
       }
     }).catch((err) => {
       console.log(err);
-      alert(err.response.data.errors);
+      alert(err.response.data.error);
     });
     
   };
