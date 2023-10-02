@@ -52,7 +52,7 @@ export default function AdminDashboard () {
         <>
             <ThemeProvider theme={defaultTheme}>
                 <NavBar userType="admin"/>
-            <Container component="div" maxWidth="85%">
+            <Container component="div" maxWidth="85%" >
           <CssBaseline />
           <Box
             sx={{

@@ -120,7 +120,8 @@ export default function RegistrationPage() {
       setMessage(response.data);
       setSuccess(true);
     }).catch((error) => {
-      alert(error)
+      console.log(error);
+      alert(error.response.data)
     })
 
   }
@@ -131,7 +132,7 @@ export default function RegistrationPage() {
         <>
           <ThemeProvider theme={defaultTheme}>
           <HomeNavbar/>
-            <Container component="main" maxWidth="sm">
+            <Container component="main" maxWidth="sm" sx={{bgcolor: 'powderblue'}}>
               <CssBaseline />
               <Box
                 sx={{

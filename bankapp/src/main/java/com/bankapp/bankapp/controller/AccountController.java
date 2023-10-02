@@ -46,7 +46,7 @@ public class AccountController {
     CustomerService customerService;
     
 	@PostMapping("/createAccount/{uid}")
-	public List<String> createNewAccount(@RequestBody Account account,@PathVariable("uid") Long userID) {
+	public ResponseEntity<List<String>> createNewAccount(@RequestBody Account account,@PathVariable("uid") Long userID) {
 		ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
 		javax.validation.Validator validator = factory.getValidator();
 		Set<ConstraintViolation<Account>> violations = validator.validate(account);
@@ -58,14 +58,14 @@ public class AccountController {
 			if(acc!=null)
 			{	
 				resp.add("Your new Account ID is "+acc.getAccount_id().toString());
-				return resp;
+				return ResponseEntity.ok().body(resp);
 			}
 		}
 
 		for(ConstraintViolation<Account> t: violations){
 			resp.add(t.getMessage());
 		}
-		return resp;
+		return ResponseEntity.badRequest().body(resp);
 	}
 		
 	
