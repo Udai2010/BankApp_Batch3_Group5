@@ -14,6 +14,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.bankapp.bankapp.exception.InvalidCredentialException;
 import com.bankapp.bankapp.model.Customer;
 import com.bankapp.bankapp.model.Login;
 import com.bankapp.bankapp.repository.CustomerRepository;
@@ -34,11 +35,13 @@ public class CustomerService implements UserDetailsService {
 	public boolean validateUser(Login l) {
 		Optional<Customer> obj = customerRepo.findById(l.getUsername());
 		if (obj == null) {
-			return false;
+			throw new InvalidCredentialException("Invalid credentials");
+			// return false;
 		} else if (obj.get().getPassword().equals(l.getPassword())) {
 			return true;
 		} else {
-			return false;
+			throw new InvalidCredentialException("Invalid credentials");
+			// return false;
 		}
 
 	}

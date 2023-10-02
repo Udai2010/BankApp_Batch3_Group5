@@ -80,35 +80,37 @@ export default function LoginPage() {
     let response = await axios.post(baseURL, {
       userID: username,
       password: hashedPassword,
+    }).then((response) => {
+      if (response.data) {
+        const newToken = response.data;
+  
+        try {
+          localStorage.setItem("token", newToken);
+          console.log("Token saved to local storage:", newToken);
+        } catch (error) {
+          console.error("Error saving token to local storage:", error);
+        }
+  
+        const token = localStorage.getItem("token");
+        if (token) {
+          console.log(token);
+        }
+        
+        window.sessionStorage.setItem("customer_id", username);
+        // setMessage("Valid Credentials")
+        // setSuccess(true);
+        // setView(true);
+        
+        window.location.assign("/dashboard");
+        
+      } else {
+        alert("error in authentication");
+      }
     }).catch((err) => {
       console.log(err);
-      //alert(err);
+      alert(err.response.data.errors);
     });
-    if (response.data) {
-      const newToken = response.data;
-
-      try {
-        localStorage.setItem("token", newToken);
-        console.log("Token saved to local storage:", newToken);
-      } catch (error) {
-        console.error("Error saving token to local storage:", error);
-      }
-
-      const token = localStorage.getItem("token");
-      if (token) {
-        console.log(token);
-      }
-      
-      window.sessionStorage.setItem("customer_id", username);
-      // setMessage("Valid Credentials")
-      // setSuccess(true);
-      // setView(true);
-      
-      window.location.assign("/dashboard");
-      
-    } else {
-      alert("error in authentication");
-    }
+    
   };
 
   return (

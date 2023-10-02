@@ -62,7 +62,7 @@ export default function AdminLoginPage() {
       })
       .catch((err) => {
         console.log(err);
-        alert("error- " + err);
+        alert(err.response.data);
       });
   };
 
