@@ -8,10 +8,13 @@ import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import { Grid } from "@mui/material";
+import { Grid, IconButton, InputAdornment } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import HomeNavbar from "./HomeNavbar";
 import { brown } from "@mui/material/colors";
+import Snackbar from "@mui/material/Snackbar";
+import MuiAlert from "@mui/material/Alert"
+import { Visibility, VisibilityOff } from "@mui/icons-material";
 
 const defaultTheme = createTheme(
   {palette:{
@@ -23,6 +26,31 @@ export default function AdminLoginPage() {
   const baseURL = "http://localhost:3000/auth/adminlogin";
   const [admin_id, setAdmin_Id] = useState("");
   const [password, setPassword] = useState("");
+
+  const [showPassword, setShowPassword] = useState(true);
+  const [openErrorSnackbar, setOpenErrorSnackbar] = useState(false);
+  const [openSuccessSnackbar, setOpenSuccessSnackbar] = useState(false);
+  const [alertMessage, setAlertMessage] = useState("");
+
+  const handleTogglePassword = () => {
+    setShowPassword(!showPassword);
+  }
+
+  const handleCloseErrorSnackbar = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+    setOpenErrorSnackbar(false);
+  }
+
+  const handleCloseSuccessSnackbar = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+    setOpenSuccessSnackbar(false);
+    window.location.assign("/admindashboard");
+  }
+
 
   const onAdminIdChange = (event) => {
     setAdmin_Id(event.target.value);
@@ -57,12 +85,13 @@ export default function AdminLoginPage() {
 
         window.sessionStorage.setItem("admin_id", admin_id);
         window.sessionStorage.removeItem("customer_id");
-        alert("valid login")
-        window.location.assign("/admindashboard");
+        setAlertMessage("Valid Admin Login")
+        setOpenSuccessSnackbar(true);
       })
       .catch((err) => {
         console.log(err);
-        alert(err.response.data);
+        setAlertMessage(err.response.data);
+        setOpenErrorSnackbar(true);
       });
   };
 
@@ -114,9 +143,20 @@ export default function AdminLoginPage() {
                       id="password"
                       label="Password"
                       name="password"
-                      type='password'
+                      type={showPassword?"password":"text"}
                       value={password}
                       onChange={onPasswordChange}
+                      InputProps={{
+                        endAdornment: (
+                          <InputAdornment position="end">
+                          <IconButton
+                            onClick={handleTogglePassword}
+                            edge="end">
+                                {showPassword? <Visibility/>:<VisibilityOff/>}
+                          </IconButton>
+                          </InputAdornment>
+                        )
+                      }}
                     />
                   </Grid>
                 </Grid>
@@ -134,6 +174,36 @@ export default function AdminLoginPage() {
         </Container>
         
       </ThemeProvider>
+      <Snackbar
+        open={openErrorSnackbar}
+        autoHideDuration={6000}
+        onClose={handleCloseErrorSnackbar}
+        anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+      >
+        <MuiAlert
+          elevation={6}
+          variant="filled"
+          severity="error"
+          onClose={handleCloseErrorSnackbar}
+        >
+          {alertMessage}
+        </MuiAlert>
+      </Snackbar>
+      <Snackbar
+        open={openSuccessSnackbar}
+        autoHideDuration={6000}
+        onClose={handleCloseSuccessSnackbar}
+        anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+      >
+        <MuiAlert
+          elevation={6}
+          variant="filled"
+          severity="success"
+          onClose={handleCloseSuccessSnackbar}
+        >
+          {alertMessage}
+        </MuiAlert>
+      </Snackbar>
     </>
   );
 }

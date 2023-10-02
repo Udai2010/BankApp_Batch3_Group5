@@ -8,16 +8,21 @@ import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import { Grid } from "@mui/material";
+import { Grid, IconButton, InputAdornment } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { passwordHashService } from "../services/PasswordHashService";
 import HomeNavbar from "./HomeNavbar";
 import { brown } from "@mui/material/colors";
+import Snackbar from "@mui/material/Snackbar";
+import MuiAlert from "@mui/material/Alert"
+import { Visibility, VisibilityOff } from "@mui/icons-material";
 
 const defaultTheme = createTheme(
-  {palette:{
+  {
+    palette: {
       primary: brown
-  }}
+    }
+  }
 );
 
 export default function ForgotPassowrd() {
@@ -36,6 +41,31 @@ export default function ForgotPassowrd() {
   const [otp, setOtp] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
+
+  const [showPassword, setShowPassword] = useState(true);
+  const [openErrorSnackbar, setOpenErrorSnackbar] = useState(false);
+  const [openSuccessSnackbar, setOpenSuccessSnackbar] = useState(false);
+  const [alertMessage, setAlertMessage] = useState("");
+
+  const handleTogglePassword = () => {
+    setShowPassword(!showPassword);
+  }
+
+  const handleCloseErrorSnackbar = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+    setOpenErrorSnackbar(false);
+  }
+
+  const handleCloseSuccessSnackbar = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+    setOpenSuccessSnackbar(false);
+    window.location.assign("/login");
+  }
+
 
   const onCustomerIdChange = (event) => {
     setCustomerId(event.target.value);
@@ -58,18 +88,19 @@ export default function ForgotPassowrd() {
         otp: otp,
       })
       .then((response) => {
-        alert(response.data);
-        window.location.assign("/login");
+        setAlertMessage(response.data);
+        setOpenSuccessSnackbar(true);
       })
       .catch((err) => {
-        alert("error- " + err);
+        setAlertMessage(err.response.data);
+        setOpenErrorSnackbar(true);
       });
   };
 
   return (
     <>
       <ThemeProvider theme={defaultTheme}>
-        <HomeNavbar/>
+        <HomeNavbar />
         <Container component="main" maxWidth="sm">
           <CssBaseline />
           <Box
@@ -82,7 +113,7 @@ export default function ForgotPassowrd() {
             }}
           >
             <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}></Avatar>
-            <Typography component="h1" variant="h5" sx={{color: '#616161'}}>
+            <Typography component="h1" variant="h5" sx={{ color: '#616161' }}>
               FORGOT PASSWORD
             </Typography>
             <Box
@@ -112,12 +143,22 @@ export default function ForgotPassowrd() {
                     required
                     fullWidth
                     id="password"
-                    label="New Password"
+                    label="Password"
                     name="password"
-                    type="password"
+                    type={showPassword ? "password" : "text"}
                     value={password}
                     onChange={onPasswordChange}
-                    autoFocus
+                    InputProps={{
+                      endAdornment: (
+                        <InputAdornment position="end">
+                          <IconButton
+                            onClick={handleTogglePassword}
+                            edge="end">
+                            {showPassword ? <Visibility /> : <VisibilityOff />}
+                          </IconButton>
+                        </InputAdornment>
+                      )
+                    }}
                   />
                 </Grid>
 
@@ -148,6 +189,36 @@ export default function ForgotPassowrd() {
           </Box>
         </Container>
       </ThemeProvider>
+      <Snackbar
+        open={openErrorSnackbar}
+        autoHideDuration={6000}
+        onClose={handleCloseErrorSnackbar}
+        anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+      >
+        <MuiAlert
+          elevation={6}
+          variant="filled"
+          severity="error"
+          onClose={handleCloseErrorSnackbar}
+        >
+          {alertMessage}
+        </MuiAlert>
+      </Snackbar>
+      <Snackbar
+        open={openSuccessSnackbar}
+        autoHideDuration={6000}
+        onClose={handleCloseSuccessSnackbar}
+        anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+      >
+        <MuiAlert
+          elevation={6}
+          variant="filled"
+          severity="success"
+          onClose={handleCloseSuccessSnackbar}
+        >
+          {alertMessage}
+        </MuiAlert>
+      </Snackbar>
     </>
   );
 }

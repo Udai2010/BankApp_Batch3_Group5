@@ -34,7 +34,6 @@ export default function AdminViewTransactions() {
         setTransactions(response.data);
     }).catch((err) => {
       alert(err);
-
     });
   }
 
