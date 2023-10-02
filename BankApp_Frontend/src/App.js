@@ -28,7 +28,7 @@ function App() {
             <Route path='/login' element={<LoginPage/>}/>
             <Route path='/transaction' element={<TransactionPage/>}/>
             <Route path='/dashboard' element={<Dashboard/>}/>
-            <Route path='/openaccount' element={<OpenAccountPage/>}/>
+            <Route path='/openaccount/:usertype' element={<OpenAccountPage/>}/>
             <Route path='/register' element={<RegistrationPage/>}/>
             <Route path='/account' element = {<AccountPage/>}/>
             <Route path='/user' element={<UserPage/>}/>

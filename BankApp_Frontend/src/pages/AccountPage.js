@@ -135,7 +135,7 @@ export default function AccountPage() {
                 <Box sx={{margin: 'auto', width: '50%', display: 'flex', justifyContent: 'center'}}>
                 <Button 
                         align='center'
-                        variant="contained" component={Link} to="/openaccount"
+                        variant="contained" component={Link} to="/openaccount/user"
                         sx={{ mt: 3, mb: 2 }}>Create a new account</Button> 
                 </Box>
                 <Typography component="h1" variant="h5" align='center' sx={{color: 'darkblue', fontSize: '20px', fontWeight: 'bold'}}>

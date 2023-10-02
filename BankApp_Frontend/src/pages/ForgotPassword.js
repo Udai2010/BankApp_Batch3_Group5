@@ -11,8 +11,14 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { Grid } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { passwordHashService } from "../services/PasswordHashService";
+import HomeNavbar from "./HomeNavbar";
+import { brown } from "@mui/material/colors";
 
-const defaultTheme = createTheme();
+const defaultTheme = createTheme(
+  {palette:{
+      primary: brown
+  }}
+);
 
 export default function ForgotPassowrd() {
   const token = localStorage.getItem("token");
@@ -63,24 +69,25 @@ export default function ForgotPassowrd() {
   return (
     <>
       <ThemeProvider theme={defaultTheme}>
+        <HomeNavbar/>
         <Container component="main" maxWidth="sm">
           <CssBaseline />
           <Box
             sx={{
-              marginTop: 8,
+              marginTop: 5,
               display: "flex",
               flexDirection: "column",
               alignItems: "center",
+              border: '0.5rem outset #827717'
             }}
           >
             <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}></Avatar>
-            <Typography component="h1" variant="h5">
-              Forgot Password
+            <Typography component="h1" variant="h5" sx={{color: '#616161'}}>
+              FORGOT PASSWORD
             </Typography>
             <Box
               component="form"
               onSubmit={onForgotPassword}
-              noValidate
               sx={{ mt: 1 }}
             >
               <Grid containter>

@@ -17,8 +17,14 @@ import Backdrop from '@mui/material/Backdrop';
 import Modal from '@mui/material/Modal';
 import Fade from '@mui/material/Fade';
 import { passwordHashService } from "../services/PasswordHashService";
+import HomeNavbar from "./HomeNavbar";
+import { brown } from "@mui/material/colors";
 
-const defaultTheme = createTheme();
+const defaultTheme = createTheme(
+  {palette:{
+      primary: brown
+  }}
+);
 
 
 const style = {
@@ -39,11 +45,6 @@ export default function LoginPage() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
-  // const navigate = useNavigate();
-  // const baseURL = "http://localhost:3000/login";
-
-  // const [username, setUsername] = useState("");
-  // const [password, setPassword] = useState("");
   const [message, setMessage] = useState("");
   const [success, setSuccess] = useState(false)
   const [view,setView]=useState(false); 
@@ -81,7 +82,7 @@ export default function LoginPage() {
       password: hashedPassword,
     }).catch((err) => {
       console.log(err);
-      alert(err);
+      //alert(err);
     });
     if (response.data) {
       const newToken = response.data;
@@ -99,28 +100,15 @@ export default function LoginPage() {
       }
       
       window.sessionStorage.setItem("customer_id", username);
+      // setMessage("Valid Credentials")
+      // setSuccess(true);
+      // setView(true);
+      
       window.location.assign("/dashboard");
+      
     } else {
       alert("error in authentication");
     }
-    // const hashedPassword = passwordHashService(password)
-    // console.log(username)
-    // axios
-    //   .post(baseURL, {
-    //     userID: username,
-    //     password: hashedPassword
-    //   })
-
-    //   const token = localStorage.getItem("token");
-    //   if (token) {
-    //     console.log(token);
-    //   }
-      
-    //   window.sessionStorage.setItem("customer_id", username);
-    //   window.location.assign("/dashboard");
-    // } else {
-    //   alert("error in authentication");
-    // }
   };
 
   return (
@@ -129,23 +117,21 @@ export default function LoginPage() {
     { !success ?
       <>
       <ThemeProvider theme={defaultTheme}>
+      <HomeNavbar/>
         <Container component="main" maxWidth="sm">
           <CssBaseline />
           <Box
             sx={{
-              p:3,
-              color: '#000',
-              marginTop: 8,
+              marginTop: 5,
               display: 'flex',
               flexDirection: 'column',
               alignItems: 'center',
-              backgroundColor: 'rgba(225, 225, 225, 0.8)',
-              borderRadius: '10px'
+              border: '0.5rem outset #827717'
             }}
           >
             <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}></Avatar>
-            <Typography component="h1" variant="h5">
-              Login
+            <Typography component="h1" variant="h5" sx={{color: '#616161'}}>
+              LOGIN
             </Typography>
             <Box component="form" onSubmit={onLogin} sx={{ mt: 1 }}>
               <Grid containter>
