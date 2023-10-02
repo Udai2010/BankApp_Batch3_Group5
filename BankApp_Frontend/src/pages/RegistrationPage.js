@@ -9,7 +9,7 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { Grid, Card, CardActions, CardContent } from '@mui/material';
+import { Grid, Card, CardActions, CardContent, IconButton, InputAdornment } from '@mui/material';
 import Backdrop from '@mui/material/Backdrop';
 import Modal from '@mui/material/Modal';
 import Fade from '@mui/material/Fade';
@@ -18,6 +18,7 @@ import { passwordHashService } from '../services/PasswordHashService';
 import { DatePicker, LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs/AdapterDayjs';
 import dayjs from 'dayjs';
+import { Visibility, VisibilityOff } from "@mui/icons-material";
 import HomeNavbar from './HomeNavbar';
 import { brown } from "@mui/material/colors";
 
@@ -52,12 +53,16 @@ export default function RegistrationPage() {
   const [fathername, setfathername] = useState("")
   const [mothername, setmothername] = useState("")
   const [address, setaddress] = useState("")
-
+  const [showPassword, setShowPassword] = useState(true);
   const [success, setSuccess] = useState(false)
 
   const [message,setMessage] = useState("")
 
   const navigate = useNavigate()
+
+  const handleTogglePassword = () => {
+    setShowPassword(!showPassword);
+  }
 
   // Model Handler
   const [open, setOpen] = useState(true);
@@ -231,17 +236,28 @@ export default function RegistrationPage() {
                         </Grid>
                       </LocalizationProvider>
                       <Grid item xs={12}>
-                        <TextField
-                          margin="normal"
-                          required
-                          fullWidth
-                          type="password"
-                          id="password"
-                          label="Password"
-                          name="password"
-                          onChange={passwordChangeHandler}
-                          autoFocus
-                        />
+                      <TextField
+                      margin="normal"
+                      required
+                      fullWidth
+                      id="password"
+                      label="Password"
+                      name="password"
+                      type={showPassword?"password":"text"}
+                      value={password}
+                      onChange={passwordChangeHandler}
+                      InputProps={{
+                        endAdornment: (
+                          <InputAdornment position="end">
+                          <IconButton
+                            onClick={handleTogglePassword}
+                            edge="end">
+                                {showPassword? <Visibility/>:<VisibilityOff/>}
+                          </IconButton>
+                          </InputAdornment>
+                        )
+                      }}
+                    />
                       </Grid>
                       <Grid item xs={12}>
                         <TextField
