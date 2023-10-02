@@ -10,7 +10,7 @@ export default function NavBar({userType}) {
         console.log(userType);
         sessionStorage.clear();
         alert("Thank you for Banking with us.")
-        navigate("/login")
+        navigate("/")
     }
 
     return(
@@ -23,11 +23,10 @@ export default function NavBar({userType}) {
                              <>
                              <Button color="inherit" href="/admindashboard">
                                  <Typography variant="h6" component="div"  sx={{ flexGrow: 1 }}>
-                                     Online Banking App
+                                     Liberty Bank
                                  </Typography>
                              </Button>
                              <Box sx={{display:'flex'}}>
-                                 <Button align ='right' color="inherit" href="/changepassword">Change password</Button>
                                  <Button align='right'  color="inherit" onClick={onLogout}>Logout</Button>
                              </Box>
                          </>
@@ -35,7 +34,7 @@ export default function NavBar({userType}) {
                         <>
                         <Button color="inherit" href="/dashboard">
                             <Typography variant="h6" component="div"  sx={{ flexGrow: 1 }}>
-                                Online Banking App
+                            Liberty Bank
                             </Typography>
                         </Button>
                         <Box sx={{display:'flex'}}>

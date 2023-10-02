@@ -79,7 +79,7 @@ export default function AdminDashboard () {
                     </CardContent>
                     <CardActions>
                         <Button fullWidth
-                        variant="contained" component={Link} to="/openaccount"
+                        variant="contained" component={Link} to="/openaccount/admin"
                         sx={{ mt: 3, mb: 2 }}>Create Account</Button>
                     </CardActions>
                 </Card>

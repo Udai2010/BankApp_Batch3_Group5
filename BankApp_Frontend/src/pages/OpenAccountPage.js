@@ -15,8 +15,16 @@ import Modal from '@mui/material/Modal';
 import Fade from '@mui/material/Fade';
 import {Select} from '@mui/material';
 import {MenuItem} from '@mui/material';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import NavBar from './NavBar';
+import { brown } from "@mui/material/colors";
+
+const defaultTheme = createTheme(
+  {palette:{
+      primary: brown
+  }}
+);
+
 const style = {
   position: 'absolute',
   top: '50%',
@@ -29,11 +37,9 @@ const style = {
   p: 4,
 };
 
-const defaultTheme = createTheme();
-
 export default function OpenAccountPage() {
   const token = localStorage.getItem("token");
-
+  const {usertype} = useParams();
   const authToken = `Bearer ${token}`;
   const axiosInstance = axios.create({
     baseURL: "http://localhost:3000", // Replace with your API URL
@@ -48,16 +54,17 @@ export default function OpenAccountPage() {
   const [occupationType,setOccupationType]=useState("");
   const [sourceOfIncome, setSourceOfIncome]=useState("");
   const [grossSalary, setGrossSalary]=useState("");
-  const [debit_card, setDebitCard]=useState("");
+  const [debit_card, setDebitCard]=useState(false);
   const [net_banking, setNet_banking]=useState(false);
-  const [account_type, setAccountType]=useState(false);
+  const [account_type, setAccountType]=useState("");
   const [branch, setBranch] = useState("");
   const [success, setSuccess] = useState(false)
   const [message, setMessage] = useState("");
   const navigate = useNavigate()
 
   useEffect(() => {
-    setCustomerId(window.sessionStorage.getItem("customer_id"));
+    if(usertype.includes("user"))
+      setCustomerId(window.sessionStorage.getItem("customer_id"));
   }, [customerId])
   
   // Model Handler
@@ -145,7 +152,7 @@ export default function OpenAccountPage() {
       {!success ?
         <>
           <ThemeProvider theme={defaultTheme}>
-          <NavBar/>
+          <NavBar userType={usertype}/>
 
             <Container component="main" maxWidth="sm">
               <CssBaseline />
@@ -155,12 +162,12 @@ export default function OpenAccountPage() {
                   display: 'flex',
                   flexDirection: 'column',
                   alignItems: 'center',
-                  border: '0.5rem outset skyblue'
+                  border: '0.5rem outset #827717'
                 }}
               >
                 <Avatar sx={{ m: 1, bgcolor: 'charcoal' }}>
                 </Avatar>
-                <Typography component="h1" variant="h5" sx={{color: 'steelblue', fontSize: '20px', fontWeight: 'bold'}}>
+                <Typography component="h1" variant="h5" sx={{color: '#616161', fontSize: '20px', fontWeight: 'bold'}}>
                       OPEN AN ACCOUNT
                 </Typography>
                 <Box component="form" onSubmit={onSubmitForm}  sx={{ m: 2 }}>
@@ -173,7 +180,6 @@ export default function OpenAccountPage() {
                           id="customerId"
                           label="Customer ID"
                           name="customerId"
-                          autoComplete="customerId"
                           value={customerId}
                           onChange={onCustomerIdChange}
                           autoFocus

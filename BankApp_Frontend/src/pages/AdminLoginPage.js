@@ -10,8 +10,14 @@ import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { Grid } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import HomeNavbar from "./HomeNavbar";
+import { brown } from "@mui/material/colors";
 
-const defaultTheme = createTheme();
+const defaultTheme = createTheme(
+  {palette:{
+      primary: brown
+  }}
+);
 
 export default function AdminLoginPage() {
   const baseURL = "http://localhost:3000/auth/adminlogin";
@@ -51,6 +57,7 @@ export default function AdminLoginPage() {
 
         window.sessionStorage.setItem("admin_id", admin_id);
         window.sessionStorage.removeItem("customer_id");
+        alert("valid login")
         window.location.assign("/admindashboard");
       })
       .catch((err) => {
@@ -62,32 +69,29 @@ export default function AdminLoginPage() {
   return (
     <>
       <ThemeProvider theme={defaultTheme}>
+        <HomeNavbar/>
+        
         <Container component="main" maxWidth="sm">
           <CssBaseline />
           <Box
             sx={{
-              marginTop: 8,
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
+              
+              marginTop: 5,
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              border: '0.5rem outset #827717'
             }}
           >
             <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}></Avatar>
-            <Typography component="h1" variant="h5">
-              Admin Login
+            <Typography component="h1" variant="h5" sx={{color: '#616161'}}>
+              ADMIN LOGIN
             </Typography>
             <Box
               component="form"
               onSubmit={onAdminLogin}
-              noValidate
               sx={{ mt: 1 }}
             >
-
-              {/* <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
-              </Avatar>
-              <Typography component="h1" variant="h5">
-                Admin Login
-              </Typography> */}
               <Box component="form" onSubmit={onAdminLogin} sx={{ mt: 1 }}>
                 <Grid containter>
                   <Grid item xm={12}>
@@ -131,6 +135,7 @@ export default function AdminLoginPage() {
             </Box>
           </Box>
         </Container>
+        
       </ThemeProvider>
     </>
   );

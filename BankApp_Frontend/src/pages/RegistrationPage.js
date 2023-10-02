@@ -9,7 +9,7 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { Grid } from '@mui/material';
+import { Grid, Card, CardActions, CardContent } from '@mui/material';
 import Backdrop from '@mui/material/Backdrop';
 import Modal from '@mui/material/Modal';
 import Fade from '@mui/material/Fade';
@@ -18,7 +18,14 @@ import { passwordHashService } from '../services/PasswordHashService';
 import { DatePicker, LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs/AdapterDayjs';
 import dayjs from 'dayjs';
-import { auto } from '@popperjs/core';
+import HomeNavbar from './HomeNavbar';
+import { brown } from "@mui/material/colors";
+
+const defaultTheme = createTheme(
+  {palette:{
+      primary: brown
+  }}
+);
 
 const style = {
   position: 'absolute',
@@ -31,9 +38,6 @@ const style = {
   boxShadow: 24,
   p: 4,
 };
-
-
-const defaultTheme = createTheme();
 
 
 export default function RegistrationPage() {
@@ -126,134 +130,145 @@ export default function RegistrationPage() {
       {!success ?
         <>
           <ThemeProvider theme={defaultTheme}>
+          <HomeNavbar/>
             <Container component="main" maxWidth="sm">
               <CssBaseline />
               <Box
                 sx={{
-                  p:3,
-                  color: '#000',
-                  marginTop: 8,
+                  marginTop: 3,
                   display: 'flex',
                   flexDirection: 'column',
-                  alignItems: 'center',
-                  backgroundColor: 'rgba(225, 225, 225, 0.8)',
-                  borderRadius: '10px'
+                  alignItems: 'center'
                 }}
               >
-                <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
-                </Avatar>
-                <Typography component="h1" variant="h5">
-                  Register Customer
-                </Typography>
-                <Box component="form" onSubmit={submitHandler} sx={{ mt: 1 }}>
-                  <Grid container columnSpacing={1.5}>
-                    <Grid item xs={6} >
-                      <TextField
-                        margin="normal"
-                        required
-                        fullWidth
-                        id="name"
-                        placeholder="Name"
-                        name="name"
-                        autoComplete="name"
-                        onChange={nameChangeHandler}
-                        autoFocus
-                      />
-                    </Grid>
-                    <Grid item xs={6}>
-                      <TextField
-                        margin="normal"
-                        required
-                        fullWidth
-                        id="email"
-                        placeholder="Email Address"
-                        name="email"
-                        autoComplete="email"
-                        onChange={emailChangeHandler}
-                        autoFocus
-                      />
-                    </Grid>
-                    <Grid item xs={6}>
-                      <TextField
-                        margin="normal"
-                        required
-                        fullWidth
-                        id="fathername"
-                        placeholder="Father Name"
-                        name="fathername"
-                        autoComplete="fathername"
-                        onChange={fathernameChangeHandler}
-                        autoFocus
-                      />
-                    </Grid>
-                    <Grid item xs={6}>
-                      <TextField
-                        margin="normal"
-                        required
-                        fullWidth
-                        id="mothername"
-                        placeholder="Mother Name"
-                        name="mothername"
-                        autoComplete="mothername"
-                        onChange={mothernameChangeHandler}
-                        autoFocus
-                      />
-                    </Grid>
-                    <Grid item xs={6}>
-                      <TextField
-                        margin="normal"
-                        required
-                        fullWidth
-                        id="pannumber"
-                        placeholder="Pan Number"
-                        name="pannumber"
-                        autoComplete="pannumber"
-                        onChange={pannumberChangeHandler}
-                        autoFocus
-                      />
-                    </Grid>
-                    <LocalizationProvider dateAdapter={AdapterDayjs}>
-                      <Grid item xm={6} marginTop={'15px'}>
-                          <DatePicker  required fullWidth label="Date Of Birth" disableFuture
-                              value={dob} onChange={(dob)=>setdob(dob)} />
+                 <Card
+                sx={{
+                  border: '0.5rem outset #827717',
+                  width: '40em'
+                }}
+               >
+                 <CardContent sx={{margin: 'auto', width: '50%', display: 'flex', flexDirection: 'column', justifyContent: 'center'}}>
+                    <Avatar sx={{marginBottom: 1, alignItems: 'center', bgcolor: 'secondary.main', marginLeft: '45%' }}>
+                    </Avatar>
+                        <Typography component="h1" variant="h5" align='center' sx={{color: '#616161', fontSize: '20px', fontWeight: 'bold'}}>
+                            CUSTOMER REGISTRATION
+                        </Typography>
+                  </CardContent>
+                  <CardActions sx={{ display: 'flex', justifyContent: 'center'}}>
+            
+                  <Box component="form" onSubmit={submitHandler}>
+                    <Grid container columnSpacing={1.5}>
+                      <Grid item xs={6} >
+                        <TextField
+                          margin="normal"
+                          required
+                          fullWidth
+                          id="name"
+                          label="Name"
+                          name="name"
+                          autoComplete="name"
+                          onChange={nameChangeHandler}
+                          autoFocus
+                        />
                       </Grid>
-                    </LocalizationProvider>
-                    <Grid item xs={12}>
-                      <TextField
-                        margin="normal"
-                        required
-                        fullWidth
-                        type="password"
-                        id="password"
-                        placeholder="Password"
-                        name="password"
-                        onChange={passwordChangeHandler}
-                        autoFocus
-                      />
+                      <Grid item xs={6}>
+                        <TextField
+                          margin="normal"
+                          required
+                          fullWidth
+                          id="email"
+                          label="Email Address"
+                          name="email"
+                          autoComplete="email"
+                          onChange={emailChangeHandler}
+                          autoFocus
+                        />
+                      </Grid>
+                      <Grid item xs={6}>
+                        <TextField
+                          margin="normal"
+                          required
+                          fullWidth
+                          id="fathername"
+                          label="Father Name"
+                          name="fathername"
+                          autoComplete="fathername"
+                          onChange={fathernameChangeHandler}
+                          autoFocus
+                        />
+                      </Grid>
+                      <Grid item xs={6}>
+                        <TextField
+                          margin="normal"
+                          required
+                          fullWidth
+                          id="mothername"
+                          label="Mother Name"
+                          name="mothername"
+                          autoComplete="mothername"
+                          onChange={mothernameChangeHandler}
+                          autoFocus
+                        />
+                      </Grid>
+                      <Grid item xs={6}>
+                        <TextField
+                          margin="normal"
+                          required
+                          fullWidth
+                          id="pannumber"
+                          label="Pan Number"
+                          name="pannumber"
+                          autoComplete="pannumber"
+                          onChange={pannumberChangeHandler}
+                          autoFocus
+                        />
+                      </Grid>
+                      <LocalizationProvider dateAdapter={AdapterDayjs}>
+                        <Grid item xm={6} marginTop={'15px'}>
+                            <DatePicker  required fullWidth label="Date Of Birth" disableFuture
+                                value={dob} onChange={(dob)=>setdob(dob)} />
+                        </Grid>
+                      </LocalizationProvider>
+                      <Grid item xs={12}>
+                        <TextField
+                          margin="normal"
+                          required
+                          fullWidth
+                          type="password"
+                          id="password"
+                          label="Password"
+                          name="password"
+                          onChange={passwordChangeHandler}
+                          autoFocus
+                        />
+                      </Grid>
+                      <Grid item xs={12}>
+                        <TextField
+                          margin="normal"
+                          required
+                          fullWidth
+                          id="address"
+                          label="Current Address"
+                          name="address"
+                          autoComplete="address"
+                          onChange={addressChangeHandler}
+                          autoFocus
+                        />
+                      </Grid>
+                    <Grid item xs={12} justifyContent="center" align="center">
+                      <Button
+                        type="submit"
+                        variant="contained"
+                        
+                        sx={{ mt: 3, mb: 2 }}
+                      >
+                        Register
+                      </Button>
                     </Grid>
-                    <Grid item xs={12}>
-                      <TextField
-                        margin="normal"
-                        required
-                        fullWidth
-                        id="address"
-                        placeholder="Current Address"
-                        name="address"
-                        autoComplete="address"
-                        onChange={addressChangeHandler}
-                        autoFocus
-                      />
                     </Grid>
-                  </Grid>
-                  <Button
-                    type="submit"
-                    fullWidth
-                    variant="contained"
-                    sx={{ mt: 3, mb: 2 }}
-                  >
-                    Register
-                  </Button>
-                </Box>
+                  </Box>
+                  </CardActions>
+                </Card>
               </Box>
             </Container>
           </ThemeProvider>
@@ -262,7 +277,7 @@ export default function RegistrationPage() {
         <>
           <div>
             <Modal
-              aria-placeholderledby="transition-modal-title"
+              aria-labelledby="transition-modal-title"
               aria-describedby="transition-modal-description"
               open={open}
               onClose={handleClose}
