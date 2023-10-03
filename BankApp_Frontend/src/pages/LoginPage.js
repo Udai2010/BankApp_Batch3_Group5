@@ -117,7 +117,7 @@ export default function LoginPage() {
         setSuccess(true);
         setView(true);
 
-        window.location.assign("/dashboard");
+        //window.location.assign("/dashboard");
 
       } else {
         alert("error in authentication");
