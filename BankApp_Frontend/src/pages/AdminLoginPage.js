@@ -13,7 +13,7 @@ import { useNavigate } from "react-router-dom";
 import HomeNavbar from "./HomeNavbar";
 import { brown } from "@mui/material/colors";
 import Snackbar from "@mui/material/Snackbar";
-import MuiAlert from "@mui/material/Alert"
+import MuiAlert from "@mui/material/Alert";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 
 const defaultTheme = createTheme(
@@ -90,7 +90,7 @@ export default function AdminLoginPage() {
       })
       .catch((err) => {
         console.log(err);
-        setAlertMessage(err.response.data);
+        setAlertMessage("Authentication Required");
         setOpenErrorSnackbar(true);
       });
   };

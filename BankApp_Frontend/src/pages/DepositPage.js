@@ -7,11 +7,12 @@ import TextField from '@mui/material/TextField';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
-import {FormControl, InputLabel, Select, MenuItem, Card, CardActions, CardContent } from '@mui/material';
+import { FormControl, InputLabel, Select, MenuItem, Card, CardActions, CardContent } from '@mui/material';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { Grid } from '@mui/material';
 import NavBar from './NavBar';
-
+import Snackbar from "@mui/material/Snackbar";
+import MuiAlert from "@mui/material/Alert";
 const defaultTheme = createTheme();
 
 export default function DepositPage() {
@@ -31,6 +32,24 @@ export default function DepositPage() {
   const [amount, setAmount] = useState("");
   const [selectedAccount, setSelectedAccont] = useState(-1);
 
+  const [openErrorSnackbar, setOpenErrorSnackbar] = useState(false);
+  const [openSuccessSnackbar, setOpenSuccessSnackbar] = useState(false);
+  const [alertMessage, setAlertMessage] = useState("");
+
+  const handleCloseErrorSnackbar = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+    setOpenErrorSnackbar(false);
+  }
+
+  const handleCloseSuccessSnackbar = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+    setOpenSuccessSnackbar(false);
+  }
+
   async function getAccounts(customer_id, setAccounts) {
     const url = `http://localhost:3000/account/${customer_id}`;
     await axiosInstance.get(url).then((response) => {
@@ -38,13 +57,15 @@ export default function DepositPage() {
       console.log(accounts);
     }).catch((err) => {
       console.log(err);
-      alert(err);
+      setAlertMessage(err.response.data);
+      setOpenErrorSnackbar(true);
     });
   }
 
   const onAmountChange = (event) => {
     if (event.target.value < 0) {
-      alert("Negative amount not allowed");
+      setAlertMessage("Negative amount not allowed");
+      setOpenErrorSnackbar(true);
       //document.getElementById('amount').value = '';
       return;
     }
@@ -72,12 +93,14 @@ export default function DepositPage() {
         amount: amount,
       })
       .then((response) => {
-        alert(response.data);
+        setAlertMessage(response.data);
+        setOpenSuccessSnackbar(true);
         console.log(response);
         //navigate("/dashboard");
       })
       .catch((err) => {
-        alert(err.response.data.errors);
+        setAlertMessage(err.response.data.errors);
+        setOpenErrorSnackbar(true);
       });
   };
 
@@ -85,7 +108,7 @@ export default function DepositPage() {
   return (
     <>
       <ThemeProvider theme={defaultTheme}>
-      <NavBar/>
+        <NavBar />
         <Container component="main" maxWidth="sm">
           <CssBaseline />
           <Box
@@ -98,65 +121,96 @@ export default function DepositPage() {
             }}
           >
             <Card
-                  sx={{
-                    border: '0.5rem outset skyblue',
-                    width: '25em'
-                  }}
-                 >
-                   <CardContent sx={{margin: 'auto', width: '50%', display: 'flex', justifyContent: 'center'}}>
-                      
-                      <Typography component="h1" variant="h5" align='center' sx={{color: 'steelblue', fontSize: '20px', fontWeight: 'bold'}}>
-                        DEPOSIT
-                      </Typography>
-                    </CardContent>
-                    <CardActions sx={{margin: 'auto', width: '50%', display: 'flex', justifyContent: 'center'}}>
-                        <Box component="form" onSubmit={onDeposit} sx={{ mt: 1 }}>
-                        {accounts.length > 0 ?<div>
-                          <FormControl fullWidth>
-                            <InputLabel id="selectAccount">Account number</InputLabel>
-                            <Select
-                              fullWidth 
-                              id="selectAccount"
-                              value={selectedAccount}
-                              label="Account number"
-                              onChange={onSelectAccount}>
-                                {accounts.map((acc) => {
-                                  return <MenuItem value={acc.account_id}>{acc.account_id}</MenuItem>
-                                })}
-                              </Select>
-                          </FormControl>
-                          </div>: <Typography component="h3" variant="h5" align='center' sx={{color: 'charcoal', fontSize: '20px', fontWeight: 'bold'}}>
-                                  NO ACCOUNTS AVAILABLE
-                                </Typography>
-                        }
-                            <Grid item xm={12}>
-                              <TextField
-                                margin="normal"
-                                required
-                                fullWidth
-                                id="amount"
-                                label="Amount"
-                                name="amount"
-                                type="text"
-                                value={amount}
-                                onChange={onAmountChange}
-                                autoFocus
-                              />
-                            </Grid>
-                          <Button
-                            type="submit"
-                            fullWidth
-                            variant="contained"
-                            sx={{ mt: 3, mb: 2 }}
-                          >
-                            DEPOSIT
-                          </Button>
-                        </Box>
-                      </CardActions>
-                    </Card>
-              </Box>
+              sx={{
+                border: '0.5rem outset skyblue',
+                width: '25em'
+              }}
+            >
+              <CardContent sx={{ margin: 'auto', width: '50%', display: 'flex', justifyContent: 'center' }}>
+
+                <Typography component="h1" variant="h5" align='center' sx={{ color: 'steelblue', fontSize: '20px', fontWeight: 'bold' }}>
+                  DEPOSIT
+                </Typography>
+              </CardContent>
+              <CardActions sx={{ margin: 'auto', width: '50%', display: 'flex', justifyContent: 'center' }}>
+                <Box component="form" onSubmit={onDeposit} sx={{ mt: 1 }}>
+                  {accounts.length > 0 ? <div>
+                    <FormControl fullWidth>
+                      <InputLabel id="selectAccount">Account number</InputLabel>
+                      <Select
+                        fullWidth
+                        id="selectAccount"
+                        value={selectedAccount}
+                        label="Account number"
+                        onChange={onSelectAccount}>
+                        {accounts.map((acc) => {
+                          return <MenuItem value={acc.account_id}>{acc.account_id}</MenuItem>
+                        })}
+                      </Select>
+                    </FormControl>
+                  </div> : <Typography component="h3" variant="h5" align='center' sx={{ color: 'charcoal', fontSize: '20px', fontWeight: 'bold' }}>
+                    NO ACCOUNTS AVAILABLE
+                  </Typography>
+                  }
+                  <Grid item xm={12}>
+                    <TextField
+                      margin="normal"
+                      required
+                      fullWidth
+                      id="amount"
+                      label="Amount"
+                      name="amount"
+                      type="text"
+                      value={amount}
+                      onChange={onAmountChange}
+                      autoFocus
+                    />
+                  </Grid>
+                  <Button
+                    type="submit"
+                    fullWidth
+                    variant="contained"
+                    sx={{ mt: 3, mb: 2 }}
+                  >
+                    DEPOSIT
+                  </Button>
+                </Box>
+              </CardActions>
+            </Card>
+          </Box>
         </Container>
       </ThemeProvider>
+      <Snackbar
+        open={openErrorSnackbar}
+        autoHideDuration={6000}
+        onClose={handleCloseErrorSnackbar}
+        anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+      >
+        <MuiAlert
+          elevation={6}
+          variant="filled"
+          severity="error"
+          onClose={handleCloseErrorSnackbar}
+        >
+          {alertMessage}
+        </MuiAlert>
+      </Snackbar>
+      <Snackbar
+        open={openSuccessSnackbar}
+        autoHideDuration={6000}
+        onClose={handleCloseSuccessSnackbar}
+        anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+      >
+        <MuiAlert
+          elevation={6}
+          variant="filled"
+          severity="success"
+          onClose={handleCloseSuccessSnackbar}
+        >
+          {alertMessage}
+        </MuiAlert>
+      </Snackbar>
+
     </>
   );
 }

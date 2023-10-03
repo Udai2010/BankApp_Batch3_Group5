@@ -12,6 +12,8 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { Grid } from '@mui/material';
 import { ElevenMp } from '@mui/icons-material';
 import NavBar from './NavBar';
+import Snackbar from "@mui/material/Snackbar";
+import MuiAlert from "@mui/material/Alert";
 
 const defaultTheme = createTheme();
 
@@ -33,17 +35,40 @@ export default function FundTransfer() {
   const [selectedAccount, setSelectedAccont] = useState(-1);
   const [destinationAccount, setDestinationAccount] = useState("");
 
+  const [openErrorSnackbar, setOpenErrorSnackbar] = useState(false);
+  const [openSuccessSnackbar, setOpenSuccessSnackbar] = useState(false);
+  const [alertMessage, setAlertMessage] = useState("");
+
+  const handleCloseErrorSnackbar = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+    setOpenErrorSnackbar(false);
+  }
+
+  const handleCloseSuccessSnackbar = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+    setOpenSuccessSnackbar(false);
+  }
+
+
   async function getAccounts(customer_id, setAccounts) {
     const url = `http://localhost:3000/account/${customer_id}`;
     await axiosInstance.get(url).then((response) => {
       setAccounts(response.data);
       console.log(accounts);
+    }).catch((err) => {
+      setAlertMessage(err);
+      setOpenErrorSnackbar(true);
     });
   }
 
   const onAmountChange = (event) => {
     if (event.target.value < 0) {
-      alert("Negative amount not allowed");
+      setAlertMessage("Negative amount not allowed");
+      setOpenErrorSnackbar(true);
       //document.getElementById('amount').value = '';
       return;
     }
@@ -75,12 +100,17 @@ export default function FundTransfer() {
         amount: amount,
       })
       .then((response) => {
-        alert(response.data);
+      setAlertMessage(response.data);
+      if(response.data === "Fund transfer completed")
+        setOpenSuccessSnackbar(true);  
+      else
+        setOpenErrorSnackbar(true);
         //console.log(response);
         //navigate("/dashboard");
       })
       .catch((err) => {
-        alert(err.response.data.errors);
+        setAlertMessage(err.response.data.errors);
+        setOpenErrorSnackbar(true);
       });
   };
 
@@ -171,6 +201,36 @@ export default function FundTransfer() {
             </Box>
         </Container>
       </ThemeProvider>
+      <Snackbar
+        open={openErrorSnackbar}
+        autoHideDuration={6000}
+        onClose={handleCloseErrorSnackbar}
+        anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+      >
+        <MuiAlert
+          elevation={6}
+          variant="filled"
+          severity="error"
+          onClose={handleCloseErrorSnackbar}
+        >
+          {alertMessage}
+        </MuiAlert>
+      </Snackbar>
+      <Snackbar
+        open={openSuccessSnackbar}
+        autoHideDuration={6000}
+        onClose={handleCloseSuccessSnackbar}
+        anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+      >
+        <MuiAlert
+          elevation={6}
+          variant="filled"
+          severity="success"
+          onClose={handleCloseSuccessSnackbar}
+        >
+          {alertMessage}
+        </MuiAlert>
+      </Snackbar>
     </>
   );
 }
